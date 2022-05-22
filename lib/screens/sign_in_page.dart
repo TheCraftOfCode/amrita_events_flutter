@@ -1,4 +1,4 @@
-import 'package:amrita_events_flutter/screens/sign_in_page.dart';
+import 'package:amrita_events_flutter/screens/sign_up_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/left_beveled_container.dart';
@@ -9,14 +9,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/password_formfield_widget.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
+
+
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Sign up',
+                  'Login',
                   style: GoogleFonts.nunitoSans(
                       color: colors.primaryTextColor,
                       fontSize: 17,
@@ -63,32 +65,18 @@ class _SignUpPageState extends State<SignUpPage> {
                 light: true,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                    width: (MediaQuery.of(context).size.width - 70) / 2,
-                    child: const PasswordFormFieldWidget(
-                        label: 'Password', hintText: 'Password')),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                SizedBox(
-                    width: (MediaQuery.of(context).size.width - 70) / 2,
-                    child: const PasswordFormFieldWidget(
-                        label: 'Retype', hintText: 'Retype'))
-              ],
-            ),
+            const PasswordFormFieldWidget(
+                label: 'Retype', hintText: 'Retype'),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SignInPage()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SignUpPage()));
                   },
                   child: Text(
-                    'Sign in instead',
+                    'Sign up instead',
                     style: GoogleFonts.nunitoSans(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -113,15 +101,15 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'SIGN UP',
-                      style: GoogleFonts.nunitoSans(
-                          color: colors.primaryTextColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
-                style: ElevatedButton.styleFrom(primary: colors.accentColor),)
+                  onPressed: () {},
+                  child: Text(
+                    'SIGN IN',
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.primaryTextColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(primary: colors.accentColor),)
               ],
             )
           ])
