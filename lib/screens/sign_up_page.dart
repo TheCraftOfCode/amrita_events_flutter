@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/screens/o_t_p_screen.dart';
 import 'package:amrita_events_flutter/screens/sign_in_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
@@ -113,7 +114,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OTPScreen()));
+                    },
                     child: Text(
                       'SIGN UP',
                       style: GoogleFonts.nunitoSans(

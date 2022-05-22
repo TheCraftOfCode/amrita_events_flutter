@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/onboarding.dart';
 import 'package:amrita_events_flutter/screens/sign_up_page.dart';
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
 class GreetingPage extends StatelessWidget {
+  const GreetingPage({Key? key}) : super(key: key);
+
 
 
   @override
@@ -28,10 +31,12 @@ class GreetingPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SignUpPage()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SignUpPage()));
                   }, child: Text('Sign In',style: GoogleFonts.nunitoSans(fontSize: 15,color: colors.alternateButtonTextColor,fontWeight: FontWeight.bold),),style: ElevatedButton.styleFrom(primary: colors.alternateButtonColor),),
                   const SizedBox(width: 20,),
-                  ElevatedButton(onPressed: (){}, child: Text('Get Started',style: GoogleFonts.nunitoSans(fontSize: 15,color: colors.scaffoldColor,fontWeight: FontWeight.bold),),style: ElevatedButton.styleFrom(primary: colors.headingTextColor),),
+                  ElevatedButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const FeaturesPage()));
+                  }, child: Text('Get Started',style: GoogleFonts.nunitoSans(fontSize: 15,color: colors.scaffoldColor,fontWeight: FontWeight.bold),),style: ElevatedButton.styleFrom(primary: colors.headingTextColor),),
                 ],
               ),
             )

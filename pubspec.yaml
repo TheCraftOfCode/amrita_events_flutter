@@ -42,6 +42,7 @@ dependencies:
   flutter_rounded_date_picker:
   morphable_shape: ^1.6.4
   dimension:
+  smooth_page_indicator:
 
 
 dev_dependencies:
