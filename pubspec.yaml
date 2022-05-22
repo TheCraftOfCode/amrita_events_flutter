@@ -40,6 +40,8 @@ dependencies:
   flutter_svg: ^1.0.3
   font_awesome_flutter:
   flutter_rounded_date_picker:
+  morphable_shape: ^1.6.4
+  dimension:
 
 
 dev_dependencies:
