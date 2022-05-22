@@ -20,7 +20,7 @@ class _LeftBeveledContainerState extends State<LeftBeveledContainer> {
           shape: constants.beveledRectangle,
           color: colors.cardColor
       ),
-      height: MediaQuery.of(context).size.height*0.5,
+      height: MediaQuery.of(context).size.height*0.53,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.all(30.0),
