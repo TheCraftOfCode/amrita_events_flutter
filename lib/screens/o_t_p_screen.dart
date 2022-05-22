@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/screens/events_home.dart';
 import 'package:amrita_events_flutter/screens/greeting_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
@@ -97,7 +98,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 onPressed: () {
                   setState(() {});
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const GreetingPage()));
+                      builder: (context) => EventsHome()));
                 },
                 child: SizedBox(
                     width: double.infinity,
