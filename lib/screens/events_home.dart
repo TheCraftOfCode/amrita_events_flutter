@@ -18,7 +18,7 @@ class _EventsHomeState extends State<EventsHome> {
       backgroundColor: colors.scaffoldColor,
       body: CustomSliverView(
         columnList: [
-          TopBarWidget(icon: Icons.home, title: 'Title',)
+          TopBarWidget(icon: Icons.home_outlined, title: 'Home',)
         ],
       ),
     );

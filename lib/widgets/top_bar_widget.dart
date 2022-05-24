@@ -35,6 +35,7 @@ class TopBarWidget extends StatelessWidget {
                     icon,
                     size: 40,
                   ),
+                  const SizedBox(width: 10,),
                   Text(
                     title,
                     style: GoogleFonts.nunitoSans(
@@ -66,10 +67,13 @@ class TopBarWidget extends StatelessWidget {
                   GestureDetector(
                     child: Material(
                       color: colors.scaffoldColor,
-                      shape: const CircleBorder(),
-                      child: Icon(
-                        Icons.search_outlined,
-                        color: colors.headingTextColor,
+                      borderRadius: BorderRadius.circular(30),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Icon(
+                          Icons.search_outlined,
+                          color: colors.headingTextColor,
+                        ),
                       ),
                     ),
                     onTap: (){
