@@ -1,5 +1,6 @@
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/utils/constants.dart' as constants;
+import 'package:amrita_events_flutter/widgets/textbox_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,19 +23,62 @@ class TopBarWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(icon),
-                Text(
-                  title,
-                  style: GoogleFonts.nunitoSans(
-                      fontSize: 30,
-                      fontWeight: FontWeight.normal,
-                      color: colors.primaryTextColor),
-                )
-              ],
-            )
+            Expanded(
+              child: Container(),
+              flex: 1,
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    icon,
+                    size: 40,
+                  ),
+                  Text(
+                    title,
+                    style: GoogleFonts.nunitoSans(
+                        fontSize: 45,
+                        fontWeight: FontWeight.normal,
+                        color: colors.primaryTextColor),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 55,
+                    width: MediaQuery.of(context).size.width * 0.65,
+                    child: TextBoxField(
+                      hint: 'Type to search',
+                      light: true,
+                      validator: (val) {},
+                      padding: const EdgeInsets.only(top: 10),
+                      title: 'Search',
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  GestureDetector(
+                    child: Material(
+                      color: colors.scaffoldColor,
+                      shape: const CircleBorder(),
+                      child: Icon(
+                        Icons.search_outlined,
+                        color: colors.headingTextColor,
+                      ),
+                    ),
+                    onTap: (){
+                      //TODO: Write search function here
+                    },
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

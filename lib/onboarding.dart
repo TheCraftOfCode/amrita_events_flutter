@@ -106,7 +106,7 @@ class _FeaturesPageState extends State<FeaturesPage> {
             backgroundColor: colors.scaffoldColor,
             body: Stack(children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20.0, right: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +122,7 @@ class _FeaturesPageState extends State<FeaturesPage> {
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SmoothPageIndicator(
                           controller: controller,
@@ -149,7 +149,7 @@ class _FeaturesPageState extends State<FeaturesPage> {
                             style: ElevatedButton.styleFrom(
                                 primary: colors.alternateButtonTextColor),
                             child: Text(
-                              'SIGN UP',
+                              'Sign Up',
                               style: GoogleFonts.nunito(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
