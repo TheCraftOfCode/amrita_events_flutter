@@ -14,3 +14,4 @@ var textBoxColor = const Color(0xff413B54);
 var lightTextBoxColor = const Color(0xffF5F5F5);
 var lightTextBoxTextColor = const Color(0xff818D80);
 var textBoxTextColor = const Color(0xffDADADA);
+var cardBackgroundColor = const Color(0xff1D1639);
