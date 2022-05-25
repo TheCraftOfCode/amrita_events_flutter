@@ -12,8 +12,6 @@ import '../widgets/password_formfield_widget.dart';
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
 
-
-
   @override
   _SignInPageState createState() => _SignInPageState();
 }
@@ -65,15 +63,15 @@ class _SignInPageState extends State<SignInPage> {
                 light: true,
               ),
             ),
-            const PasswordFormFieldWidget(
-                label: 'Retype', hintText: 'Retype'),
+            const PasswordFormFieldWidget(label: 'Retype', hintText: 'Retype'),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SignUpPage()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SignUpPage()));
                   },
                   child: Text(
                     'Sign up instead',
@@ -109,7 +107,8 @@ class _SignInPageState extends State<SignInPage> {
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                   ),
-                  style: ElevatedButton.styleFrom(primary: colors.accentColor),)
+                  style: ElevatedButton.styleFrom(primary: colors.accentColor),
+                )
               ],
             )
           ])
