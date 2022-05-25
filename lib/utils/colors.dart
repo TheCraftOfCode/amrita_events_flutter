@@ -16,3 +16,4 @@ var lightTextBoxTextColor = const Color(0xff818D80);
 var textBoxTextColor = const Color(0xffDADADA);
 var cardBackgroundColor = const Color(0xff1D1639);
 var eventCardItemTitle = const Color(0xffC0C0C0);
+var notificationDateColors = const Color(0xffFFC388);

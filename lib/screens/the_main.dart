@@ -1,5 +1,5 @@
 import 'package:amrita_events_flutter/screens/events_home.dart';
-import 'package:amrita_events_flutter/screens/notifications.dart';
+import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
 import 'package:amrita_events_flutter/screens/settings_page.dart';
 import 'package:amrita_events_flutter/screens/starred_events_page.dart';

@@ -1,5 +1,7 @@
+import 'package:amrita_events_flutter/screens/events_home.dart';
 import 'package:amrita_events_flutter/screens/password_recovery_page.dart';
 import 'package:amrita_events_flutter/screens/sign_up_page.dart';
+import 'package:amrita_events_flutter/screens/the_main.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/left_beveled_container.dart';
@@ -58,37 +60,36 @@ class _SignInPageState extends State<SignInPage> {
                 label: 'Password', hintText: 'Enter password here'),
             Padding(
               padding: const EdgeInsets.only(top: 20),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SignUpPage()));
-                  },
-                  child: Text(
-                    'Sign up instead',
-                    style: GoogleFonts.nunitoSans(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: colors.primaryTextColor),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SignUpPage()));
+                    },
+                    child: Text(
+                      'Sign up instead',
+                      style: GoogleFonts.nunitoSans(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: colors.primaryTextColor),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PasswordRecovery()));
-                },
-                child: Text(
-                  'Forgot password?',
-                  style: GoogleFonts.nunitoSans(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: colors.primaryTextColor),
-                ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const PasswordRecovery()));
+                    },
+                    child: Text(
+                      'Forgot password?',
+                      style: GoogleFonts.nunitoSans(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: colors.primaryTextColor),
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(child: Container()),
@@ -107,7 +108,10 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const TheMain()));
+                  },
                   child: Text(
                     'SIGN IN',
                     style: GoogleFonts.nunitoSans(
