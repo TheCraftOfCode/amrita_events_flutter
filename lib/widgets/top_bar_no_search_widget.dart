@@ -1,11 +1,12 @@
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/utils/constants.dart' as constants;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class TopBarWidgetNoSearch extends StatelessWidget {
-  const TopBarWidgetNoSearch({Key? key, required this.icon, required this.title})
+  const TopBarWidgetNoSearch(
+      {Key? key, required this.icon, required this.title})
       : super(key: key);
 
   final IconData icon;
@@ -23,34 +24,36 @@ class TopBarWidgetNoSearch extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Spacer(),
+            Expanded(
+              child: Container(),
+              flex: 2,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-
                 Expanded(
                   flex: 5,
                   child: Row(
-
                     children: [
                       Icon(
                         icon,
                         size: 40,
                       ),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       AutoSizeText(
-
                         title,
                         style: GoogleFonts.nunitoSans(
                             fontWeight: FontWeight.normal,
                             color: colors.primaryTextColor,
-                        fontSize: 35),
+                            fontSize: 35),
                         maxLines: 2,
                         minFontSize: 28,
                       )
                     ],
                   ),
                 ),
-
               ],
             )
           ],

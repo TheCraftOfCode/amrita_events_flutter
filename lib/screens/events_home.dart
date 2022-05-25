@@ -1,9 +1,9 @@
+import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/event_card_large_widget.dart';
+import 'package:amrita_events_flutter/widgets/starred_card.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:amrita_events_flutter/utils/colors.dart' as colors;
-import 'package:amrita_events_flutter/utils/constants.dart' as constants;
 
 class EventsHome extends StatefulWidget {
   @override
@@ -37,20 +37,7 @@ class _EventsHomeState extends State<EventsHome> {
             icon: Icons.home_outlined,
             title: 'Home',
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height*0.8,
-            child: SingleChildScrollView(
-              child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return EventCardLarge(
-                      date: data[index].date,
-                      time: data[index].time,
-                      title: data[index].title,
-                    );
-                  }),
-            ),
-          ),
+          StarCard(date: 'title', time: 'time', eventName: 'title',)
         ],
       ),
     );

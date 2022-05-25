@@ -35,7 +35,9 @@ class TopBarWidget extends StatelessWidget {
                     icon,
                     size: 40,
                   ),
-                  const SizedBox(width: 10,),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Text(
                     title,
                     style: GoogleFonts.nunitoSans(
@@ -76,7 +78,7 @@ class TopBarWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onTap: (){
+                    onTap: () {
                       //TODO: Write search function here
                     },
                   ),

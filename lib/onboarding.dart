@@ -106,7 +106,8 @@ class _FeaturesPageState extends State<FeaturesPage> {
             backgroundColor: colors.scaffoldColor,
             body: Stack(children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20.0, right: 20.0),
+                padding: const EdgeInsets.only(
+                    top: 20.0, bottom: 20.0, left: 20.0, right: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -128,12 +129,11 @@ class _FeaturesPageState extends State<FeaturesPage> {
                           controller: controller,
                           count: pages.length,
                           effect: JumpingDotEffect(
-                            dotHeight: 7,
-                            dotWidth: 7,
-                            jumpScale: .7,
-                            verticalOffset: 10,
-                            activeDotColor: colors.accentColor
-                          ),
+                              dotHeight: 7,
+                              dotWidth: 7,
+                              jumpScale: .7,
+                              verticalOffset: 10,
+                              activeDotColor: colors.accentColor),
                         ),
                         const SizedBox(
                           width: 30,

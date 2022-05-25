@@ -7,11 +7,11 @@ import '../onboarding.dart';
 class StarCard extends StatelessWidget {
   const StarCard(
       {Key? key,
-      required this.event_name,
+      required this.eventName,
       required this.time,
       required this.date});
 
-  final String event_name, time, date;
+  final String eventName, time, date;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,17 @@ class StarCard extends StatelessWidget {
               color: Colors.white,
               height: 250,
             ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                event_name,
-                style: GoogleFonts.nunitoSans(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: colors.headingTextColor),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  eventName,
+                  style: GoogleFonts.nunitoSans(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: colors.headingTextColor),
+                ),
               ),
             ),
             Row(
@@ -72,8 +75,8 @@ class StarCard extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  style:
-                      ElevatedButton.styleFrom(primary: colors.headingTextColor),
+                  style: ElevatedButton.styleFrom(
+                      primary: colors.headingTextColor),
                 ),
               ],
             )
