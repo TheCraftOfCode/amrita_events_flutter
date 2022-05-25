@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/screens/password_recovery_page.dart';
 import 'package:amrita_events_flutter/screens/sign_up_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
@@ -44,17 +45,7 @@ class _SignInPageState extends State<SignInPage> {
                       fontWeight: FontWeight.bold),
                 )),
             Padding(
-              padding: const EdgeInsets.only(top: 30, bottom: 5),
-              child: TextBoxField(
-                validator: (value) {},
-                padding: const EdgeInsets.only(bottom: 5),
-                title: 'Name',
-                hint: 'Please enter your name',
-                light: true,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
+              padding: const EdgeInsets.only(bottom: 5, top: 50),
               child: TextBoxField(
                 validator: (value) {},
                 padding: const EdgeInsets.only(bottom: 5),
@@ -63,7 +54,8 @@ class _SignInPageState extends State<SignInPage> {
                 light: true,
               ),
             ),
-            const PasswordFormFieldWidget(label: 'Retype', hintText: 'Retype'),
+            const PasswordFormFieldWidget(
+                label: 'Password', hintText: 'Enter password here'),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Align(
@@ -80,6 +72,22 @@ class _SignInPageState extends State<SignInPage> {
                         fontWeight: FontWeight.bold,
                         color: colors.primaryTextColor),
                   ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PasswordRecovery()));
+                },
+                child: Text(
+                  'Forgot password?',
+                  style: GoogleFonts.nunitoSans(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: colors.primaryTextColor),
                 ),
               ),
             ),

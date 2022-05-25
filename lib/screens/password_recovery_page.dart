@@ -1,26 +1,20 @@
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
-import 'package:amrita_events_flutter/widgets/starred_card.dart';
-import 'package:amrita_events_flutter/widgets/top_bar_widget.dart';
 import 'package:flutter/material.dart';
-
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
-
-import '../onboarding.dart';
 import '../widgets/left_beveled_container.dart';
 import '../widgets/otp_input_widget.dart';
 import '../widgets/top_bar_no_search_widget.dart';
 import 'events_home.dart';
 
-class PwdRecovery extends StatefulWidget {
-  const PwdRecovery({Key? key}) : super(key: key);
+class PasswordRecovery extends StatefulWidget {
+  const PasswordRecovery({Key? key}) : super(key: key);
 
   @override
-  State<PwdRecovery> createState() => _PwdRecoveryState();
+  State<PasswordRecovery> createState() => _PasswordRecoveryState();
 }
 
-class _PwdRecoveryState extends State<PwdRecovery> {
+class _PasswordRecoveryState extends State<PasswordRecovery> {
   final TextEditingController _fieldOne = TextEditingController();
   final TextEditingController _fieldTwo = TextEditingController();
   final TextEditingController _fieldThree = TextEditingController();
@@ -31,7 +25,7 @@ class _PwdRecoveryState extends State<PwdRecovery> {
       backgroundColor: colors.scaffoldColor,
       body: CustomSliverView(
         columnList: [
-          TopBarWidgetNoSearch(icon: Icons.home_outlined, title: "Password Recovery"),
+          const TopBarWidgetNoSearch(icon: Icons.home_outlined, title: "Password Recovery"),
           Expanded(child: Container()),
           LeftBeveledContainer(
             columnList: [
