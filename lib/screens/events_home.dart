@@ -37,7 +37,11 @@ class _EventsHomeState extends State<EventsHome> {
             icon: Icons.home_outlined,
             title: 'Home',
           ),
-          StarCard(date: 'title', time: 'time', eventName: 'title',)
+          StarCard(date: 'title', time: 'time', eventName: 'title',),
+          StarCard(date: 'title', time: 'time', eventName: 'title',),
+          StarCard(date: 'title', time: 'time', eventName: 'title',),
+          StarCard(date: 'title', time: 'time', eventName: 'title',),
+          StarCard(date: 'title', time: 'time', eventName: 'title',),
         ],
       ),
     );

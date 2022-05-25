@@ -19,14 +19,8 @@ class _StarredState extends State<Starred> {
       body: const CustomSliverView(
         columnList: [
           TopBarWidget(icon: Icons.star_border_sharp, title: "Starred"),
-          Padding(
-              padding: EdgeInsets.all(8.0),
-              child: StarCard(
-                  eventName: "event_name", time: "time", date: "date")),
-          Padding(
-              padding: EdgeInsets.all(8.0),
-              child:
-                  StarCard(eventName: "event_name", time: "time", date: "date"))
+          StarCard(eventName: "event_name", time: "time", date: "date"),
+          StarCard(eventName: "event_name", time: "time", date: "date")
         ],
       ),
     );
