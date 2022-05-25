@@ -23,6 +23,14 @@ class _NotificationsState extends State<Notifications> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: DayNotificationWidget(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: DayNotificationWidget(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: DayNotificationWidget(),
           )
         ],
       ),
