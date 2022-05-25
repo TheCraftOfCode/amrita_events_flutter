@@ -18,10 +18,10 @@ class TheMain extends StatefulWidget {
 }
 
 class _TheMainState extends State<TheMain> {
-  int currentIndex =4;
+  int currentIndex =0;
   final Screens =[
-    EventsHome(),
-    Starred(),
+     EventsHome(),
+     Starred(),
     Profile(),
     Settings(),
     Notifications()
@@ -34,7 +34,7 @@ class _TheMainState extends State<TheMain> {
       body: Screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
 currentIndex: currentIndex,
-        onTap: (index){ currentIndex=index;},
+        onTap: (index)=> setState(()=> currentIndex=index),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
         showUnselectedLabels: true,
