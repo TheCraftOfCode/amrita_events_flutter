@@ -1,6 +1,7 @@
 import 'package:amrita_events_flutter/screens/events_home.dart';
 import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
+import 'package:amrita_events_flutter/screens/request_feedback_page.dart';
 import 'package:amrita_events_flutter/screens/settings_page.dart';
 import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
@@ -19,7 +20,7 @@ class _TheMainState extends State<TheMain> {
     const EventsHome(yesEvents: false,),
     const Starred(yesStarred: false,),
     const Profile(),
-    const Settings(),
+    const RequestFeedbackPage(),
     const Notifications(yesNotifications: true,)
   ];
 
