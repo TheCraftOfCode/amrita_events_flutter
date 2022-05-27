@@ -16,11 +16,11 @@ class TheMain extends StatefulWidget {
 class _TheMainState extends State<TheMain> {
   int currentIndex = 0;
   final screens = [
-    EventsHome(),
-    const Starred(),
+    const EventsHome(yesEvents: false,),
+    const Starred(yesStarred: false,),
     const Profile(),
     const Settings(),
-    const Notifications()
+    const Notifications(yesNotifications: true,)
   ];
 
   @override

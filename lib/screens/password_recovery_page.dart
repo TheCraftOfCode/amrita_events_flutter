@@ -97,7 +97,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                 onPressed: () {
                   setState(() {});
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => EventsHome()));
+                      builder: (context) => const EventsHome(yesEvents: false,)));
                 },
                 child: SizedBox(
                     width: double.infinity,
