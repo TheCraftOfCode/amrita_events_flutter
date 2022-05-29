@@ -22,15 +22,33 @@ class _ProfileState extends State<Profile> {
           TopBarWidgetNoSearch(icon: Icons.person_outline, title: "Profile"),
           //
 
-          Row(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  color: colors.headingTextColor,
+                  height: 100,
+                  width: 100,
+                ),
 
-            children: [
-              Container(
-                color: colors.headingTextColor,
-                height: 50,
-              ),
+                                Spacer(),
+                Column(
+                  children: [
+                    Text("Username", style: GoogleFonts.nunitoSans(
+                      color: colors.headingTextColor,
+                      fontWeight: FontWeight.bold,
+
+                    ),),
+                    Spacer(),
+                    IconButton(onPressed: (){}, icon: Icon(Icons.edit, size: 20, color: colors.headingTextColor,)),
+                    Spacer()
+                  ],
+                )
     ]
 
+            ),
           )
         ],
       ),

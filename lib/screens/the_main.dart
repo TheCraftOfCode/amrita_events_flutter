@@ -1,5 +1,6 @@
 import 'package:amrita_events_flutter/screens/bugreport_page.dart';
 import 'package:amrita_events_flutter/screens/events_home.dart';
+import 'package:amrita_events_flutter/screens/liscence_page.dart';
 import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
 import 'package:amrita_events_flutter/screens/request_feedback_page.dart';
@@ -8,6 +9,7 @@ import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
 
+import 'about_page.dart';
 import 'modify_profile.dart';
 
 class TheMain extends StatefulWidget {
@@ -22,7 +24,7 @@ class _TheMainState extends State<TheMain> {
   final screens = [
     const EventsHome(yesEvents: false,),
     const Starred(yesStarred: true,),
-    const ModifyProfile(),
+    const AboutPage(),
     const Settings(),
     const Notifications(yesNotifications: true,)
   ];
