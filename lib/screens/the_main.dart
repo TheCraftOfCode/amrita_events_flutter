@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/screens/bugreport_page.dart';
 import 'package:amrita_events_flutter/screens/events_home.dart';
 import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
@@ -19,8 +20,8 @@ class _TheMainState extends State<TheMain> {
   final screens = [
     const EventsHome(yesEvents: false,),
     const Starred(yesStarred: false,),
-    const Profile(),
-    const RequestFeedbackPage(),
+    const BugReport(),
+    const Settings(),
     const Notifications(yesNotifications: true,)
   ];
 

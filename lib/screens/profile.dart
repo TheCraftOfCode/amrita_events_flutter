@@ -19,7 +19,19 @@ class _ProfileState extends State<Profile> {
       backgroundColor: colors.scaffoldColor,
       body: CustomSliverView(
         columnList: [
-          TopBarWidgetNoSearch(icon: Icons.person_outline, title: "Profile")
+          TopBarWidgetNoSearch(icon: Icons.person_outline, title: "Profile"),
+          //
+
+          Row(
+
+            children: [
+              Container(
+                color: colors.headingTextColor,
+                height: 50,
+              ),
+    ]
+
+          )
         ],
       ),
     );
