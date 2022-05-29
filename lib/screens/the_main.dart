@@ -8,6 +8,8 @@ import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
 
+import 'modify_profile.dart';
+
 class TheMain extends StatefulWidget {
   const TheMain({Key? key}) : super(key: key);
 
@@ -19,8 +21,8 @@ class _TheMainState extends State<TheMain> {
   int currentIndex = 0;
   final screens = [
     const EventsHome(yesEvents: false,),
-    const Starred(yesStarred: false,),
-    const BugReport(),
+    const Starred(yesStarred: true,),
+    const ModifyProfile(),
     const Settings(),
     const Notifications(yesNotifications: true,)
   ];

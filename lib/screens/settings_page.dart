@@ -20,7 +20,7 @@ class _SettingsState extends State<Settings> {
       body: CustomSliverView(
         columnList: [
           TopBarWidgetNoSearch(icon: Icons.settings_outlined, title: "Settings"),
-          SettingCard(icon: Icons.notifications_none, title: "Notification and reminders"),
+          SettingCard(icon: Icons.edit, title: "Modify Profile"),
           SettingCard(icon: Icons.insert_invitation_outlined, title:"Invite"),
           SettingCard(icon: Icons.info, title: "About"),
 

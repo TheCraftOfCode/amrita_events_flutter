@@ -22,7 +22,7 @@ class _BugReportState extends State<BugReport> {
       backgroundColor: colors.scaffoldColor,
       body: CustomSliverView(
         columnList: [
-          TopBarWithTextWidget(title: 'Bug Report', text: ''),
+          TopBarWithTextWidget(title: 'Bug Report', text: 'Is there any glitches we have missed out? Please let us know'),
           Padding(
             padding: const EdgeInsets.only(top: 20, left: 10),
             child: Align(
