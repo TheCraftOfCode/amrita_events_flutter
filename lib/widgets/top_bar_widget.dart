@@ -34,15 +34,15 @@ class TopBarWidget extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: GoogleFonts.nunitoSans(
-                      fontSize: 45,
-                      fontWeight: FontWeight.normal,
+                  style: GoogleFonts.raleway(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
                       color: colors.primaryTextColor),
                 )
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 30),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

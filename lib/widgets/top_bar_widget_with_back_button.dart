@@ -47,8 +47,8 @@ class TopBarWidgetWithBackButton extends StatelessWidget {
                       ),
                       AutoSizeText(
                         title,
-                        style: GoogleFonts.nunitoSans(
-                            fontWeight: FontWeight.normal,
+                        style: GoogleFonts.raleway(
+                            fontWeight: FontWeight.bold,
                             color: colors.primaryTextColor,
                             fontSize: 40),
                         maxLines: 2,

@@ -56,8 +56,8 @@ class _TopBarWithTextWidgetState extends State<TopBarWithTextWidget> {
                             width: MediaQuery.of(context).size.width*0.7,
                             child: AutoSizeText(
                               widget.title,
-                              style: GoogleFonts.nunitoSans(
-                                  fontWeight: FontWeight.normal,
+                              style: GoogleFonts.raleway(
+                                  fontWeight: FontWeight.bold,
                                   color: colors.primaryTextColor,),
                               maxFontSize: 40,
                               maxLines: 2,

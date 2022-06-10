@@ -24,7 +24,7 @@ class _TheMainState extends State<TheMain> {
   final screens = [
     const EventsHome(yesEvents: false,),
     const Starred(yesStarred: true,),
-    const AboutPage(),
+    const Profile(),
     const Settings(),
     const Notifications(yesNotifications: true,)
   ];

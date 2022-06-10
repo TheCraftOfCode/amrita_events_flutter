@@ -200,3 +200,6 @@ class NoEventsWidget extends StatelessWidget {
     );
   }
 }
+
+
+//TODO: Have to add refresh on pull and empty / no network states
