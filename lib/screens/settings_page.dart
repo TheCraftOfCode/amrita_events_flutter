@@ -75,7 +75,7 @@ class _SettingsState extends State<Settings> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 25.0, 8.0, 25.0),
             child: Text(
-              "APP VERSION 1.0.0",
+              "VERSION 1.0.0",
               style: GoogleFonts.nunitoSans(
                   fontSize: 14, color: colors.headingTextColor),
             ),
