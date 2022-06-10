@@ -3,7 +3,7 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../onboarding.dart';
+import '../screens/onboarding.dart';
 
 class StarCard extends StatelessWidget {
   const StarCard(

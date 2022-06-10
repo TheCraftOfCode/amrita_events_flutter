@@ -16,75 +16,60 @@ class TopBarWidget extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
           shape: constants.rightBeveledRectangle, color: colors.cardColor),
-      height: MediaQuery.of(context).size.height * 0.30,
-      width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding:
+            const EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 70),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded(
-              child: Container(),
-              flex: 1,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  icon,
+                  size: 40,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  title,
+                  style: GoogleFonts.nunitoSans(
+                      fontSize: 45,
+                      fontWeight: FontWeight.normal,
+                      color: colors.primaryTextColor),
+                )
+              ],
             ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(
-                    icon,
-                    size: 40,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    title,
-                    style: GoogleFonts.nunitoSans(
-                        fontSize: 45,
-                        fontWeight: FontWeight.normal,
-                        color: colors.primaryTextColor),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 55,
-                    width: MediaQuery.of(context).size.width * 0.65,
-                    child: TextBoxField(
-                      hint: 'Type to search',
-                      light: true,
-                      validator: (val) {},
-                      padding: const EdgeInsets.only(top: 10),
-                      title: 'Search',
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  GestureDetector(
-                    child: Material(
-                      color: colors.scaffoldColor,
-                      borderRadius: BorderRadius.circular(30),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Icon(
-                          Icons.search_outlined,
-                          color: colors.headingTextColor,
-                        ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: TextBoxField(
+                        hint: 'Type to search',
+                        light: true,
+                        validator: (val) {},
+                        padding: const EdgeInsets.all(0.0),
+                        title: 'Search',
                       ),
                     ),
-                    onTap: () {
-                      //TODO: Write search function here
-                    },
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {},
+                    backgroundColor: colors.scaffoldColor,
+                    child: Icon(
+                      Icons.search_outlined,
+                      color: colors.headingTextColor,
+                    ),
                   ),
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),

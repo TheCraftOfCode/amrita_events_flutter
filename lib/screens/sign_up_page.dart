@@ -22,114 +22,108 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: CustomSliverView(
-        columnList: [
-          Expanded(child: Container()),
-          LeftBeveledContainer(columnList: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Welcome',
-                  style: GoogleFonts.nunitoSans(
-                      color: colors.primaryTextColor,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                )),
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Sign up',
-                  style: GoogleFonts.nunitoSans(
-                      color: colors.primaryTextColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold),
-                )),
-            Padding(
-              padding: const EdgeInsets.only(top: 30, bottom: 5),
-              child: TextBoxField(
-                validator: (value) {},
-                padding: const EdgeInsets.only(bottom: 5),
-                title: 'Name',
-                hint: 'Please enter your name',
-                light: true,
+      body:           LeftBeveledContainer(columnList: [
+        Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              'Welcome',
+              style: GoogleFonts.nunitoSans(
+                  color: colors.primaryTextColor,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold),
+            )),
+        Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              'Sign up',
+              style: GoogleFonts.nunitoSans(
+                  color: colors.primaryTextColor,
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold),
+            )),
+        Padding(
+          padding: const EdgeInsets.only(top: 30, bottom: 5),
+          child: TextBoxField(
+            validator: (value) {},
+            padding: const EdgeInsets.only(bottom: 5),
+            title: 'Name',
+            hint: 'Please enter your name',
+            light: true,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: TextBoxField(
+            validator: (value) {},
+            padding: const EdgeInsets.only(bottom: 5),
+            title: 'Email',
+            hint: 'Please enter your e-mail',
+            light: true,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+                width: (MediaQuery.of(context).size.width - 70) / 2,
+                child: const PasswordFormFieldWidget(
+                    label: 'Password', hintText: 'Password')),
+            const SizedBox(
+              width: 10.0,
+            ),
+            SizedBox(
+                width: (MediaQuery.of(context).size.width - 70) / 2,
+                child: const PasswordFormFieldWidget(
+                    label: 'Retype', hintText: 'Retype'))
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SignInPage()));
+              },
+              child: Text(
+                'Sign in instead',
+                style: GoogleFonts.nunitoSans(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: colors.primaryTextColor),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: TextBoxField(
-                validator: (value) {},
-                padding: const EdgeInsets.only(bottom: 5),
-                title: 'Email',
-                hint: 'Please enter your e-mail',
-                light: true,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                    width: (MediaQuery.of(context).size.width - 70) / 2,
-                    child: const PasswordFormFieldWidget(
-                        label: 'Password', hintText: 'Password')),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                SizedBox(
-                    width: (MediaQuery.of(context).size.width - 70) / 2,
-                    child: const PasswordFormFieldWidget(
-                        label: 'Retype', hintText: 'Retype'))
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SignInPage()));
-                  },
-                  child: Text(
-                    'Sign in instead',
-                    style: GoogleFonts.nunitoSans(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: colors.primaryTextColor),
-                  ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Material(
+              color: colors.accentColor,
+              shape: const CircleBorder(),
+              child: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  FontAwesomeIcons.google,
+                  color: colors.primaryTextColor,
                 ),
               ),
             ),
-            Expanded(child: Container()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Material(
-                  color: colors.accentColor,
-                  shape: const CircleBorder(),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      FontAwesomeIcons.google,
-                      color: colors.primaryTextColor,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OTPScreen()));
-                    },
-                    child: Text(
-                      'SIGN UP',
-                      style: GoogleFonts.nunitoSans(
-                          color: colors.primaryTextColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
-                style: ElevatedButton.styleFrom(primary: colors.accentColor),)
-              ],
-            )
-          ])
-        ],
-      ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>OTPScreen()));
+              },
+              child: Text(
+                'SIGN UP',
+                style: GoogleFonts.nunitoSans(
+                    color: colors.primaryTextColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+              style: ElevatedButton.styleFrom(primary: colors.accentColor),)
+          ],
+        )
+      ])
     );
   }
 }

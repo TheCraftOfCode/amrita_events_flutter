@@ -4,7 +4,7 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/utils/constants.dart' as constants;
 import 'package:google_fonts/google_fonts.dart';
 
-import '../onboarding.dart';
+import 'onboarding.dart';
 import '../widgets/custom_sliver_widget.dart';
 import '../widgets/textbox_widget.dart';
 

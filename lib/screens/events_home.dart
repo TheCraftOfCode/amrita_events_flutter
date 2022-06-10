@@ -65,7 +65,7 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: (MediaQuery.of(context).size.height) / 3, // card height
+      height: 280, // card height
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: PageView.builder(
@@ -82,19 +82,17 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: SizedBox(
-                          width: constraints.minWidth,
-                          height: constraints.minWidth,
-                          child: Card(
-                            elevation: 6,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Center(
-                              child: Text(
-                                "Card ${i + 1}",
-                                style: const TextStyle(fontSize: 32),
-                              ),
+                      SizedBox(
+                        width: constraints.minWidth,
+                        height: constraints.minWidth,
+                        child: Card(
+                          elevation: 6,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Center(
+                            child: Text(
+                              "Card ${i + 1}",
+                              style: const TextStyle(fontSize: 32),
                             ),
                           ),
                         ),

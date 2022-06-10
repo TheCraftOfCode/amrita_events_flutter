@@ -15,20 +15,31 @@ class LeftBeveledContainer extends StatefulWidget {
 class _LeftBeveledContainerState extends State<LeftBeveledContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: ShapeDecoration(
-          shape: constants.beveledRectangle,
-          color: colors.cardColor
-      ),
-      height: MediaQuery.of(context).size.height*0.53,
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: widget.columnList,
+    return CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                decoration: ShapeDecoration(
+                    shape: constants.beveledRectangle,
+                    color: colors.cardColor
+                ),
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: widget.columnList,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

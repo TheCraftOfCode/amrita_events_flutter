@@ -1,12 +1,9 @@
-import 'package:amrita_events_flutter/widgets/top_bar_widget_with_text.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
-import 'package:amrita_events_flutter/utils/constants.dart' as constants;
 import 'package:google_fonts/google_fonts.dart';
 
-import '../onboarding.dart';
 import '../widgets/custom_sliver_widget.dart';
-import '../widgets/textbox_widget.dart';
+import '../widgets/top_bar_no_search_widget.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -17,8 +14,7 @@ class AboutPage extends StatelessWidget {
       backgroundColor: colors.scaffoldColor,
       body: CustomSliverView(
         columnList: [
-          TopBarWithTextWidget(title: 'About', text: ''),
-
+          TopBarWidgetNoSearch(icon: Icons.info_outline, title: "About"),
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
