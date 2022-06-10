@@ -1,9 +1,8 @@
+import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_no_search_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -19,39 +18,48 @@ class _ProfileState extends State<Profile> {
       backgroundColor: colors.scaffoldColor,
       body: CustomSliverView(
         columnList: [
-          TopBarWidgetNoSearch(icon: Icons.person_outline, title: "Profile"),
+          const TopBarWidgetNoSearch(
+              icon: Icons.person_outline, title: "Profile"),
           //
 
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  color: colors.headingTextColor,
-                  height: 100,
-                  width: 100,
-                ),
-
-                                Spacer(),
-                Column(
-                  children: [
-                    Text("Username", style: GoogleFonts.nunitoSans(
-                      color: colors.headingTextColor,
-                      fontWeight: FontWeight.bold,
-
-                    ),),
-                    Spacer(),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.edit, size: 20, color: colors.headingTextColor,)),
-                    Spacer()
-                  ],
-                )
-    ]
-
-            ),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    color: colors.headingTextColor,
+                    height: 100,
+                    width: 100,
+                  ),
+                  SizedBox(height: 100,),
+                  Column(
+                    children: [
+                      Text(
+                        "Username",
+                        style: GoogleFonts.nunitoSans(
+                          color: colors.headingTextColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 100,),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.edit,
+                            size: 20,
+                            color: colors.headingTextColor,
+                          )),
+                      SizedBox(height: 100,),
+                    ],
+                  )
+                ]),
           )
         ],
       ),
     );
   }
 }
+
+
+//TODO: Has to be finished
