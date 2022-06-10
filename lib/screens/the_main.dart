@@ -3,7 +3,7 @@ import 'package:amrita_events_flutter/screens/events_home.dart';
 import 'package:amrita_events_flutter/screens/license_page.dart';
 import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
-import 'package:amrita_events_flutter/screens/request_feedback_page.dart';
+import 'package:amrita_events_flutter/screens/request_features_page.dart';
 import 'package:amrita_events_flutter/screens/settings_page.dart';
 import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;

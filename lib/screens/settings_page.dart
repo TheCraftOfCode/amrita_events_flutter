@@ -1,5 +1,6 @@
 import 'package:amrita_events_flutter/screens/about_page.dart';
 import 'package:amrita_events_flutter/screens/modify_profile.dart';
+import 'package:amrita_events_flutter/screens/request_features_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/settings_card.dart';
@@ -42,7 +43,8 @@ class _SettingsState extends State<Settings> {
             icon: Icons.info,
             title: "About",
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>const AboutPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const AboutPage()));
             },
           ),
           SettingCard(
@@ -53,7 +55,12 @@ class _SettingsState extends State<Settings> {
           SettingCard(
             icon: Icons.request_page_outlined,
             title: "Request a feature",
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RequestFeaturesPage()));
+            },
           ),
           SettingCard(
             icon: Icons.bug_report_outlined,
