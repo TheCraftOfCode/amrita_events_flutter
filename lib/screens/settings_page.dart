@@ -19,20 +19,19 @@ class _SettingsState extends State<Settings> {
       backgroundColor: colors.scaffoldColor,
       body: CustomSliverView(
         columnList: [
-          TopBarWidgetNoSearch(icon: Icons.settings_outlined, title: "Settings"),
-          SettingCard(icon: Icons.edit, title: "Modify Profile"),
-          SettingCard(icon: Icons.insert_invitation_outlined, title:"Invite"),
-          SettingCard(icon: Icons.info, title: "About"),
-
-          SettingCard(icon: Icons.laptop, title: "Contribute"),
-          SettingCard(icon: Icons.request_page_outlined, title: "Request a feature"),
-          SettingCard(icon: Icons.bug_report_outlined, title: "Report a bug"),
-          SettingCard(icon: Icons.checklist_rtl_outlined, title: "Liscence"),
+          const TopBarWidgetNoSearch(icon: Icons.settings_outlined, title: "Settings"),
+          SettingCard(icon: Icons.edit, title: "Modify Profile",onTap: (){},),
+          SettingCard(icon: Icons.insert_invitation_outlined, title:"Invite",onTap: (){},),
+          SettingCard(icon: Icons.info, title: "About",onTap: (){},),
+          SettingCard(icon: Icons.laptop, title: "Contribute",onTap: (){},),
+          SettingCard(icon: Icons.request_page_outlined, title: "Request a feature",onTap: (){},),
+          SettingCard(icon: Icons.bug_report_outlined, title: "Report a bug",onTap: (){},),
+          SettingCard(icon: Icons.checklist_rtl_outlined, title: "License",onTap: (){},),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 14.0, 8.0, 8.0),
-            child: Text("APP VERSION 1.1.0", style: GoogleFonts.nunitoSans(
-              fontSize: 18,
+            padding: const EdgeInsets.fromLTRB(8.0, 25.0, 8.0, 25.0),
+            child: Text("APP VERSION 1.0.0", style: GoogleFonts.nunitoSans(
+              fontSize: 14,
               color: colors.headingTextColor
             ),),
           )

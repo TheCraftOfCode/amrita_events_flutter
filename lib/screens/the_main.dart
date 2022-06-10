@@ -1,6 +1,6 @@
 import 'package:amrita_events_flutter/screens/bugreport_page.dart';
 import 'package:amrita_events_flutter/screens/events_home.dart';
-import 'package:amrita_events_flutter/screens/liscence_page.dart';
+import 'package:amrita_events_flutter/screens/license_page.dart';
 import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
 import 'package:amrita_events_flutter/screens/request_feedback_page.dart';
