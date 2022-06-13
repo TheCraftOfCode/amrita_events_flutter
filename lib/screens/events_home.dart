@@ -2,7 +2,6 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/starred_card.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,15 +35,42 @@ class _EventsHomeState extends State<EventsHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: CustomSliverView(
+      body: const CustomSliverView(
         columnList: [
-          const TopBarWidget(
+          TopBarWidget(
             icon: Icons.home_outlined,
             title: 'Events',
           ),
-          widget.yesEvents == false
-              ? const YesEventsWidget()
-              : const NoEventsWidget()
+          HorizontalPageView(),
+          HorizontalPageView(),
+          StarCard(
+            date: 'title',
+            time: 'time',
+            eventName: 'title',
+          ),
+          StarCard(
+            date: 'title',
+            time: 'time',
+            eventName: 'title',
+          ),
+          StarCard(
+            date: 'title',
+            time: 'time',
+            eventName: 'title',
+          ),
+          StarCard(
+            date: 'title',
+            time: 'time',
+            eventName: 'title',
+          ),
+          StarCard(
+            date: 'title',
+            time: 'time',
+            eventName: 'title',
+          ),
+          // widget.yesEvents == false
+          //     ? const YesEventsWidget()
+          //     : const NoEventsWidget()
         ],
       ),
     );
@@ -65,62 +91,53 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 280, // card height
+      height: (MediaQuery.of(context).size.height * 0.7) / 2,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: PageView.builder(
           padEnds: false,
           itemCount: 10,
-          controller: PageController(viewportFraction: 0.45),
+          controller: PageController(viewportFraction: 0.55),
           onPageChanged: (int index) => setState(() => _index = index),
           itemBuilder: (_, i) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: constraints.minWidth,
-                        height: constraints.minWidth,
-                        child: Card(
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: Text(
-                              "Card ${i + 1}",
-                              style: const TextStyle(fontSize: 32),
-                            ),
-                          ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Card(
+                      elevation: 6,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
+                        child: Text(
+                          "Card ${i + 1}",
+                          style: const TextStyle(fontSize: 32),
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8, top: 8),
-                        child: AutoSizeText(
-                          "CSE: A survival guide",
-                          style: TextStyle(color: Colors.white),
-                          overflow: TextOverflow.ellipsis,
-                          maxFontSize: 22,
-                          maxLines: 2,
-                          minFontSize: 19,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8, top: 10),
-                        child: AutoSizeText(
-                          "March 17, 2022",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.grey),
-                          maxLines: 1,
-                          maxFontSize: 20,
-                        ),
-                      )
-                    ],
-                  );
-                }
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8, top: 8),
+                    child: Text(
+                      "CSE: A survival guide",
+                      maxLines: 2,
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8, top: 10),
+                    child: Text(
+                      "March 17, 2022",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.grey),
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
               ),
             );
           },
