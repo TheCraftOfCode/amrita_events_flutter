@@ -35,42 +35,15 @@ class _EventsHomeState extends State<EventsHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: const CustomSliverView(
+      body: CustomSliverView(
         columnList: [
-          TopBarWidget(
+          const TopBarWidget(
             icon: Icons.home_outlined,
             title: 'Events',
           ),
-          HorizontalPageView(),
-          HorizontalPageView(),
-          StarCard(
-            date: 'title',
-            time: 'time',
-            eventName: 'title',
-          ),
-          StarCard(
-            date: 'title',
-            time: 'time',
-            eventName: 'title',
-          ),
-          StarCard(
-            date: 'title',
-            time: 'time',
-            eventName: 'title',
-          ),
-          StarCard(
-            date: 'title',
-            time: 'time',
-            eventName: 'title',
-          ),
-          StarCard(
-            date: 'title',
-            time: 'time',
-            eventName: 'title',
-          ),
-          // widget.yesEvents == false
-          //     ? const YesEventsWidget()
-          //     : const NoEventsWidget()
+          widget.yesEvents == false
+              ? const YesEventsWidget()
+              : const NoEventsWidget()
         ],
       ),
     );
@@ -147,36 +120,71 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
   }
 }
 
-class YesEventsWidget extends StatelessWidget {
+class YesEventsWidget extends StatefulWidget {
   const YesEventsWidget({Key? key}) : super(key: key);
+
+  @override
+  State<YesEventsWidget> createState() => _YesEventsWidgetState();
+}
+
+class _YesEventsWidgetState extends State<YesEventsWidget> {
+  String chosenOption = "ALL EVENTS";
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        HorizontalPageView(),
-        HorizontalPageView(),
-        StarCard(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 28, top: 30),
+          child: Text(
+            "Upcoming",
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+          ),
+        ),
+        const HorizontalPageView(),
+        const Padding(
+          padding: EdgeInsets.only(left: 28, top: 16),
+          child: Text(
+            "RSVP'd Events",
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+          ),
+        ),
+        const HorizontalPageView(),
+        _dropDown(
+            ["ALL EVENTS", "STARRED EVENTS", "RSVP'D EVENTS"], chosenOption,
+            (newValue) {
+          setState(() {
+            chosenOption = newValue;
+          });
+        }),
+        const StarCard(
           date: 'title',
           time: 'time',
           eventName: 'title',
         ),
-        StarCard(
+        const StarCard(
           date: 'title',
           time: 'time',
           eventName: 'title',
         ),
-        StarCard(
+        const StarCard(
           date: 'title',
           time: 'time',
           eventName: 'title',
         ),
-        StarCard(
+        const StarCard(
           date: 'title',
           time: 'time',
           eventName: 'title',
         ),
-        StarCard(
+        const StarCard(
           date: 'title',
           time: 'time',
           eventName: 'title',
@@ -184,6 +192,47 @@ class YesEventsWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget _dropDown(listOfOptions, chosenOption, onChanged) {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: DropdownButtonHideUnderline(
+      child: ButtonTheme(
+        alignedDropdown: true,
+        child: DropdownButton<dynamic>(
+          dropdownColor: colors.scaffoldColor,
+          icon: const Padding(
+            padding: EdgeInsets.only(right: 5),
+            child: Icon(
+              // Add this
+              Icons.menu_open, // Add this
+              // color: colors.errorColor, // Add this
+            ),
+          ),
+          value: chosenOption,
+          isExpanded: true,
+          items: listOfOptions.map<DropdownMenuItem>((value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(
+                value,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white),
+              ),
+            );
+          }).toList(),
+          onChanged: onChanged,
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            // decorationColor: colors.errorColor
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class NoEventsWidget extends StatelessWidget {
@@ -217,6 +266,5 @@ class NoEventsWidget extends StatelessWidget {
     );
   }
 }
-
 
 //TODO: Have to add refresh on pull and empty / no network states
