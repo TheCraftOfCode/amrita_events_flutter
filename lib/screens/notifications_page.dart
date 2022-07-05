@@ -22,35 +22,13 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: colors.scaffoldColor,
-      body: CustomSliverView(columnList: [
-        const TopBarWidgetNoSearch(
-            icon: Icons.notifications_none_outlined, title: "Notifications"),
-        widget.yesNotifications
-            ? const YesNotificationsWidget()
-            : const NoNotificationsWidget(),
-      ]),
-    );
-  }
-}
-
-class YesNotificationsWidget extends StatefulWidget {
-  const YesNotificationsWidget({Key? key}) : super(key: key);
-
-  @override
-  State<YesNotificationsWidget> createState() => _YesNotificationsWidgetState();
-}
-
-class _YesNotificationsWidgetState extends State<YesNotificationsWidget> {
   Map<String, List<NotificationModel>> mapData = {};
   List<Widget> notificationList = [];
 
   _getData() async {
     setState(() {
-      //clear
+      mapData.clear();
+      notificationList.clear();
     });
 
     var response = await makePostRequest(
@@ -95,8 +73,40 @@ class _YesNotificationsWidgetState extends State<YesNotificationsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: colors.scaffoldColor,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await _getData();
+        },
+        child: CustomSliverView(columnList: [
+          const TopBarWidgetNoSearch(
+              icon: Icons.notifications_none_outlined, title: "Notifications"),
+          widget.yesNotifications
+              ? YesNotificationsWidget(
+                  notificationList: notificationList,
+                )
+              : const NoNotificationsWidget(),
+        ]),
+      ),
+    );
+  }
+}
+
+class YesNotificationsWidget extends StatefulWidget {
+  const YesNotificationsWidget({Key? key, required this.notificationList})
+      : super(key: key);
+  final List<Widget> notificationList;
+
+  @override
+  State<YesNotificationsWidget> createState() => _YesNotificationsWidgetState();
+}
+
+class _YesNotificationsWidgetState extends State<YesNotificationsWidget> {
+  @override
+  Widget build(BuildContext context) {
     return Column(
-      children: notificationList,
+      children: widget.notificationList,
     );
   }
 }
