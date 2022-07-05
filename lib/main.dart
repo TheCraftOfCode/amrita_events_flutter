@@ -1,7 +1,6 @@
-
 import 'package:amrita_events_flutter/screens/greeting_page.dart';
-import 'package:amrita_events_flutter/screens/password_recovery_page.dart';
 import 'package:amrita_events_flutter/screens/the_main.dart';
+import 'package:amrita_events_flutter/widgets/load_valid_page_widget.dart';
 import 'package:flutter/material.dart';
 
 //TODO: Add login page for admins (only login)
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: GreetingPage(),
+    home: LoadValidPageWidget(GreetingPage(), TheMain()),
+
   ));
 }

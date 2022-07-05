@@ -41,7 +41,9 @@ dependencies:
   font_awesome_flutter:
   flutter_rounded_date_picker:
   morphable_shape: ^1.6.4
+  email_validator: ^2.0.1
   dimension:
+  flutter_secure_storage: ^5.0.2
   smooth_page_indicator:
 
 

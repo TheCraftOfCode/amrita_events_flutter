@@ -10,12 +10,14 @@ class PasswordFormFieldWidget extends StatefulWidget {
       this.style,
       this.validator,
       required this.label,
-      required this.hintText})
+      required this.hintText,
+      this.onSaved})
       : super(key: key);
   final GlobalKey<FormFieldState>? passwordKey;
   final TextEditingController? controller;
   final TextStyle? style;
   final String? Function(String?)? validator;
+  final Function(String?)? onSaved;
   final String label;
   final String hintText;
 
@@ -32,6 +34,7 @@ class _PasswordFormFieldWidgetState extends State<PasswordFormFieldWidget> {
     return TextFormField(
       obscureText: !setPasswordVisible,
       key: widget.passwordKey,
+      onSaved: widget.onSaved,
       controller: widget.controller,
       validator: widget.validator,
       style: widget.style,
