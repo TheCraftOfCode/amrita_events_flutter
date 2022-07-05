@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
 import '../utils/http_modules.dart';
+import 'event_page.dart';
 
 class EventsHome extends StatefulWidget {
   final bool yesEvents;
@@ -22,14 +23,23 @@ class EventsHome extends StatefulWidget {
 class _EventsHomeState extends State<EventsHome> {
   List<EventModel> data = [];
   List<Widget> eventList = [];
+  List<EventModel> rsvpList = [];
+  List<EventModel> upcomingList = [];
+
+  _compareDates(String date) {
+    DateTime dateParsed = DateTime.parse(date);
+    DateTime currentDate = DateTime.now();
+    //event date - current date, required is 1
+    return dateParsed.compareTo(currentDate);
+  }
 
   _getData() async {
-    //parse our URL
     setState(() {
       data.clear();
+      eventList.clear();
+      rsvpList.clear();
+      upcomingList.clear();
     });
-
-    //TODO: MAKE REQ TO GET LIST OF ALL EVENTS
 
     var response =
         await makePostRequest(null, "/event/getEvents", null, true, context);
@@ -38,10 +48,17 @@ class _EventsHomeState extends State<EventsHome> {
       var responseData = json.decode(response.body)["data"]; //List Data
       for (var i in responseData) {
         setState(() {
-          data.add(EventModel.fromJSON(i));
+          var parsedData = EventModel.fromJSON(i);
+          data.add(parsedData);
           eventList.add(StarCard(
-            model: data.last,
+            model: parsedData,
           ));
+          if (parsedData.rsvp) {
+            rsvpList.add(parsedData);
+          }
+          if (_compareDates(i['dateUnparsed']) > 0) {
+            upcomingList.add(parsedData);
+          }
         });
       }
     }
@@ -68,7 +85,8 @@ class _EventsHomeState extends State<EventsHome> {
           widget.yesEvents == false
               ? YesEventsWidget(
                   data: eventList,
-                )
+                  rsvpList: rsvpList,
+                  upcomingList: upcomingList)
               : const NoEventsWidget()
         ],
       ),
@@ -77,79 +95,103 @@ class _EventsHomeState extends State<EventsHome> {
 }
 
 class HorizontalPageView extends StatefulWidget {
-  const HorizontalPageView({Key? key}) : super(key: key);
+  const HorizontalPageView({Key? key, required this.list}) : super(key: key);
+  final List<EventModel> list;
 
   @override
   State<HorizontalPageView> createState() => _HorizontalPageViewState();
 }
 
-//TODO: Add titles and modularize the box inside PageView widget
 class _HorizontalPageViewState extends State<HorizontalPageView> {
   int _index = 0;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return widget.list.isNotEmpty ? SizedBox(
       height: (MediaQuery.of(context).size.height * 0.7) / 2,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: PageView.builder(
           padEnds: false,
-          itemCount: 10,
+          itemCount: widget.list.length,
           controller: PageController(viewportFraction: 0.55),
           onPageChanged: (int index) => setState(() => _index = index),
-          itemBuilder: (_, i) {
+          itemBuilder: (_, index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Card(
-                      elevation: 6,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Center(
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EventPage(
+                            model: widget.list[index],
+                          )));
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                        child: Card(
+                          elevation: 6,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Center(
+                            child: Text(
+                              "Card ${index + 1}",
+                              style: const TextStyle(fontSize: 32),
+                            ),
+                          ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8, top: 8),
                         child: Text(
-                          "Card ${i + 1}",
-                          style: const TextStyle(fontSize: 32),
+                          widget.list[index].title,
+                          maxLines: 2,
+                          style:
+                              const TextStyle(color: Colors.white, fontSize: 20),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8, top: 8),
-                    child: Text(
-                      "CSE: A survival guide",
-                      maxLines: 2,
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                      overflow: TextOverflow.ellipsis,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 10),
+                      child: Text(
+                        widget.list[index].date,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(color: Colors.grey),
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8, top: 10),
-                    child: Text(
-                      "March 17, 2022",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.grey),
-                      maxLines: 1,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
         ),
       ),
+    ) : Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: const Center(child: Text("No events to show!", style: TextStyle(color: Colors.white38),),),
     );
   }
 }
 
 class YesEventsWidget extends StatefulWidget {
-  YesEventsWidget({Key? key, required this.data}) : super(key: key);
+  YesEventsWidget(
+      {Key? key,
+      required this.data,
+      required this.rsvpList,
+      required this.upcomingList})
+      : super(key: key);
 
   List<Widget> data;
+  List<EventModel> rsvpList;
+  List<EventModel> upcomingList;
 
   @override
   State<YesEventsWidget> createState() => _YesEventsWidgetState();
@@ -173,7 +215,7 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
                     color: Colors.white),
               ),
             ),
-            const HorizontalPageView(),
+            HorizontalPageView(list: widget.upcomingList),
             const Padding(
               padding: EdgeInsets.only(left: 28, top: 16),
               child: Text(
@@ -184,7 +226,9 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
                     color: Colors.white),
               ),
             ),
-            const HorizontalPageView(),
+            HorizontalPageView(
+              list: widget.rsvpList,
+            ),
             _dropDown(
                 ["ALL EVENTS", "STARRED EVENTS", "RSVP'D EVENTS"], chosenOption,
                 (newValue) {

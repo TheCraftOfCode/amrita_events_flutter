@@ -45,14 +45,16 @@ class TopBarWidgetWithBackButton extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      AutoSizeText(
-                        title,
-                        style: GoogleFonts.raleway(
-                            fontWeight: FontWeight.bold,
-                            color: colors.primaryTextColor,
-                            fontSize: 40),
-                        maxLines: 2,
-                        minFontSize: 28,
+                      Expanded(
+                        child: AutoSizeText(
+                          title,
+                          style: GoogleFonts.raleway(
+                              fontWeight: FontWeight.bold,
+                              color: colors.primaryTextColor,
+                              fontSize: 40),
+                          maxLines: 2,
+                          minFontSize: 28,
+                        ),
                       )
                     ],
                   ),

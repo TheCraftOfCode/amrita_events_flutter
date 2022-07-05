@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/models/event_model.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget_with_back_button.dart';
@@ -5,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EventPage extends StatefulWidget {
-  const EventPage({Key? key}) : super(key: key);
+  const EventPage({Key? key, required this.model}) : super(key: key);
+
+  final EventModel model;
 
   @override
   _EventPageState createState() => _EventPageState();
@@ -18,8 +21,8 @@ class _EventPageState extends State<EventPage> {
       backgroundColor: colors.scaffoldColor,
       body: CustomSliverView(
         columnList: [
-          const TopBarWidgetWithBackButton(
-              title: 'Title', icon: Icons.arrow_back_ios_rounded),
+          TopBarWidgetWithBackButton(
+              title: widget.model.title, icon: Icons.arrow_back_ios_rounded),
           Padding(
               padding: const EdgeInsets.only(
                   top: 40, left: 15, right: 15, bottom: 30),
@@ -71,7 +74,7 @@ class _EventPageState extends State<EventPage> {
                 ),
                 Expanded(
                   child: Text(
-                    'Amriteshwari Hall',
+                    widget.model.location,
                     style: GoogleFonts.nunitoSans(
                         color: colors.headingTextColor, fontSize: 20),
                   ),
@@ -95,7 +98,7 @@ class _EventPageState extends State<EventPage> {
                 ),
                 Expanded(
                   child: Text(
-                    '8th - 9th April 2021',
+                    widget.model.date,
                     style: GoogleFonts.nunitoSans(
                         color: colors.headingTextColor, fontSize: 20),
                   ),
@@ -107,7 +110,8 @@ class _EventPageState extends State<EventPage> {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
             child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent elementum facilisis leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra',
+              widget.model.description,
+              textAlign: TextAlign.justify,
               style: GoogleFonts.nunitoSans(
                   fontSize: 23, color: colors.headingTextColor),
             ),
@@ -132,7 +136,9 @@ class _EventPageState extends State<EventPage> {
               style: ElevatedButton.styleFrom(primary: colors.headingTextColor),
             ),
           ),
-          const SizedBox(height: 100,)
+          const SizedBox(
+            height: 100,
+          )
         ],
       ),
     );

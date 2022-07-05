@@ -6,6 +6,7 @@ class EventModel {
   final String location;
   final String description;
   final bool eventOver;
+  final bool rsvp;
   final String eventType;
 
   EventModel({
@@ -16,10 +17,12 @@ class EventModel {
     required this.location,
     required this.description,
     required this.eventOver,
+    required this.rsvp,
     required this.eventType,
   });
 
   static EventModel fromJSON(decodedData) {
+    print(decodedData);
     return EventModel(
         id: decodedData['_id'],
         title: decodedData['eventName'],
@@ -28,6 +31,6 @@ class EventModel {
         location: decodedData['location'],
         description: decodedData['description'],
         eventOver: decodedData['eventOver'],
-        eventType: decodedData['eventType']);
+        eventType: decodedData['eventType'], rsvp: decodedData['rsvp']);
   }
 }

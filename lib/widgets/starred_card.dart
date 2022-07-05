@@ -16,7 +16,11 @@ class StarCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => EventPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => EventPage(
+                      model: model,
+                    )));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -65,19 +69,19 @@ class StarCard extends StatelessWidget {
                       ],
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const FeaturesPage()));
-                      },
+                      onPressed: !model.rsvp
+                          ? () {
+                              //TODO:  RSVP logic
+                            }
+                          : null,
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Text(
-                          'RSVP',
+                          model.rsvp ? 'Already RSVPd' : 'RSVP',
                           style: GoogleFonts.nunitoSans(
-                              fontSize: 20,
-                              color: colors.scaffoldColor,
+                              color: model.rsvp
+                                  ? Colors.white38
+                                  : colors.scaffoldColor,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
