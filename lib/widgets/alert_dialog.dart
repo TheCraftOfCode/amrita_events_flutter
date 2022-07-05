@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//TODO: Style alert dialog
 displayDialog(context, positiveText, negativeText, Function positiveFunction,
     title, subTitle, {dismissDialog, willPop}) {
   return showDialog(
@@ -58,7 +59,7 @@ displayQuitDialog(context, title, subTitle) async {
       ),
       actions: <Widget>[
         TextButton(
-                child: Text(
+                child: const Text(
                   "No",
                 ),
                 onPressed: () {
@@ -66,7 +67,7 @@ displayQuitDialog(context, title, subTitle) async {
                 },
               ),
         ElevatedButton(
-          child: Text("Yes",),
+          child: const Text("Yes",),
           onPressed: () async {
             Navigator.pop(context, true);
           },

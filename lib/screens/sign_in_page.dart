@@ -149,6 +149,7 @@ class _SignInPageState extends State<SignInPage> {
                   if (_formKey.currentState!.validate()) {
                     setState(() {
                       showProgress = true;
+                      error = '';
                     });
                     _formKey.currentState!.save();
                     var res = await makePostRequest(

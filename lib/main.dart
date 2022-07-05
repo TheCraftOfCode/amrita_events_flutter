@@ -7,11 +7,9 @@ import 'package:flutter/material.dart';
 //TODO: Fix overflows
 //TODO: Add admin page
 
-
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: LoadValidPageWidget(GreetingPage(), TheMain()),
-
   ));
 }
