@@ -35,8 +35,8 @@ class YesStarredEventsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: const [
-        StarCard(eventName: "event_name", time: "time", date: "date"),
-        StarCard(eventName: "event_name", time: "time", date: "date")
+        // StarCard(eventName: "event_name", time: "time", date: "date"),
+        // StarCard(eventName: "event_name", time: "time", date: "date")
       ],
     );
   }

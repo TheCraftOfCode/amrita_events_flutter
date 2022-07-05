@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/starred_card.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../models/event_model.dart';
+import '../utils/http_modules.dart';
 
 class EventsHome extends StatefulWidget {
   final bool yesEvents;
@@ -14,22 +19,41 @@ class EventsHome extends StatefulWidget {
   _EventsHomeState createState() => _EventsHomeState();
 }
 
-class Event {
-  final String title;
-  final String date;
-  final String time;
-
-  Event({required this.title, required this.date, required this.time});
-}
-
 class _EventsHomeState extends State<EventsHome> {
-  List<Event> data = [
-    Event(title: 'Event 1', date: '19-05-2022', time: '5:00 PM - 6:00 PM'),
-    Event(title: 'Event 2', date: '19-05-2022', time: '5:00 PM - 6:00 PM'),
-    Event(title: 'Event 3', date: '19-05-2022', time: '5:00 PM - 6:00 PM'),
-    Event(title: 'Event 4', date: '19-05-2022', time: '5:00 PM - 6:00 PM'),
-    Event(title: 'Event 5', date: '19-05-2022', time: '5:00 PM - 6:00 PM'),
-  ];
+  List<EventModel> data = [];
+  List<Widget> eventList = [];
+
+  _getData() async {
+    //parse our URL
+    setState(() {
+      data.clear();
+    });
+
+    //TODO: MAKE REQ TO GET LIST OF ALL EVENTS
+
+    var response =
+        await makePostRequest(null, "/event/getEvents", null, true, context);
+
+    if (response.statusCode == 200) {
+      var responseData = json.decode(response.body)["data"]; //List Data
+      for (var i in responseData) {
+        setState(() {
+          data.add(EventModel.fromJSON(i));
+          eventList.add(StarCard(
+            model: data.last,
+          ));
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +66,9 @@ class _EventsHomeState extends State<EventsHome> {
             title: 'Events',
           ),
           widget.yesEvents == false
-              ? const YesEventsWidget()
+              ? YesEventsWidget(
+                  data: eventList,
+                )
               : const NoEventsWidget()
         ],
       ),
@@ -121,7 +147,9 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
 }
 
 class YesEventsWidget extends StatefulWidget {
-  const YesEventsWidget({Key? key}) : super(key: key);
+  YesEventsWidget({Key? key, required this.data}) : super(key: key);
+
+  List<Widget> data;
 
   @override
   State<YesEventsWidget> createState() => _YesEventsWidgetState();
@@ -135,61 +163,37 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 28, top: 30),
-          child: Text(
-            "Upcoming",
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white),
-          ),
-        ),
-        const HorizontalPageView(),
-        const Padding(
-          padding: EdgeInsets.only(left: 28, top: 16),
-          child: Text(
-            "RSVP'd Events",
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white),
-          ),
-        ),
-        const HorizontalPageView(),
-        _dropDown(
-            ["ALL EVENTS", "STARRED EVENTS", "RSVP'D EVENTS"], chosenOption,
-            (newValue) {
-          setState(() {
-            chosenOption = newValue;
-          });
-        }),
-        const StarCard(
-          date: 'title',
-          time: 'time',
-          eventName: 'title',
-        ),
-        const StarCard(
-          date: 'title',
-          time: 'time',
-          eventName: 'title',
-        ),
-        const StarCard(
-          date: 'title',
-          time: 'time',
-          eventName: 'title',
-        ),
-        const StarCard(
-          date: 'title',
-          time: 'time',
-          eventName: 'title',
-        ),
-        const StarCard(
-          date: 'title',
-          time: 'time',
-          eventName: 'title',
-        ),
-      ],
+            const Padding(
+              padding: EdgeInsets.only(left: 28, top: 30),
+              child: Text(
+                "Upcoming",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+            const HorizontalPageView(),
+            const Padding(
+              padding: EdgeInsets.only(left: 28, top: 16),
+              child: Text(
+                "RSVP'd Events",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+            const HorizontalPageView(),
+            _dropDown(
+                ["ALL EVENTS", "STARRED EVENTS", "RSVP'D EVENTS"], chosenOption,
+                (newValue) {
+              setState(() {
+                chosenOption = newValue;
+              });
+            }),
+          ] +
+          widget.data,
     );
   }
 }
@@ -218,9 +222,7 @@ Widget _dropDown(listOfOptions, chosenOption, onChanged) {
               child: Text(
                 value,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white),
+                style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
             );
           }).toList(),

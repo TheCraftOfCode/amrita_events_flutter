@@ -3,29 +3,28 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../models/event_model.dart';
 import '../screens/onboarding.dart';
 
 class StarCard extends StatelessWidget {
-  const StarCard(
-      {Key? key,
-      required this.eventName,
-      required this.time,
-      required this.date});
+  const StarCard({Key? key, required this.model});
 
-  final String eventName, time, date;
+  final EventModel model;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>EventPage()));
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => EventPage()));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
           elevation: 10,
           color: colors.cardBackgroundColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
@@ -39,7 +38,7 @@ class StarCard extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      eventName,
+                      model.title,
                       style: GoogleFonts.nunitoSans(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -54,12 +53,12 @@ class StarCard extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          time,
+                          model.time,
                           style: GoogleFonts.nunitoSans(
                               fontSize: 20, color: colors.headingTextColor),
                         ),
                         Text(
-                          date,
+                          model.date,
                           style: GoogleFonts.nunitoSans(
                               fontSize: 20, color: colors.headingTextColor),
                         ),
