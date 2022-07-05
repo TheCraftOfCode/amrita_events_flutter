@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EventPage extends StatefulWidget {
-  const EventPage({Key? key, required this.model}) : super(key: key);
+  const EventPage({Key? key, required this.model, required this.rsvp})
+      : super(key: key);
 
   final EventModel model;
+  final void Function(EventModel) rsvp;
 
   @override
   _EventPageState createState() => _EventPageState();
@@ -122,14 +124,21 @@ class _EventPageState extends State<EventPage> {
           Align(
             alignment: Alignment.center,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: !widget.model.rsvp
+                  ? () {
+                      setState(() {
+                        widget.rsvp(widget.model);
+                      });
+                    }
+                  : null,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'RSVP',
+                  widget.model.rsvp ? 'Already RSVPd' : 'RSVP',
                   style: GoogleFonts.nunitoSans(
-                      color: colors.scaffoldColor,
-                      fontSize: 25,
+                      color: widget.model.rsvp
+                          ? Colors.white38
+                          : colors.scaffoldColor,
                       fontWeight: FontWeight.bold),
                 ),
               ),

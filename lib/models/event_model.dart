@@ -2,17 +2,19 @@ class EventModel {
   final String id;
   final String title;
   final String date;
+  final String dateUnparsed;
   final String time;
   final String location;
   final String description;
   final bool eventOver;
-  final bool rsvp;
+  bool rsvp;
   final String eventType;
 
   EventModel({
     required this.id,
     required this.title,
     required this.date,
+    required this.dateUnparsed,
     required this.time,
     required this.location,
     required this.description,
@@ -31,6 +33,8 @@ class EventModel {
         location: decodedData['location'],
         description: decodedData['description'],
         eventOver: decodedData['eventOver'],
-        eventType: decodedData['eventType'], rsvp: decodedData['rsvp']);
+        eventType: decodedData['eventType'],
+        rsvp: decodedData['rsvp'],
+        dateUnparsed: decodedData['dateUnparsed']);
   }
 }

@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
-import 'package:amrita_events_flutter/widgets/starred_card.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
 import '../utils/http_modules.dart';
+import '../widgets/starred_card.dart';
 import 'event_page.dart';
 
 class EventsHome extends StatefulWidget {
@@ -21,7 +21,10 @@ class EventsHome extends StatefulWidget {
 }
 
 class _EventsHomeState extends State<EventsHome> {
+  //root data
   List<EventModel> data = [];
+
+  //list depending on root data
   List<Widget> eventList = [];
   List<EventModel> rsvpList = [];
   List<EventModel> upcomingList = [];
@@ -33,12 +36,32 @@ class _EventsHomeState extends State<EventsHome> {
     return dateParsed.compareTo(currentDate);
   }
 
-  _getData() async {
+  //call this method if data is updated to refresh all data without having to pull new data from the server again
+  _buildDataList() {
     setState(() {
-      data.clear();
       eventList.clear();
       rsvpList.clear();
       upcomingList.clear();
+    });
+    for (var i in data) {
+      setState(() {
+        eventList.add(StarCard(
+          model: i,
+          rsvp: _rsvp,
+        ));
+        if (i.rsvp) {
+          rsvpList.add(i);
+        }
+        if (_compareDates(i.dateUnparsed) > 0) {
+          upcomingList.add(i);
+        }
+      });
+    }
+  }
+
+  _getData() async {
+    setState(() {
+      data.clear();
     });
 
     var response =
@@ -48,19 +71,23 @@ class _EventsHomeState extends State<EventsHome> {
       var responseData = json.decode(response.body)["data"]; //List Data
       for (var i in responseData) {
         setState(() {
-          var parsedData = EventModel.fromJSON(i);
-          data.add(parsedData);
-          eventList.add(StarCard(
-            model: parsedData,
-          ));
-          if (parsedData.rsvp) {
-            rsvpList.add(parsedData);
-          }
-          if (_compareDates(i['dateUnparsed']) > 0) {
-            upcomingList.add(parsedData);
-          }
+          data.add(EventModel.fromJSON(i));
         });
       }
+      _buildDataList();
+    }
+  }
+
+  _rsvp(EventModel model) async {
+    var response = await makePostRequest(
+        json.encode({"eventId": model.id}), "/rsvp/rsvp", null, true, context);
+
+    if (response.statusCode == 200) {
+      //TODO: Show message for successful RSVP
+      model.rsvp = true;
+
+      //updating list to refresh new changed done to the list
+      _buildDataList();
     }
   }
 
@@ -76,27 +103,34 @@ class _EventsHomeState extends State<EventsHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: CustomSliverView(
-        columnList: [
-          const TopBarWidget(
-            icon: Icons.home_outlined,
-            title: 'Events',
-          ),
-          widget.yesEvents == false
-              ? YesEventsWidget(
-                  data: eventList,
-                  rsvpList: rsvpList,
-                  upcomingList: upcomingList)
-              : const NoEventsWidget()
-        ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await _getData();
+        },
+        child: CustomSliverView(
+          columnList: [
+            const TopBarWidget(
+              icon: Icons.home_outlined,
+              title: 'Events',
+            ),
+            widget.yesEvents == false
+                ? YesEventsWidget(
+                    data: eventList,
+                    rsvpList: rsvpList,
+                    upcomingList: upcomingList, rsvp: _rsvp,)
+                : const NoEventsWidget()
+          ],
+        ),
       ),
     );
   }
 }
 
 class HorizontalPageView extends StatefulWidget {
-  const HorizontalPageView({Key? key, required this.list}) : super(key: key);
+  const HorizontalPageView({Key? key, required this.list, required this.rsvp})
+      : super(key: key);
   final List<EventModel> list;
+  final void Function(EventModel) rsvp;
 
   @override
   State<HorizontalPageView> createState() => _HorizontalPageViewState();
@@ -107,77 +141,85 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.list.isNotEmpty ? SizedBox(
-      height: (MediaQuery.of(context).size.height * 0.7) / 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: PageView.builder(
-          padEnds: false,
-          itemCount: widget.list.length,
-          controller: PageController(viewportFraction: 0.55),
-          onPageChanged: (int index) => setState(() => _index = index),
-          itemBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EventPage(
-                            model: widget.list[index],
-                          )));
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 3,
-                        child: Card(
-                          elevation: 6,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: Text(
-                              "Card ${index + 1}",
-                              style: const TextStyle(fontSize: 32),
+    return widget.list.isNotEmpty
+        ? SizedBox(
+            height: (MediaQuery.of(context).size.height * 0.7) / 2,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: PageView.builder(
+                padEnds: false,
+                itemCount: widget.list.length,
+                controller: PageController(viewportFraction: 0.55),
+                onPageChanged: (int index) => setState(() => _index = index),
+                itemBuilder: (_, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EventPage(
+                                      model: widget.list[index],
+                                      rsvp: widget.rsvp,
+                                    )));
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Card(
+                              elevation: 6,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Center(
+                                child: Text(
+                                  "Card ${index + 1}",
+                                  style: const TextStyle(fontSize: 32),
+                                ),
+                              ),
                             ),
                           ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 8),
+                              child: Text(
+                                widget.list[index].title,
+                                maxLines: 2,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, top: 10),
+                            child: Text(
+                              widget.list[index].date,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(color: Colors.grey),
+                              maxLines: 1,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8, top: 8),
-                        child: Text(
-                          widget.list[index].title,
-                          maxLines: 2,
-                          style:
-                              const TextStyle(color: Colors.white, fontSize: 20),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 10),
-                      child: Text(
-                        widget.list[index].date,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: Colors.grey),
-                        maxLines: 1,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ),
-    ) : Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: const Center(child: Text("No events to show!", style: TextStyle(color: Colors.white38),),),
-    );
+            ),
+          )
+        : Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: const Center(
+              child: Text(
+                "No events to show!",
+                style: TextStyle(color: Colors.white38),
+              ),
+            ),
+          );
   }
 }
 
@@ -186,12 +228,14 @@ class YesEventsWidget extends StatefulWidget {
       {Key? key,
       required this.data,
       required this.rsvpList,
-      required this.upcomingList})
+      required this.upcomingList,
+      required this.rsvp})
       : super(key: key);
 
   List<Widget> data;
   List<EventModel> rsvpList;
   List<EventModel> upcomingList;
+  final void Function(EventModel) rsvp;
 
   @override
   State<YesEventsWidget> createState() => _YesEventsWidgetState();
@@ -215,7 +259,10 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
                     color: Colors.white),
               ),
             ),
-            HorizontalPageView(list: widget.upcomingList),
+            HorizontalPageView(
+              list: widget.upcomingList,
+              rsvp: widget.rsvp,
+            ),
             const Padding(
               padding: EdgeInsets.only(left: 28, top: 16),
               child: Text(
@@ -228,6 +275,7 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
             ),
             HorizontalPageView(
               list: widget.rsvpList,
+              rsvp: widget.rsvp,
             ),
             _dropDown(
                 ["ALL EVENTS", "STARRED EVENTS", "RSVP'D EVENTS"], chosenOption,

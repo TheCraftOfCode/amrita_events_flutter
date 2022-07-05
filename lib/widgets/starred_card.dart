@@ -7,9 +7,10 @@ import '../models/event_model.dart';
 import '../screens/onboarding.dart';
 
 class StarCard extends StatelessWidget {
-  const StarCard({Key? key, required this.model});
+  const StarCard({Key? key, required this.model, required this.rsvp});
 
   final EventModel model;
+  final void Function(EventModel) rsvp;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class StarCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => EventPage(
-                      model: model,
+                      model: model, rsvp: rsvp,
                     )));
       },
       child: Padding(
@@ -71,7 +72,7 @@ class StarCard extends StatelessWidget {
                     ElevatedButton(
                       onPressed: !model.rsvp
                           ? () {
-                              //TODO:  RSVP logic
+                              rsvp(model);
                             }
                           : null,
                       child: Padding(
