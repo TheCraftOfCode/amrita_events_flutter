@@ -30,6 +30,7 @@ class _EventPageState extends State<EventPage> {
                   top: 40, left: 15, right: 15, bottom: 30),
               child: Container(
                 height: 500,
+                //TODO: Use the image url and display poster here
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: colors.headingTextColor,
@@ -52,7 +53,7 @@ class _EventPageState extends State<EventPage> {
                 ),
                 Expanded(
                   child: Text(
-                    'Association of students of computer science for information interchange (ASCII) ',
+                    widget.model.host,
                     style: GoogleFonts.nunitoSans(
                         color: colors.headingTextColor, fontSize: 20),
                   ),
