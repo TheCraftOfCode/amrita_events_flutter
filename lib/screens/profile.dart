@@ -1,8 +1,12 @@
+import 'package:amrita_events_flutter/screens/greeting_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_no_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../utils/utils.dart';
+import '../widgets/alert_dialog.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -32,7 +36,9 @@ class _ProfileState extends State<Profile> {
                     height: 100,
                     width: 100,
                   ),
-                  SizedBox(height: 100,),
+                  SizedBox(
+                    height: 100,
+                  ),
                   Column(
                     children: [
                       Text(
@@ -42,7 +48,9 @@ class _ProfileState extends State<Profile> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(width: 100,),
+                      SizedBox(
+                        width: 100,
+                      ),
                       IconButton(
                           onPressed: () {},
                           icon: Icon(
@@ -50,16 +58,30 @@ class _ProfileState extends State<Profile> {
                             size: 20,
                             color: colors.headingTextColor,
                           )),
-                      SizedBox(height: 100,),
+                      SizedBox(
+                        height: 100,
+                      ),
                     ],
                   )
                 ]),
-          )
+          ),
+          ElevatedButton(
+              onPressed: () {
+                displayDialog(context, "Yes", "No", () {
+                  clearAllData();
+                  // showToast("Signed out successfully!");
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const GreetingPage()),
+                      (Route<dynamic> route) => false);
+                }, "Are you sure you want to sign out?",
+                    "You will be signed out and all data will be lost");
+              },
+              child: Text("Sign Out"))
         ],
       ),
     );
   }
 }
-
 
 //TODO: Has to be finished

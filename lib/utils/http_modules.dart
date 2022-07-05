@@ -8,7 +8,7 @@ import 'utils.dart';
 
 Future<http.Response> makePostRequest(
     body, String route, Map<String, dynamic>? queryParameters, attachJWT,
-    {BuildContext? context}) async {
+    context) async {
   try {
     var contentType = {"Content-Type": "application/json"};
 
@@ -36,7 +36,7 @@ Future<http.Response> makePostRequest(
 
     if (res.statusCode == 412) {
       if (context != null) {
-        jwtTokenSet = "";
+        clearAllData();
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const GreetingPage()),
             (Route<dynamic> route) => false);
