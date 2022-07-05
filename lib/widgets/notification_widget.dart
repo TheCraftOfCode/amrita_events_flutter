@@ -11,37 +11,43 @@ class NotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              title,
-              style: GoogleFonts.nunitoSans(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                  color: colors.headingTextColor),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                title,
+                style: GoogleFonts.nunitoSans(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    color: colors.headingTextColor),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(
-              body,
-              style: GoogleFonts.nunitoSans(
-                  color: colors.headingTextColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  body,
+                  style: GoogleFonts.nunitoSans(
+                      color: colors.headingTextColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal),
+                ),
+              ),
             ),
-          ),
-          Divider(
-            color: colors.headingTextColor,
-            thickness: 0.5,
-          )
-        ],
+            Divider(
+              color: colors.headingTextColor,
+              thickness: 0.5,
+            )
+          ],
+        ),
       ),
     );
   }
