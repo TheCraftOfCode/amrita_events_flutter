@@ -23,6 +23,7 @@ class EventsHome extends StatefulWidget {
 class _EventsHomeState extends State<EventsHome> {
   //root data
   List<EventModel> data = [];
+  List<EventModel> dataSearch = [];
 
   //list depending on root data
   List<Widget> eventList = [];
@@ -71,7 +72,9 @@ class _EventsHomeState extends State<EventsHome> {
       var responseData = json.decode(response.body)["data"]; //List Data
       for (var i in responseData) {
         setState(() {
-          data.add(EventModel.fromJSON(i));
+          var parseData = EventModel.fromJSON(i);
+          data.add(parseData);
+          dataSearch.add(parseData);
         });
       }
       _buildDataList();
@@ -109,15 +112,42 @@ class _EventsHomeState extends State<EventsHome> {
         },
         child: CustomSliverView(
           columnList: [
-            const TopBarWidget(
+            TopBarWidget(
               icon: Icons.home_outlined,
+              onChanged: (value) {
+                data.clear();
+                if(value != null){
+                  if(value.isEmpty){
+                    setState((){
+                      data.addAll(dataSearch);
+                    });
+                  }
+                  else{
+                    setState((){
+                      data = dataSearch
+                          .where((i) =>
+                          i.title.toLowerCase().contains(value!.toLowerCase()))
+                          .toList();
+                    });
+                  }
+                }
+                else{
+                  setState((){
+                    data.addAll(dataSearch);
+                  });
+                }
+                _buildDataList();
+
+              },
               title: 'Events',
             ),
             widget.yesEvents == false
                 ? YesEventsWidget(
                     data: eventList,
                     rsvpList: rsvpList,
-                    upcomingList: upcomingList, rsvp: _rsvp,)
+                    upcomingList: upcomingList,
+                    rsvp: _rsvp,
+                  )
                 : const NoEventsWidget()
           ],
         ),
@@ -211,9 +241,9 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
               ),
             ),
           )
-        : Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: const Center(
+        : const Padding(
+            padding: EdgeInsets.all(32.0),
+            child: Center(
               child: Text(
                 "No events to show!",
                 style: TextStyle(color: Colors.white38),

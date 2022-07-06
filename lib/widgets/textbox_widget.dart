@@ -3,26 +3,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
 class TextBoxField extends StatelessWidget {
-
-  TextBoxField(
+  const TextBoxField(
       {Key? key,
-        this.validator,
-        this.onSaved,
-        this.controller,
-        required this.title,
-        required this.hint,
-        required this.padding,
-        required this.light})
+      this.validator,
+      this.onSaved,
+      this.controller,
+      required this.title,
+      required this.hint,
+      required this.padding,
+      required this.light,
+      this.onChanged})
       : super(key: key);
 
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final void Function(String?)? onChanged;
   final Function(String?)? onSaved;
   final String title;
   final String hint;
   final EdgeInsets padding;
   final bool light;
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,6 +32,7 @@ class TextBoxField extends StatelessWidget {
           controller: controller,
           validator: validator,
           onSaved: onSaved,
+          onChanged: onChanged,
           style: GoogleFonts.montserrat(color: colors.primaryTextColor),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(
@@ -50,10 +52,8 @@ class TextBoxField extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(5)),
-            fillColor:
-                light ? colors.lightTextBoxColor : colors.textBoxColor,
-            focusColor:
-                light ? colors.lightTextBoxColor : colors.textBoxColor,
+            fillColor: light ? colors.lightTextBoxColor : colors.textBoxColor,
+            focusColor: light ? colors.lightTextBoxColor : colors.textBoxColor,
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(5)),

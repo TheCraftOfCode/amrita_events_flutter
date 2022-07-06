@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TopBarWidget extends StatelessWidget {
-  const TopBarWidget({Key? key, required this.icon, required this.title})
+  const TopBarWidget({Key? key, required this.icon, required this.title, this.onChanged})
       : super(key: key);
 
   final IconData icon;
   final String title;
+  final void Function(String?)? onChanged;
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class TopBarWidget extends StatelessWidget {
                       child: TextBoxField(
                         hint: 'Type to search',
                         light: true,
-                        validator: (val) {},
+                        onChanged: onChanged,
                         padding: const EdgeInsets.all(0.0),
                         title: 'Search',
                       ),
