@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/http_modules.dart';
 import '../utils/utils.dart';
 import '../widgets/password_formfield_widget.dart';
+import 'forgot_password.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -26,8 +27,6 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   String error = "", _email = "", _password = "";
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   bool showProgress = false;
 
   @override
@@ -116,7 +115,7 @@ class _SignInPageState extends State<SignInPage> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const PasswordRecovery()));
+                        builder: (context) => const ForgotPassword()));
                   },
                   child: Text(
                     'Forgot password?',
@@ -163,9 +162,7 @@ class _SignInPageState extends State<SignInPage> {
                           setState(() {
                             showProgress = false;
                           });
-                          print(res.statusCode);
                           if (res.statusCode == 200) {
-                            print(res.body);
                             jwtTokenSet = json.decode(res.body)['token'];
                             setName = json.decode(res.body)['name'];
                             setUserRole = json.decode(res.body)['role'];
