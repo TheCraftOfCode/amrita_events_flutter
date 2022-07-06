@@ -63,6 +63,7 @@ class _EventsHomeState extends State<EventsHome> {
   _getData() async {
     setState(() {
       data.clear();
+      dataSearch.clear();
     });
 
     var response =
