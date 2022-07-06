@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/screens/change_password.dart';
 import 'package:amrita_events_flutter/screens/greeting_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
@@ -36,7 +37,7 @@ class _ProfileState extends State<Profile> {
                     height: 100,
                     width: 100,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                   Column(
@@ -48,7 +49,7 @@ class _ProfileState extends State<Profile> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 100,
                       ),
                       IconButton(
@@ -58,7 +59,7 @@ class _ProfileState extends State<Profile> {
                             size: 20,
                             color: colors.headingTextColor,
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 100,
                       ),
                     ],
@@ -77,7 +78,15 @@ class _ProfileState extends State<Profile> {
                 }, "Are you sure you want to sign out?",
                     "You will be signed out and all data will be lost");
               },
-              child: Text("Sign Out"))
+              child: const Text("Sign Out")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return const ChangePassword();
+                }));
+              },
+              child: const Text("Change Password"))
         ],
       ),
     );
