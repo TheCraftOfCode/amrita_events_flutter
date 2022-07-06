@@ -8,4 +8,4 @@ jobs:
       - run: flutter doctor
       - run: flutter test 
       - run: flutter -v build apk
-view raw
+
