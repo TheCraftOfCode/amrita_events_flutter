@@ -142,7 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 alignment: Alignment.topLeft,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => const SignInPage()));
                   },
                   child: Text(

@@ -102,7 +102,7 @@ class _SignInPageState extends State<SignInPage> {
               children: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => const SignUpPage()));
                   },
                   child: Text(
@@ -143,54 +143,58 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
               ),
-              showProgress ? const CircularProgressIndicator() :
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    setState(() {
-                      showProgress = true;
-                      error = '';
-                    });
-                    _formKey.currentState!.save();
-                    var res = await makePostRequest(
-                        json.encode({"email": _email, "password": _password}),
-                        "/user/login",
-                        null,
-                        false, context);
-                    setState(() {
-                      showProgress = false;
-                    });
-                    print(res.statusCode);
-                    if (res.statusCode == 200) {
-                      print(res.body);
-                      jwtTokenSet = json.decode(res.body)['token'];
-                      setName = json.decode(res.body)['name'];
-                      setUserRole = json.decode(res.body)['role'];
-                      setDateRegistered =
-                          json.decode(res.body)['dateRegistered'];
-                      setEmailID = json.decode(res.body)['email'];
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const TheMain()),
-                          (Route<dynamic> route) => false);
-                    } else {
-                      setState(() {
-                        error = json.decode(res.body)['message'];
-                      });
-                    }
-                  }
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => const TheMain()));
-                },
-                child: Text(
-                  'SIGN IN',
-                  style: GoogleFonts.nunitoSans(
-                      color: colors.primaryTextColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(primary: colors.accentColor),
-              )
+              showProgress
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            showProgress = true;
+                            error = '';
+                          });
+                          _formKey.currentState!.save();
+                          var res = await makePostRequest(
+                              json.encode(
+                                  {"email": _email, "password": _password}),
+                              "/user/login",
+                              null,
+                              false,
+                              context);
+                          setState(() {
+                            showProgress = false;
+                          });
+                          print(res.statusCode);
+                          if (res.statusCode == 200) {
+                            print(res.body);
+                            jwtTokenSet = json.decode(res.body)['token'];
+                            setName = json.decode(res.body)['name'];
+                            setUserRole = json.decode(res.body)['role'];
+                            setDateRegistered =
+                                json.decode(res.body)['dateRegistered'];
+                            setEmailID = json.decode(res.body)['email'];
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const TheMain()),
+                                (Route<dynamic> route) => false);
+                          } else {
+                            setState(() {
+                              error = json.decode(res.body)['message'];
+                            });
+                          }
+                        }
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) => const TheMain()));
+                      },
+                      child: Text(
+                        'SIGN IN',
+                        style: GoogleFonts.nunitoSans(
+                            color: colors.primaryTextColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style:
+                          ElevatedButton.styleFrom(primary: colors.accentColor),
+                    )
             ],
           )
         ]),
