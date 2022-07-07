@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Starred extends StatefulWidget {
-  const Starred({Key? key, required this.yesStarred}) : super(key: key);
+  const Starred({Key? key}) : super(key: key);
 
-  final bool yesStarred;
   @override
   State<Starred> createState() => _StarredState();
 }
@@ -18,10 +17,11 @@ class _StarredState extends State<Starred> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: CustomSliverView(
+      body: const CustomSliverView(
         columnList: [
-          const TopBarWidget(icon: Icons.star_border_sharp, title: "Starred"),
-          widget.yesStarred==true?const YesStarredEventsWidget():const NoStarredEventsWidget()
+          TopBarWidget(icon: Icons.star_border_sharp, title: "Starred"),
+          //TODO: Check for list size here
+          true==true?YesStarredEventsWidget():NoStarredEventsWidget()
         ],
       ),
     );
