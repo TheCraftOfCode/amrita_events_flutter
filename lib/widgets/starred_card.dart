@@ -7,10 +7,12 @@ import '../models/event_model.dart';
 import '../screens/onboarding.dart';
 
 class StarCard extends StatelessWidget {
-  const StarCard({Key? key, required this.model, required this.rsvp});
+  const StarCard(
+      {Key? key, required this.model, required this.rsvp, required this.star});
 
   final EventModel model;
   final void Function(EventModel) rsvp;
+  final void Function(EventModel) star;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,8 @@ class StarCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => EventPage(
-                      model: model, rsvp: rsvp,
+                      model: model,
+                      rsvp: rsvp,
                     )));
       },
       child: Padding(
@@ -37,6 +40,47 @@ class StarCard extends StatelessWidget {
                 Container(
                   color: Colors.white,
                   height: 250,
+                  width: double.maxFinite,
+                  child: Stack(
+                    children: [
+                      //TODO: Add network image here
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            color: colors.cardBackgroundColor,
+                            child: InkWell(
+                              onTap: () {
+                                star(model);
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 8),
+                                    child: Icon(
+                                      model.starred ? Icons.star : Icons.star_border,
+                                      color: Colors.white54,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      model.starred ? "Already Starred" : "Star",
+                                      style: GoogleFonts.nunitoSans(
+                                          color:Colors.white70,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),

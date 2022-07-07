@@ -94,7 +94,7 @@ class _OTPScreenState extends State<OTPScreen> {
             onPressed: () {
               setState(() {});
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const EventsHome(yesEvents: false,)));
+                  builder: (context) => const EventsHome()));
             },
             child: SizedBox(
                 width: double.infinity,

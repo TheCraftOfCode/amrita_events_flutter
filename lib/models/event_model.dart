@@ -11,6 +11,7 @@ class EventModel {
   final bool eventOver;
   bool rsvp;
   final String eventType;
+  bool starred;
 
   EventModel({
     required this.id,
@@ -25,6 +26,7 @@ class EventModel {
     required this.eventOver,
     required this.rsvp,
     required this.eventType,
+    required this.starred,
   });
 
   static EventModel fromJSON(decodedData) {
@@ -40,6 +42,7 @@ class EventModel {
         rsvp: decodedData['rsvp'],
         dateUnparsed: decodedData['dateUnparsed'],
         posterUrl: decodedData['posterUrl'],
-        host: decodedData['host']);
+        host: decodedData['host'],
+        starred: decodedData['starred']);
   }
 }

@@ -12,10 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/http_modules.dart';
 
 class Notifications extends StatefulWidget {
-  const Notifications({Key? key, required this.yesNotifications})
-      : super(key: key);
-
-  final bool yesNotifications;
+  const Notifications({Key? key}) : super(key: key);
 
   @override
   State<Notifications> createState() => _NotificationsState();
@@ -82,7 +79,7 @@ class _NotificationsState extends State<Notifications> {
         child: CustomSliverView(columnList: [
           const TopBarWidgetNoSearch(
               icon: Icons.notifications_none_outlined, title: "Notifications"),
-          widget.yesNotifications
+          notificationList.isNotEmpty
               ? YesNotificationsWidget(
                   notificationList: notificationList,
                 )

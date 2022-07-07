@@ -42,7 +42,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Reset Password',
+                    'Enter new password',
                     style: GoogleFonts.nunitoSans(
                         color: colors.primaryTextColor,
                         fontSize: 30,
@@ -52,7 +52,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Please enter current password and new password',
+                  'Make sure it’s unique and safe. Use symbols, uppercase and lowecase characters!',
                   style: GoogleFonts.nunitoSans(
                       color: colors.primaryTextColor,
                       fontSize: 17,

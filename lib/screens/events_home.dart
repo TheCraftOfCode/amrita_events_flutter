@@ -9,12 +9,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/event_model.dart';
 import '../utils/http_modules.dart';
 import '../widgets/starred_card.dart';
+import '../widgets/yes_starred_event_widget.dart';
 import 'event_page.dart';
 
 class EventsHome extends StatefulWidget {
-  final bool yesEvents;
 
-  const EventsHome({Key? key, required this.yesEvents}) : super(key: key);
+  const EventsHome({Key? key}) : super(key: key);
 
   @override
   _EventsHomeState createState() => _EventsHomeState();
@@ -44,11 +44,13 @@ class _EventsHomeState extends State<EventsHome> {
       rsvpList.clear();
       upcomingList.clear();
     });
+    // widget.starredEventKey!.currentState!.addData(data);
     for (var i in data) {
       setState(() {
         eventList.add(StarCard(
           model: i,
           rsvp: _rsvp,
+          star: _starEvent,
         ));
         if (i.rsvp) {
           rsvpList.add(i);
@@ -95,6 +97,36 @@ class _EventsHomeState extends State<EventsHome> {
     }
   }
 
+  _starEvent(EventModel model) async {
+    //already starred
+    if (!model.starred) {
+      var response = await makePostRequest(json.encode({"eventId": model.id}),
+          "/event/starEvent", null, true, context);
+
+      if (response.statusCode == 200) {
+        //TODO: Show message for successful RSVP
+        model.starred = true;
+
+        //updating list to refresh new changed done to the list
+        _buildDataList();
+      }
+    }
+
+    //not starred
+    else {
+      var response = await makePostRequest(json.encode({"eventId": model.id}),
+          "/event/removeStarredEvent", null, true, context);
+
+      if (response.statusCode == 200) {
+        //TODO: Show message for successful RSVP
+        model.starred = false;
+
+        //updating list to refresh new changed done to the list
+        _buildDataList();
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -117,32 +149,30 @@ class _EventsHomeState extends State<EventsHome> {
               icon: Icons.home_outlined,
               onChanged: (value) {
                 data.clear();
-                if(value != null){
-                  if(value.isEmpty){
-                    setState((){
+                if (value != null) {
+                  if (value.isEmpty) {
+                    setState(() {
                       data.addAll(dataSearch);
                     });
-                  }
-                  else{
-                    setState((){
+                  } else {
+                    setState(() {
                       data = dataSearch
-                          .where((i) =>
-                          i.title.toLowerCase().contains(value!.toLowerCase()))
+                          .where((i) => i.title
+                              .toLowerCase()
+                              .contains(value.toLowerCase()))
                           .toList();
                     });
                   }
-                }
-                else{
-                  setState((){
+                } else {
+                  setState(() {
                     data.addAll(dataSearch);
                   });
                 }
                 _buildDataList();
-
               },
               title: 'Events',
             ),
-            widget.yesEvents == false
+            data.isNotEmpty
                 ? YesEventsWidget(
                     data: eventList,
                     rsvpList: rsvpList,
