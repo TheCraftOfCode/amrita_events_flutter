@@ -20,7 +20,7 @@ class EventsHome extends StatefulWidget {
   _EventsHomeState createState() => _EventsHomeState();
 }
 
-class _EventsHomeState extends State<EventsHome> {
+class _EventsHomeState extends State<EventsHome> with AutomaticKeepAliveClientMixin  {
   //root data
   List<EventModel> data = [];
   List<EventModel> dataSearch = [];
@@ -185,6 +185,10 @@ class _EventsHomeState extends State<EventsHome> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class HorizontalPageView extends StatefulWidget {

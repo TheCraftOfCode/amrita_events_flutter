@@ -18,7 +18,7 @@ class Notifications extends StatefulWidget {
   State<Notifications> createState() => _NotificationsState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _NotificationsState extends State<Notifications> with AutomaticKeepAliveClientMixin  {
   Map<String, List<NotificationModel>> mapData = {};
   List<Widget> notificationList = [];
 
@@ -88,6 +88,9 @@ class _NotificationsState extends State<Notifications> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class YesNotificationsWidget extends StatefulWidget {
