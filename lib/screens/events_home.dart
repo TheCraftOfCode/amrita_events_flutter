@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
@@ -9,18 +10,17 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/event_model.dart';
 import '../utils/http_modules.dart';
 import '../widgets/starred_card.dart';
-import '../widgets/yes_starred_event_widget.dart';
 import 'event_page.dart';
 
 class EventsHome extends StatefulWidget {
-
   const EventsHome({Key? key}) : super(key: key);
 
   @override
   _EventsHomeState createState() => _EventsHomeState();
 }
 
-class _EventsHomeState extends State<EventsHome> with AutomaticKeepAliveClientMixin  {
+class _EventsHomeState extends State<EventsHome>
+    with AutomaticKeepAliveClientMixin {
   //root data
   List<EventModel> data = [];
   List<EventModel> dataSearch = [];
@@ -44,7 +44,6 @@ class _EventsHomeState extends State<EventsHome> with AutomaticKeepAliveClientMi
       rsvpList.clear();
       upcomingList.clear();
     });
-    // widget.starredEventKey!.currentState!.addData(data);
     for (var i in data) {
       setState(() {
         eventList.add(StarCard(
@@ -58,6 +57,7 @@ class _EventsHomeState extends State<EventsHome> with AutomaticKeepAliveClientMi
         if (_compareDates(i.dateUnparsed) > 0) {
           upcomingList.add(i);
         }
+        if (i.starred) {}
       });
     }
   }

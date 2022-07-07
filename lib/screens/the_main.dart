@@ -1,11 +1,6 @@
-import 'dart:async';
-
-import 'package:amrita_events_flutter/screens/bugreport_page.dart';
 import 'package:amrita_events_flutter/screens/events_home.dart';
-import 'package:amrita_events_flutter/screens/license_page.dart';
 import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
-import 'package:amrita_events_flutter/screens/request_features_page.dart';
 import 'package:amrita_events_flutter/screens/settings_page.dart';
 import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
@@ -26,14 +21,11 @@ class _TheMainState extends State<TheMain> {
   void initState() {
     super.initState();
     screens = [
-      const EventsHome(
-      ),
-      const Starred(
-      ),
+      const EventsHome(),
+      const Starred(),
       const Profile(),
       const Settings(),
-      const Notifications(
-      )
+      const Notifications()
     ];
   }
 
@@ -45,17 +37,19 @@ class _TheMainState extends State<TheMain> {
       backgroundColor: colors.scaffoldColor,
       body: PageView.builder(
         controller: controller,
-        onPageChanged: (index){
+        onPageChanged: (index) {
           setState(() => currentIndex = index);
         },
-        itemBuilder: (BuildContext context, int index) { 
-        return screens[index];
-      },),
+        itemBuilder: (BuildContext context, int index) {
+          return screens[index];
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {
           setState(() => currentIndex = index);
-          controller.animateToPage(index, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+          controller.animateToPage(index,
+              duration: const Duration(milliseconds: 500), curve: Curves.ease);
         },
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
