@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget.dart';
@@ -8,21 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
-import '../utils/http_modules.dart';
 import '../widgets/starred_card.dart';
 import 'event_page.dart';
 
 class EventsHome extends StatefulWidget {
-  const EventsHome({Key? key}) : super(key: key);
+  const EventsHome(
+      {Key? key,
+      required this.data,
+      required this.refresh,
+      required this.rsvp,
+      required this.star})
+      : super(key: key);
+  final List<EventModel> data;
+  final Function refresh;
+  final Function(EventModel) rsvp;
+  final Function(EventModel) star;
 
   @override
-  _EventsHomeState createState() => _EventsHomeState();
+  EventsHomeState createState() => EventsHomeState();
 }
 
-class _EventsHomeState extends State<EventsHome>
+class EventsHomeState extends State<EventsHome>
     with AutomaticKeepAliveClientMixin {
   //root data
-  List<EventModel> data = [];
   List<EventModel> dataSearch = [];
 
   //list depending on root data
@@ -38,18 +43,23 @@ class _EventsHomeState extends State<EventsHome>
   }
 
   //call this method if data is updated to refresh all data without having to pull new data from the server again
-  _buildDataList() {
+  buildDataList(bool search) {
     setState(() {
       eventList.clear();
       rsvpList.clear();
       upcomingList.clear();
+      if(!search){
+        dataSearch.clear();
+        dataSearch.addAll(widget.data);
+      }
+
     });
-    for (var i in data) {
+    for (var i in dataSearch) {
       setState(() {
         eventList.add(StarCard(
           model: i,
-          rsvp: _rsvp,
-          star: _starEvent,
+          rsvp: widget.rsvp,
+          star: widget.star,
         ));
         if (i.rsvp) {
           rsvpList.add(i);
@@ -62,77 +72,10 @@ class _EventsHomeState extends State<EventsHome>
     }
   }
 
-  _getData() async {
-    setState(() {
-      data.clear();
-      dataSearch.clear();
-    });
-
-    var response =
-        await makePostRequest(null, "/event/getEvents", null, true, context);
-
-    if (response.statusCode == 200) {
-      var responseData = json.decode(response.body)["data"]; //List Data
-      for (var i in responseData) {
-        setState(() {
-          var parseData = EventModel.fromJSON(i);
-          data.add(parseData);
-          dataSearch.add(parseData);
-        });
-      }
-      _buildDataList();
-    }
-  }
-
-  _rsvp(EventModel model) async {
-    var response = await makePostRequest(
-        json.encode({"eventId": model.id}), "/rsvp/rsvp", null, true, context);
-
-    if (response.statusCode == 200) {
-      //TODO: Show message for successful RSVP
-      model.rsvp = true;
-
-      //updating list to refresh new changed done to the list
-      _buildDataList();
-    }
-  }
-
-  _starEvent(EventModel model) async {
-    //already starred
-    if (!model.starred) {
-      var response = await makePostRequest(json.encode({"eventId": model.id}),
-          "/event/starEvent", null, true, context);
-
-      if (response.statusCode == 200) {
-        //TODO: Show message for successful RSVP
-        model.starred = true;
-
-        //updating list to refresh new changed done to the list
-        _buildDataList();
-      }
-    }
-
-    //not starred
-    else {
-      var response = await makePostRequest(json.encode({"eventId": model.id}),
-          "/event/removeStarredEvent", null, true, context);
-
-      if (response.statusCode == 200) {
-        //TODO: Show message for successful RSVP
-        model.starred = false;
-
-        //updating list to refresh new changed done to the list
-        _buildDataList();
-      }
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getData();
-    });
+    buildDataList(false);
   }
 
   @override
@@ -141,22 +84,22 @@ class _EventsHomeState extends State<EventsHome>
       backgroundColor: colors.scaffoldColor,
       body: RefreshIndicator(
         onRefresh: () async {
-          await _getData();
+          await widget.refresh();
         },
         child: CustomSliverView(
           columnList: [
             TopBarWidget(
               icon: Icons.home_outlined,
               onChanged: (value) {
-                data.clear();
+                dataSearch.clear();
                 if (value != null) {
                   if (value.isEmpty) {
                     setState(() {
-                      data.addAll(dataSearch);
+                      dataSearch.addAll(widget.data);
                     });
                   } else {
                     setState(() {
-                      data = dataSearch
+                      dataSearch = widget.data
                           .where((i) => i.title
                               .toLowerCase()
                               .contains(value.toLowerCase()))
@@ -165,19 +108,19 @@ class _EventsHomeState extends State<EventsHome>
                   }
                 } else {
                   setState(() {
-                    data.addAll(dataSearch);
+                    dataSearch.addAll(widget.data);
                   });
                 }
-                _buildDataList();
+                buildDataList(true);
               },
               title: 'Events',
             ),
-            data.isNotEmpty
+            dataSearch.isNotEmpty
                 ? YesEventsWidget(
                     data: eventList,
                     rsvpList: rsvpList,
                     upcomingList: upcomingList,
-                    rsvp: _rsvp,
+                    rsvp: widget.rsvp,
                   )
                 : const NoEventsWidget()
           ],

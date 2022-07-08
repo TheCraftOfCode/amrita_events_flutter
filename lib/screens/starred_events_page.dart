@@ -12,117 +12,53 @@ import '../models/event_model.dart';
 import '../utils/http_modules.dart';
 
 class Starred extends StatefulWidget {
-  const Starred({Key? key}) : super(key: key);
+  const Starred(
+      {Key? key,
+      required this.data,
+      required this.refresh,
+      required this.rsvp,
+      required this.star})
+      : super(key: key);
+  final List<EventModel> data;
+  final Function refresh;
+  final Function(EventModel) rsvp;
+  final Function(EventModel) star;
 
   @override
-  State<Starred> createState() => _StarredState();
+  State<Starred> createState() => StarredState();
 }
 
-class _StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
-  List<EventModel> data = [];
+class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
   List<EventModel> dataSearch = [];
 
   //list depending on root data
   List<Widget> eventList = [];
 
-  _rebuildData(){
-    data.clear();
-    eventList.clear();
-    for(var i in dataSearch){
-      if (i.starred) {
-        data.add(i);
-        eventList.add(StarCard(
-          model: i,
-          rsvp: _rsvp,
-          star: _starEvent,
-        ));
-      }
-    }
-    dataSearch.clear();
-    dataSearch.addAll(data);
-  }
-
-  _rsvp(EventModel model) async {
-    var response = await makePostRequest(
-        json.encode({"eventId": model.id}), "/rsvp/rsvp", null, true, context);
-
-    if (response.statusCode == 200) {
-      //TODO: Show message for successful RSVP
-      model.rsvp = true;
-
-      //updating list to refresh new changed done to the list
-      setState(() {
-        _rebuildData();
-      });
-    }
-  }
-
-  _starEvent(EventModel model) async {
-    //already starred
-    if (!model.starred) {
-      var response = await makePostRequest(json.encode({"eventId": model.id}),
-          "/event/starEvent", null, true, context);
-
-      if (response.statusCode == 200) {
-        //TODO: Show message for successful RSVP
-        model.starred = true;
-
-        //updating list to refresh new changed done to the list
-        setState(() {
-          _rebuildData();
-        });
-      }
-    }
-
-    //not starred
-    else {
-      var response = await makePostRequest(json.encode({"eventId": model.id}),
-          "/event/removeStarredEvent", null, true, context);
-
-      if (response.statusCode == 200) {
-        //TODO: Show message for successful RSVP
-        model.starred = false;
-
-        //updating list to refresh new changed done to the list
-        setState(() {
-          _rebuildData();
-        });
-      }
-    }
-  }
-
-  _getData() async {
+  buildDataList(search) {
     setState(() {
-      data.clear();
-      dataSearch.clear();
-    });
-
-    var response =
-        await makePostRequest(null, "/event/getEvents", null, true, context);
-
-    if (response.statusCode == 200) {
-      var responseData = json.decode(response.body)["data"]; //List Data
-      for (var i in responseData) {
-        setState(() {
-          var parseData = EventModel.fromJSON(i);
-          if (parseData.starred) {
-            data.add(parseData);
-            dataSearch.add(parseData);
-            eventList.add(StarCard(
-              model: parseData,
-              rsvp: _rsvp,
-              star: _starEvent,
-            ));
-          }
-        });
+      eventList.clear();
+      if (!search) {
+        dataSearch.clear();
+        dataSearch.addAll(widget.data);
       }
+    });
+    for (var i in dataSearch) {
+      setState(() {
+        if (i.starred) {
+          eventList.add(StarCard(
+            model: i,
+            rsvp: widget.rsvp,
+            star: widget.star,
+          ));
+        }
+      });
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _getData();
+    buildDataList(false);
   }
 
   @override
@@ -131,13 +67,39 @@ class _StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
       backgroundColor: colors.scaffoldColor,
       body: RefreshIndicator(
         onRefresh: () async {
-          await _getData();
+          await widget.refresh();
         },
         child: CustomSliverView(
           columnList: [
-            const TopBarWidget(icon: Icons.star_border_sharp, title: "Starred"),
+            TopBarWidget(
+              icon: Icons.star_border_sharp,
+              title: "Starred",
+              onChanged: (value) {
+                dataSearch.clear();
+                if (value != null) {
+                  if (value.isEmpty) {
+                    setState(() {
+                      dataSearch.addAll(widget.data);
+                    });
+                  } else {
+                    setState(() {
+                      dataSearch = widget.data
+                          .where((i) => i.title
+                              .toLowerCase()
+                              .contains(value.toLowerCase()))
+                          .toList();
+                    });
+                  }
+                } else {
+                  setState(() {
+                    dataSearch.addAll(widget.data);
+                  });
+                }
+                buildDataList(true);
+              },
+            ),
             //TODO: Check for list size here
-            true == true
+            dataSearch.isNotEmpty
                 ? YesStarredEventsWidget(
                     eventList: eventList,
                   )

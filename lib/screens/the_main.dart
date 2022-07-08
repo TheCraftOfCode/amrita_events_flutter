@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:amrita_events_flutter/screens/events_home.dart';
 import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
@@ -5,6 +7,9 @@ import 'package:amrita_events_flutter/screens/settings_page.dart';
 import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
+
+import '../models/event_model.dart';
+import '../utils/http_modules.dart';
 
 class TheMain extends StatefulWidget {
   const TheMain({Key? key}) : super(key: key);
@@ -16,13 +21,103 @@ class TheMain extends StatefulWidget {
 class _TheMainState extends State<TheMain> {
   int currentIndex = 0;
   PageController controller = PageController();
+  List<EventModel> data = [];
+
+  _getData() async {
+    setState(() {
+      data.clear();
+    });
+
+    var response =
+        await makePostRequest(null, "/event/getEvents", null, true, context);
+
+    if (response.statusCode == 200) {
+      var responseData = json.decode(response.body)["data"]; //List Data
+      for (var i in responseData) {
+        setState(() {
+          var parseData = EventModel.fromJSON(i);
+          data.add(parseData);
+        });
+      }
+      _eventHomeState.currentState!.buildDataList(false);
+      _starredEventsState.currentState!.buildDataList(false);
+    }
+  }
+
+  _rsvp(EventModel model) async {
+    var response = await makePostRequest(
+        json.encode({"eventId": model.id}), "/rsvp/rsvp", null, true, context);
+
+    if (response.statusCode == 200) {
+      //TODO: Show message for successful RSVP
+      model.rsvp = true;
+
+      //updating list to refresh new changed done to the list
+      setState(() {});
+      _eventHomeState.currentState!.buildDataList(false);
+      _starredEventsState.currentState!.buildDataList(false);
+    }
+  }
+
+  _starEvent(EventModel model) async {
+    //already starred
+    if (!model.starred) {
+      var response = await makePostRequest(json.encode({"eventId": model.id}),
+          "/event/starEvent", null, true, context);
+
+      if (response.statusCode == 200) {
+        //TODO: Show message for successful RSVP
+        model.starred = true;
+
+        //updating list to refresh new changed done to the list
+        setState(() {});
+        _eventHomeState.currentState!.buildDataList(false);
+        _starredEventsState.currentState!.buildDataList(false);
+      }
+    }
+
+    //not starred
+    else {
+      var response = await makePostRequest(json.encode({"eventId": model.id}),
+          "/event/removeStarredEvent", null, true, context);
+
+      if (response.statusCode == 200) {
+        //TODO: Show message for successful RSVP
+        model.starred = false;
+
+        //updating list to refresh new changed done to the list
+        setState(() {});
+        _eventHomeState.currentState!.buildDataList(false);
+        _starredEventsState.currentState!.buildDataList(false);
+      }
+    }
+  }
+
+  final GlobalKey<EventsHomeState> _eventHomeState =
+      GlobalKey<EventsHomeState>();
+  final GlobalKey<StarredState> _starredEventsState = GlobalKey<StarredState>();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getData();
+    });
     screens = [
-      const EventsHome(),
-      const Starred(),
+      EventsHome(
+        key: _eventHomeState,
+        data: data,
+        refresh: _getData,
+        star: _starEvent,
+        rsvp: _rsvp,
+      ),
+      Starred(
+        key: _starredEventsState,
+        data: data,
+        refresh: _getData,
+        star: _starEvent,
+        rsvp: _rsvp,
+      ),
       const Profile(),
       const Settings(),
       const Notifications()
