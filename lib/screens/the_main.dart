@@ -1,14 +1,17 @@
 import 'dart:convert';
 
+import 'package:amrita_events_flutter/screens/admin/admin_console.dart';
 import 'package:amrita_events_flutter/screens/events_home.dart';
 import 'package:amrita_events_flutter/screens/notifications_page.dart';
 import 'package:amrita_events_flutter/screens/profile.dart';
 import 'package:amrita_events_flutter/screens/settings_page.dart';
 import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
+import 'package:amrita_events_flutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../models/event_model.dart';
+import '../utils/constants.dart';
 import '../utils/http_modules.dart';
 
 class TheMain extends StatefulWidget {
@@ -103,111 +106,108 @@ class _TheMainState extends State<TheMain> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getData();
     });
-    screens = [
-      EventsHome(
-        key: _eventHomeState,
-        data: data,
-        refresh: _getData,
-        star: _starEvent,
-        rsvp: _rsvp,
-      ),
-      Starred(
-        key: _starredEventsState,
-        data: data,
-        refresh: _getData,
-        star: _starEvent,
-        rsvp: _rsvp,
-      ),
-      const Profile(),
-      // const Settings(),
-      // const Notifications()
-    ];
   }
-
-  late List<Widget> screens;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => const Notifications()));
-              },
-              splashRadius: 20,
-              icon: Icon(
-                Icons.notifications,
-                color: colors.scaffoldColor,
-              )),
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => const Settings()));
-              },
-              splashRadius: 20,
-              icon: Icon(
-                Icons.settings,
-                color: colors.scaffoldColor,
-              )),
-          IconButton(
-              onPressed: () {},
-              splashRadius: 20,
-              icon: Icon(
-                Icons.logout,
-                color: colors.scaffoldColor,
-              )),
-        ],
-      ),
-      // extendBodyBehindAppBar: true,
-      backgroundColor: colors.scaffoldColor,
-      body: PageView.builder(
-        controller: controller,
-        itemCount: screens.length,
-        onPageChanged: (index) {
-          setState(() => currentIndex = index);
-        },
-        itemBuilder: (BuildContext context, int index) {
-          return screens[index];
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() => currentIndex = index);
-          controller.animateToPage(index,
-              duration: const Duration(milliseconds: 500), curve: Curves.ease);
-        },
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
-        showUnselectedLabels: true,
-        backgroundColor: colors.scaffoldColor,
-        items: [
-          BottomNavigationBarItem(
-              backgroundColor: colors.scaffoldColor,
-              icon: const Icon(Icons.play_arrow_outlined),
-              label: 'Events'),
-          BottomNavigationBarItem(
-              backgroundColor: colors.scaffoldColor,
-              icon: const Icon(Icons.star_border_sharp),
-              label: 'Starred'),
-          BottomNavigationBarItem(
-              backgroundColor: colors.scaffoldColor,
-              icon: const Icon(Icons.tag_faces_outlined),
-              label: 'Profile'),
-          // BottomNavigationBarItem(
-          //     backgroundColor: colors.scaffoldColor,
-          //     icon: const Icon(Icons.settings),
-          //     label: 'Settings'),
-          // BottomNavigationBarItem(
-          //     backgroundColor: colors.scaffoldColor,
-          //     icon: const Icon(Icons.notifications_none_outlined),
-          //     label: 'Notifications')
-        ],
-      ),
+    return FutureBuilder(
+      future: getUserRole,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const Notifications()));
+                  },
+                  splashRadius: 20,
+                  icon: Icon(
+                    Icons.notifications,
+                    color: colors.scaffoldColor,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => const Settings()));
+                  },
+                  splashRadius: 20,
+                  icon: Icon(
+                    Icons.settings,
+                    color: colors.scaffoldColor,
+                  )),
+              IconButton(
+                  onPressed: () {},
+                  splashRadius: 20,
+                  icon: Icon(
+                    Icons.logout,
+                    color: colors.scaffoldColor,
+                  )),
+            ],
+          ),
+          // extendBodyBehindAppBar: true,
+          backgroundColor: colors.scaffoldColor,
+          body: PageView(
+            controller: controller,
+            onPageChanged: (index) {
+              setState(() => currentIndex = index);
+            },
+            children: [
+              EventsHome(
+                key: _eventHomeState,
+                data: data,
+                refresh: _getData,
+                star: _starEvent,
+                rsvp: _rsvp,
+              ),
+              Starred(
+                key: _starredEventsState,
+                data: data,
+                refresh: _getData,
+                star: _starEvent,
+                rsvp: _rsvp,
+              ),
+              const Profile(),
+              const AdminConsole()
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: currentIndex,
+            onTap: (index) {
+              setState(() => currentIndex = index);
+              controller.animateToPage(index,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.ease);
+            },
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white70,
+            showUnselectedLabels: true,
+            backgroundColor: colors.scaffoldColor,
+            items: [
+              BottomNavigationBarItem(
+                  backgroundColor: colors.scaffoldColor,
+                  icon: const Icon(Icons.play_arrow_outlined),
+                  label: 'Events'),
+              BottomNavigationBarItem(
+                  backgroundColor: colors.scaffoldColor,
+                  icon: const Icon(Icons.star_border_sharp),
+                  label: 'Starred'),
+              BottomNavigationBarItem(
+                  backgroundColor: colors.scaffoldColor,
+                  icon: const Icon(Icons.tag_faces_outlined),
+                  label: 'Profile'),
+              if (snapshot.data == admin || snapshot.data == superAdmin)
+                BottomNavigationBarItem(
+                    backgroundColor: colors.scaffoldColor,
+                    icon: const Icon(Icons.admin_panel_settings),
+                    label: 'Admin'),
+            ],
+          ),
+        );
+      },
     );
   }
 }

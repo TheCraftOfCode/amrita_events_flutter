@@ -22,3 +22,6 @@ const String roleKey = "USER_ROLE";
 const String dateRegistered = "USER_REGISTER_DATE";
 const String emailIdKey = "USER_EMAIL";
 const String userIdKey = "USER_ID";
+const user = "user";
+const admin = "admin";
+const superAdmin = "super_admin";

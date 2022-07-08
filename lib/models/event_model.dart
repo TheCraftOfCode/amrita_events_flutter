@@ -41,7 +41,7 @@ class EventModel {
         eventType: decodedData['eventType'],
         rsvp: decodedData['rsvp'],
         dateUnparsed: decodedData['dateUnparsed'],
-        posterUrl: decodedData['posterUrl'],
+        posterUrl: decodedData['posterUrl'] ?? '',
         host: decodedData['host'],
         starred: decodedData['starred']);
   }
