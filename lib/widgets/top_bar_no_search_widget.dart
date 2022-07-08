@@ -17,7 +17,8 @@ class TopBarWidgetNoSearch extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
           shape: constants.rightBeveledRectangle, color: colors.cardColor),
-      height: MediaQuery.of(context).size.height * 0.30,
+      //changed from 0.3 to 0.2
+      height: MediaQuery.of(context).size.height * 0.2,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.all(25.0),

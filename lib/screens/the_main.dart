@@ -119,8 +119,8 @@ class _TheMainState extends State<TheMain> {
         rsvp: _rsvp,
       ),
       const Profile(),
-      const Settings(),
-      const Notifications()
+      // const Settings(),
+      // const Notifications()
     ];
   }
 
@@ -129,9 +129,44 @@ class _TheMainState extends State<TheMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => const Notifications()));
+              },
+              splashRadius: 20,
+              icon: Icon(
+                Icons.notifications,
+                color: colors.scaffoldColor,
+              )),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => const Settings()));
+              },
+              splashRadius: 20,
+              icon: Icon(
+                Icons.settings,
+                color: colors.scaffoldColor,
+              )),
+          IconButton(
+              onPressed: () {},
+              splashRadius: 20,
+              icon: Icon(
+                Icons.logout,
+                color: colors.scaffoldColor,
+              )),
+        ],
+      ),
+      // extendBodyBehindAppBar: true,
       backgroundColor: colors.scaffoldColor,
       body: PageView.builder(
         controller: controller,
+        itemCount: screens.length,
         onPageChanged: (index) {
           setState(() => currentIndex = index);
         },
@@ -149,6 +184,7 @@ class _TheMainState extends State<TheMain> {
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
         showUnselectedLabels: true,
+        backgroundColor: colors.scaffoldColor,
         items: [
           BottomNavigationBarItem(
               backgroundColor: colors.scaffoldColor,
@@ -162,14 +198,14 @@ class _TheMainState extends State<TheMain> {
               backgroundColor: colors.scaffoldColor,
               icon: const Icon(Icons.tag_faces_outlined),
               label: 'Profile'),
-          BottomNavigationBarItem(
-              backgroundColor: colors.scaffoldColor,
-              icon: const Icon(Icons.settings),
-              label: 'Settings'),
-          BottomNavigationBarItem(
-              backgroundColor: colors.scaffoldColor,
-              icon: const Icon(Icons.notifications_none_outlined),
-              label: 'Notifications')
+          // BottomNavigationBarItem(
+          //     backgroundColor: colors.scaffoldColor,
+          //     icon: const Icon(Icons.settings),
+          //     label: 'Settings'),
+          // BottomNavigationBarItem(
+          //     backgroundColor: colors.scaffoldColor,
+          //     icon: const Icon(Icons.notifications_none_outlined),
+          //     label: 'Notifications')
         ],
       ),
     );
