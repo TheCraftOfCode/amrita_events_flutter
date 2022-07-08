@@ -64,6 +64,7 @@ class TopBarWidget extends StatelessWidget {
                   ),
                   FloatingActionButton(
                     onPressed: () {},
+                    heroTag: title,
                     backgroundColor: colors.scaffoldColor,
                     child: Icon(
                       Icons.search_outlined,

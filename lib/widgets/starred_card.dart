@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
 import '../screens/onboarding.dart';
+import 'network_image.dart';
 
 class StarCard extends StatelessWidget {
   const StarCard(
@@ -37,13 +38,12 @@ class StarCard extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
-                Container(
-                  color: Colors.white,
+                SizedBox(
                   height: 250,
                   width: double.maxFinite,
                   child: Stack(
                     children: [
-                      //TODO: Add network image here
+                      Positioned.fill(child: networkImage(model.posterUrl)),
                       Align(
                         alignment: Alignment.topRight,
                         child: Padding(

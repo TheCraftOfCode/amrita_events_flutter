@@ -2,8 +2,11 @@ import 'package:amrita_events_flutter/models/event_model.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget_with_back_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../widgets/network_image.dart';
 
 class EventPage extends StatefulWidget {
   const EventPage({Key? key, required this.model, required this.rsvp})
@@ -28,15 +31,9 @@ class _EventPageState extends State<EventPage> {
           Padding(
               padding: const EdgeInsets.only(
                   top: 40, left: 15, right: 15, bottom: 30),
-              child: Container(
+              child: SizedBox(
                 height: 500,
-                //TODO: Use the image url and display poster here
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: colors.headingTextColor,
-                    width: 20,
-                  ),
-                ),
+                child: networkImage(widget.model.posterUrl),
               )),
           Padding(
             padding:

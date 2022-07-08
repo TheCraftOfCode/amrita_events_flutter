@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
+import '../widgets/network_image.dart';
 import '../widgets/starred_card.dart';
 import 'event_page.dart';
 
@@ -157,7 +158,7 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
               child: PageView.builder(
                 padEnds: false,
                 itemCount: widget.list.length,
-                controller: PageController(viewportFraction: 0.55),
+                controller: PageController(viewportFraction: 0.4),
                 onPageChanged: (int index) => setState(() => _index = index),
                 itemBuilder: (_, index) {
                   return Padding(
@@ -176,20 +177,7 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            flex: 3,
-                            child: Card(
-                              elevation: 6,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Center(
-                                child: Text(
-                                  "Card ${index + 1}",
-                                  style: const TextStyle(fontSize: 32),
-                                ),
-                              ),
-                            ),
-                          ),
+                          networkImage(widget.list[index].posterUrl),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8, top: 8),
