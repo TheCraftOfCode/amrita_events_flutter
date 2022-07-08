@@ -95,6 +95,7 @@ class EventsHomeState extends State<EventsHome>
     buildDataList(false);
   }
 
+  //TODO: Figure out logic to maintain search list even if new data is added
   @override
   Widget build(BuildContext context) {
     return Scaffold(
