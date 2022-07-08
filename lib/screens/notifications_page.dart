@@ -63,7 +63,7 @@ class _NotificationsState extends State<Notifications> with AutomaticKeepAliveCl
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       _getData();
     });
   }
