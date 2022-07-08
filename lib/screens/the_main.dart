@@ -114,41 +114,6 @@ class _TheMainState extends State<TheMain> {
       future: getUserRole,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const Notifications()));
-                  },
-                  splashRadius: 20,
-                  icon: Icon(
-                    Icons.notifications,
-                    color: colors.scaffoldColor,
-                  )),
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => const Settings()));
-                  },
-                  splashRadius: 20,
-                  icon: Icon(
-                    Icons.settings,
-                    color: colors.scaffoldColor,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  splashRadius: 20,
-                  icon: Icon(
-                    Icons.logout,
-                    color: colors.scaffoldColor,
-                  )),
-            ],
-          ),
-          // extendBodyBehindAppBar: true,
           backgroundColor: colors.scaffoldColor,
           body: PageView(
             controller: controller,
@@ -170,8 +135,11 @@ class _TheMainState extends State<TheMain> {
                 star: _starEvent,
                 rsvp: _rsvp,
               ),
+              if (snapshot.data == admin || snapshot.data == superAdmin)
+                const AdminConsole(),
               const Profile(),
-              const AdminConsole()
+              const Notifications(),
+              const Settings()
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -184,7 +152,8 @@ class _TheMainState extends State<TheMain> {
             },
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.white70,
-            showUnselectedLabels: true,
+            showUnselectedLabels: false,
+            showSelectedLabels: true,
             backgroundColor: colors.scaffoldColor,
             items: [
               BottomNavigationBarItem(
@@ -195,15 +164,23 @@ class _TheMainState extends State<TheMain> {
                   backgroundColor: colors.scaffoldColor,
                   icon: const Icon(Icons.star_border_sharp),
                   label: 'Starred'),
-              BottomNavigationBarItem(
-                  backgroundColor: colors.scaffoldColor,
-                  icon: const Icon(Icons.tag_faces_outlined),
-                  label: 'Profile'),
               if (snapshot.data == admin || snapshot.data == superAdmin)
                 BottomNavigationBarItem(
                     backgroundColor: colors.scaffoldColor,
                     icon: const Icon(Icons.admin_panel_settings),
                     label: 'Admin'),
+              BottomNavigationBarItem(
+                  backgroundColor: colors.scaffoldColor,
+                  icon: const Icon(Icons.tag_faces_outlined),
+                  label: 'Profile'),
+              BottomNavigationBarItem(
+                  backgroundColor: colors.scaffoldColor,
+                  icon: const Icon(Icons.notifications),
+                  label: 'Notifications'),
+              BottomNavigationBarItem(
+                  backgroundColor: colors.scaffoldColor,
+                  icon: const Icon(Icons.settings),
+                  label: 'Settings'),
             ],
           ),
         );

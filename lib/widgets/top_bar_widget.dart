@@ -21,7 +21,7 @@ class TopBarWidget extends StatelessWidget {
       child: Padding(
         //changed from bottom: 70 to 30
         padding:
-            const EdgeInsets.only(left: 30, right: 30, bottom: 30),
+            const EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 70),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
