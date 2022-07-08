@@ -138,7 +138,7 @@ class _TheMainState extends State<TheMain> {
               const Profile(),
               const Notifications(),
               if (snapshot.data == admin || snapshot.data == superAdmin)
-                const AdminConsole(),
+                AdminConsole(userRole: snapshot.data,),
               const Settings()
             ],
           ),

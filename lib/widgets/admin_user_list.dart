@@ -4,27 +4,24 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import '../utils/http_modules.dart';
 import 'alert_dialog.dart';
 
+//TODO: Export to a different class
 class User {
-  final String id;
   final String name;
-  final String username;
   final String email;
   final String role;
 
   User(
-      {required this.id,
-      required this.name,
-      required this.username,
+      {required this.name,
       required this.email,
       required this.role});
 
   factory User.fromJson(Map<String, dynamic> json) {
+    print(json);
     return User(
-      id: json['_id'],
       name: json['name'],
-      username: json['userId'],
       email: json['email'],
       role: json['role'],
     );
@@ -43,10 +40,9 @@ class _AdminUserListState extends State<AdminUserList> {
 
   List? listData = [];
 
-  // Future<http.Response> _fetchUsers() async {
-  //   return await makePostRequest(null, "/getUsers", null, true,
-  //       context: context);
-  // }
+  Future<http.Response> _fetchUsers() async {
+    return await makePostRequest(null, "/admin/getUsers", null, true, context);
+  }
 
   _putListData(http.Response responseData, bool setStateBool) {
     listData?.clear();
@@ -63,10 +59,10 @@ class _AdminUserListState extends State<AdminUserList> {
       return SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 70.0, bottom: 10, left: 20),
+              padding: const EdgeInsets.only(top: 70.0, bottom: 10, left: 20),
               child: Align(
                   alignment: Alignment.topLeft,
                   child: Column(
@@ -97,7 +93,6 @@ class _AdminUserListState extends State<AdminUserList> {
                   return _tile(
                       context,
                       listData![index].name,
-                      listData![index].username,
                       listData![index].email,
                       listData![index].role,
                       index);
@@ -122,7 +117,7 @@ class _AdminUserListState extends State<AdminUserList> {
     }
   }
 
-  Widget _tile(context, String name, String username, String email, String role,
+  Widget _tile(context, String name, String email, String role,
       int index) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
@@ -149,16 +144,11 @@ class _AdminUserListState extends State<AdminUserList> {
                       child: Text(
                         name,
                         style: GoogleFonts.nunito(
-                            color: colors.primaryTextColor,
+                            color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Text(('@$username'),
-                        style: GoogleFonts.nunito(
-                            color: colors.textBoxTextColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold)),
                     Text(('Role: $role'),
                         style: GoogleFonts.nunito(
                             color: colors.textBoxTextColor,
@@ -169,7 +159,7 @@ class _AdminUserListState extends State<AdminUserList> {
                       child: Text(email.toLowerCase(),
                           overflow: TextOverflow.fade,
                           style: GoogleFonts.nunito(
-                              color: colors.primaryTextColor,
+                              color: Colors.white54,
                               fontSize: 14,
                               fontWeight: FontWeight.w500)),
                     )
@@ -235,6 +225,7 @@ class _AdminUserListState extends State<AdminUserList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      future: _fetchUsers(),
       builder: (context, AsyncSnapshot<http.Response> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.statusCode == 200) {
@@ -252,25 +243,23 @@ class _AdminUserListState extends State<AdminUserList> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Center(child: CircularProgressIndicator()),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Center(
-                  child: Text(
-                    'Please wait...',
-                    style: GoogleFonts.nunito(
-                        color: colors.primaryTextColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 17),
-                  ),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Center(child: CircularProgressIndicator()),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Center(
+                child: Text(
+                  'Please wait...',
+                  style: GoogleFonts.nunito(
+                      color: colors.primaryTextColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         );
       },
     );

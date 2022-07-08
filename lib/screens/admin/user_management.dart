@@ -22,9 +22,9 @@ class UserManagement extends StatelessWidget {
                 child: const Icon(Icons.person_add_alt_1_sharp),
               )
             : Container(),
-        body: Container(
+        body: const SizedBox(
           height: double.maxFinite,
-          child: const AdminUserList(),
+          child: AdminUserList(),
         ));
   }
 }

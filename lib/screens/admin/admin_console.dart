@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/screens/admin/user_management.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import '../../widgets/admin_card.dart';
@@ -5,7 +6,8 @@ import '../../widgets/custom_sliver_widget.dart';
 import '../../widgets/top_bar_no_search_widget.dart';
 
 class AdminConsole extends StatelessWidget {
-  const AdminConsole({Key? key}) : super(key: key);
+  const AdminConsole({Key? key, required this.userRole}) : super(key: key);
+  final String userRole;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,10 @@ class AdminConsole extends StatelessWidget {
                     child: AdminCard(
                   title: 'Manage Users',
                   subTitle: 'Manage all users here',
-                  iconData: Icons.manage_accounts, onTap: () {  },
+                  iconData: Icons.manage_accounts, onTap: () {
+                    //TODO: Replace admin with user role from the_main.dart
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => UserManagement(role: userRole)));
+                    },
                 )),
                 Expanded(
                     child: AdminCard(
