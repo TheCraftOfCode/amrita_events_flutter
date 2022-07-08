@@ -17,3 +17,4 @@ var textBoxTextColor = const Color(0xffDADADA);
 var cardBackgroundColor = const Color(0xff1D1639);
 var eventCardItemTitle = const Color(0xffC0C0C0);
 var notificationDateColors = const Color(0xffFFC388);
+var dividerColor = const Color(0xffdcc1ff);

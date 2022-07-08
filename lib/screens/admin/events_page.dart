@@ -278,7 +278,7 @@ class _MainContentCardWidgetState extends State<_MainContentCardWidget> {
                   child: InkWell(
                     child: Card(
                       elevation: 10,
-                      color: colors.inactiveCardColor,
+                      color: colors.cardBackgroundColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
