@@ -17,7 +17,7 @@ ShapeBorder rightBeveledRectangle = RectangleShapeBorder(
 const textFieldPadding =
 EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 10);
 
-const String networkAddress = 'localhost:8000';
+const String networkAddress = '10.0.2.2:8000';
 const bool isHTTPS = false;
 const String storageJWTKey = "USER_AUTH_JWT";
 const String nameKey = "USER_NAME";
