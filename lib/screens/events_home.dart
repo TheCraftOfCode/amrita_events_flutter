@@ -177,17 +177,17 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          networkImage(widget.list[index].posterUrl),
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8, top: 8),
-                              child: Text(
-                                widget.list[index].title,
-                                maxLines: 2,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                            child: networkImage(widget.list[index].posterUrl),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, top: 8),
+                            child: Text(
+                              widget.list[index].title,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           Padding(
