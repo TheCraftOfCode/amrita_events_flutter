@@ -34,6 +34,9 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
   //list depending on root data
   List<Widget> eventList = [];
 
+  String searchPattern = "";
+
+
   buildDataList(search) {
     eventList.clear();
     if (!search) {
@@ -51,6 +54,36 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
         }
       });
     }
+  }
+
+  rebuildSearchData(){
+    if(searchPattern.isNotEmpty){
+      filterSearchData(searchPattern);
+    }
+  }
+
+  filterSearchData(value){
+    dataSearch.clear();
+    if (value != null) {
+      if (value.isEmpty) {
+        setState(() {
+          dataSearch.addAll(widget.data);
+        });
+      } else {
+        setState(() {
+          dataSearch = widget.data
+              .where((i) => i.title
+              .toLowerCase()
+              .contains(value.toLowerCase()))
+              .toList();
+        });
+      }
+    } else {
+      setState(() {
+        dataSearch.addAll(widget.data);
+      });
+    }
+    buildDataList(true);
   }
 
   @override
@@ -72,27 +105,8 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
             TopBarWidget(
               title: "Starred",
               onChanged: (value) {
-                dataSearch.clear();
-                if (value != null) {
-                  if (value.isEmpty) {
-                    setState(() {
-                      dataSearch.addAll(widget.data);
-                    });
-                  } else {
-                    setState(() {
-                      dataSearch = widget.data
-                          .where((i) => i.title
-                              .toLowerCase()
-                              .contains(value.toLowerCase()))
-                          .toList();
-                    });
-                  }
-                } else {
-                  setState(() {
-                    dataSearch.addAll(widget.data);
-                  });
-                }
-                buildDataList(true);
+                searchPattern = value ?? "";
+                filterSearchData(value);
               },
             ),
             //TODO: Check for list size here

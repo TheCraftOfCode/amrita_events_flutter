@@ -52,6 +52,7 @@ class _TheMainState extends State<TheMain> {
       }
       if (_starredEventsState.currentState != null) {
         _starredEventsState.currentState!.buildDataList(false);
+        _starredEventsState.currentState!.rebuildSearchData();
       }
     }
   }
@@ -72,6 +73,7 @@ class _TheMainState extends State<TheMain> {
       }
       if (_starredEventsState.currentState != null) {
         _starredEventsState.currentState!.buildDataList(false);
+        _starredEventsState.currentState!.rebuildSearchData();
       }
     }
   }
@@ -94,6 +96,7 @@ class _TheMainState extends State<TheMain> {
         }
         if (_starredEventsState.currentState != null) {
           _starredEventsState.currentState!.buildDataList(false);
+          _starredEventsState.currentState!.rebuildSearchData();
         }
       }
     }
@@ -115,6 +118,7 @@ class _TheMainState extends State<TheMain> {
         }
         if (_starredEventsState.currentState != null) {
           _starredEventsState.currentState!.buildDataList(false);
+          _starredEventsState.currentState!.rebuildSearchData();
         }
       }
     }
@@ -168,6 +172,8 @@ class _TheMainState extends State<TheMain> {
         }
         if (_starredEventsState.currentState != null) {
           _starredEventsState.currentState!.buildDataList(false);
+          _starredEventsState.currentState!.rebuildSearchData();
+
         }
       },
       onError: (error) => print(error),
