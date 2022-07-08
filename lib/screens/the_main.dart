@@ -48,6 +48,7 @@ class _TheMainState extends State<TheMain> {
       }
       if (_eventHomeState.currentState != null) {
         _eventHomeState.currentState!.buildDataList(false);
+        _eventHomeState.currentState!.rebuildSearchData();
       }
       if (_starredEventsState.currentState != null) {
         _starredEventsState.currentState!.buildDataList(false);
@@ -67,6 +68,7 @@ class _TheMainState extends State<TheMain> {
       setState(() {});
       if (_eventHomeState.currentState != null) {
         _eventHomeState.currentState!.buildDataList(false);
+        _eventHomeState.currentState!.rebuildSearchData();
       }
       if (_starredEventsState.currentState != null) {
         _starredEventsState.currentState!.buildDataList(false);
@@ -88,6 +90,7 @@ class _TheMainState extends State<TheMain> {
         setState(() {});
         if (_eventHomeState.currentState != null) {
           _eventHomeState.currentState!.buildDataList(false);
+          _eventHomeState.currentState!.rebuildSearchData();
         }
         if (_starredEventsState.currentState != null) {
           _starredEventsState.currentState!.buildDataList(false);
@@ -108,6 +111,7 @@ class _TheMainState extends State<TheMain> {
         setState(() {});
         if (_eventHomeState.currentState != null) {
           _eventHomeState.currentState!.buildDataList(false);
+          _eventHomeState.currentState!.rebuildSearchData();
         }
         if (_starredEventsState.currentState != null) {
           _starredEventsState.currentState!.buildDataList(false);
@@ -160,6 +164,7 @@ class _TheMainState extends State<TheMain> {
         }
         if (_eventHomeState.currentState != null) {
           _eventHomeState.currentState!.buildDataList(false);
+          _eventHomeState.currentState!.rebuildSearchData();
         }
         if (_starredEventsState.currentState != null) {
           _starredEventsState.currentState!.buildDataList(false);

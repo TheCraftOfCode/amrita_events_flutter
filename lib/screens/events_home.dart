@@ -40,6 +40,8 @@ class EventsHomeState extends State<EventsHome>
   List<EventModel> rsvpList = [];
   List<EventModel> upcomingList = [];
 
+  String searchPattern = "";
+
   _compareDates(String date) {
     DateTime dateParsed = DateTime.parse(date);
     DateTime currentDate = DateTime.now();
@@ -89,6 +91,36 @@ class EventsHomeState extends State<EventsHome>
     }
   }
 
+  rebuildSearchData(){
+    if(searchPattern.isNotEmpty){
+      filterSearchData(searchPattern);
+    }
+  }
+
+  filterSearchData(value){
+    dataSearch.clear();
+    if (value != null) {
+      if (value.isEmpty) {
+        setState(() {
+          dataSearch.addAll(widget.data);
+        });
+      } else {
+        setState(() {
+          dataSearch = widget.data
+              .where((i) => i.title
+              .toLowerCase()
+              .contains(value.toLowerCase()))
+              .toList();
+        });
+      }
+    } else {
+      setState(() {
+        dataSearch.addAll(widget.data);
+      });
+    }
+    buildDataList(true);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -108,27 +140,8 @@ class EventsHomeState extends State<EventsHome>
           columnList: [
             TopBarWidget(
               onChanged: (value) {
-                dataSearch.clear();
-                if (value != null) {
-                  if (value.isEmpty) {
-                    setState(() {
-                      dataSearch.addAll(widget.data);
-                    });
-                  } else {
-                    setState(() {
-                      dataSearch = widget.data
-                          .where((i) => i.title
-                              .toLowerCase()
-                              .contains(value.toLowerCase()))
-                          .toList();
-                    });
-                  }
-                } else {
-                  setState(() {
-                    dataSearch.addAll(widget.data);
-                  });
-                }
-                buildDataList(true);
+                searchPattern = value ?? "";
+                filterSearchData(value);
               },
               title: 'Events',
             ),
