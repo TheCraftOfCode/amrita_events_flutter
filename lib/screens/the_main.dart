@@ -135,10 +135,10 @@ class _TheMainState extends State<TheMain> {
                 star: _starEvent,
                 rsvp: _rsvp,
               ),
-              if (snapshot.data == admin || snapshot.data == superAdmin)
-                const AdminConsole(),
               const Profile(),
               const Notifications(),
+              if (snapshot.data == admin || snapshot.data == superAdmin)
+                const AdminConsole(),
               const Settings()
             ],
           ),
@@ -164,11 +164,6 @@ class _TheMainState extends State<TheMain> {
                   backgroundColor: colors.scaffoldColor,
                   icon: const Icon(Icons.star_border_sharp),
                   label: 'Starred'),
-              if (snapshot.data == admin || snapshot.data == superAdmin)
-                BottomNavigationBarItem(
-                    backgroundColor: colors.scaffoldColor,
-                    icon: const Icon(Icons.admin_panel_settings),
-                    label: 'Admin'),
               BottomNavigationBarItem(
                   backgroundColor: colors.scaffoldColor,
                   icon: const Icon(Icons.tag_faces_outlined),
@@ -177,6 +172,11 @@ class _TheMainState extends State<TheMain> {
                   backgroundColor: colors.scaffoldColor,
                   icon: const Icon(Icons.notifications),
                   label: 'Notifications'),
+              if (snapshot.data == admin || snapshot.data == superAdmin)
+                BottomNavigationBarItem(
+                    backgroundColor: colors.scaffoldColor,
+                    icon: const Icon(Icons.admin_panel_settings),
+                    label: 'Admin'),
               BottomNavigationBarItem(
                   backgroundColor: colors.scaffoldColor,
                   icon: const Icon(Icons.settings),
