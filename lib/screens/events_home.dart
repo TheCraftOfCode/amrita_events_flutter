@@ -35,6 +35,7 @@ class EventsHomeState extends State<EventsHome>
   List<Widget> cultural = [];
   List<Widget> technical = [];
   List<Widget> spiritual = [];
+  List<Widget> mainWidgetList = [];
 
   List<EventModel> rsvpList = [];
   List<EventModel> upcomingList = [];
@@ -51,6 +52,7 @@ class EventsHomeState extends State<EventsHome>
     cultural.clear();
     technical.clear();
     spiritual.clear();
+    mainWidgetList.clear();
 
     rsvpList.clear();
     upcomingList.clear();
@@ -67,6 +69,7 @@ class EventsHomeState extends State<EventsHome>
         );
 
         //three conditions for three types of events
+        mainWidgetList.add(card);
         if (i.eventType == "CULTURAL") {
           cultural.add(card);
         } else if (i.eventType == "TECHNICAL") {
@@ -136,6 +139,7 @@ class EventsHomeState extends State<EventsHome>
                     spiritual: spiritual,
                     technical: technical,
                     cultural: cultural,
+                    allWidgets: mainWidgetList,
                   )
                 : const NoEventsWidget()
           ],
@@ -241,12 +245,14 @@ class YesEventsWidget extends StatefulWidget {
       required this.technical,
       required this.rsvpList,
       required this.upcomingList,
-      required this.rsvp})
+      required this.rsvp,
+      required this.allWidgets})
       : super(key: key);
 
   final List<Widget> cultural;
   final List<Widget> technical;
   final List<Widget> spiritual;
+  final List<Widget> allWidgets;
 
   final List<EventModel> rsvpList;
   final List<EventModel> upcomingList;
@@ -265,9 +271,7 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
   initList() {
     widgetList.clear();
     if (chosenOption == options[0]) {
-      widgetList.addAll(widget.cultural);
-      widgetList.addAll(widget.technical);
-      widgetList.addAll(widget.spiritual);
+      widgetList.addAll(widget.allWidgets);
     } else if (chosenOption == options[1]) {
       widgetList.addAll(widget.cultural);
     } else if (chosenOption == options[2]) {
@@ -330,7 +334,7 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
                 });
               }),
             ] +
-            widgetList);
+            widgetList.reversed.toList());
   }
 }
 
