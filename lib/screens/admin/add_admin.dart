@@ -155,31 +155,31 @@ class _AddAdminState extends State<AddAdmin> {
                                   setState(() {
                                     showProgress = true;
                                   });
-                                  var res = await makePostRequest(
-                                      json.encode({
-                                        "name": _nameController.text,
-                                        "email": _emailController.text,
-                                        "role": roleData
-                                      }),
-                                      "/registerAdminUser",
-                                      null,
-                                      true,
-                                      context: context);
+                                  // var res = await makePostRequest(
+                                  //     json.encode({
+                                  //       "name": _nameController.text,
+                                  //       "email": _emailController.text,
+                                  //       "role": roleData
+                                  //     }),
+                                  //     "/registerAdminUser",
+                                  //     null,
+                                  //     true,
+                                  //     context: context);
                                   setState(() {
                                     showProgress = false;
                                   });
-                                  if (res.statusCode == 200) {
-                                    error = '';
-                                    displayDialog(context, "Continue", null, () {
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                    }, "Account has been created",
-                                        "An account has been created and password has been sent to the mail ID");
-                                  } else {
-                                    setState(() {
-                                      error = json.decode(res.body)['message'];
-                                    });
-                                  }
+                                  // if (res.statusCode == 200) {
+                                  //   error = '';
+                                  //   displayDialog(context, "Continue", null, () {
+                                  //     Navigator.of(context).pop();
+                                  //     Navigator.of(context).pop();
+                                  //   }, "Account has been created",
+                                  //       "An account has been created and password has been sent to the mail ID");
+                                  // } else {
+                                  //   setState(() {
+                                  //     error = json.decode(res.body)['message'];
+                                  //   });
+                                  // }
                                 }
                               },
                               child: Text(
