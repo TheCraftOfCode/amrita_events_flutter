@@ -105,7 +105,6 @@ class EventsHomeState extends State<EventsHome>
         child: CustomSliverView(
           columnList: [
             TopBarWidget(
-              icon: Icons.home_outlined,
               onChanged: (value) {
                 dataSearch.clear();
                 if (value != null) {

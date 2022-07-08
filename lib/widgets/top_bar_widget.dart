@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TopBarWidget extends StatelessWidget {
-  const TopBarWidget({Key? key, required this.icon, required this.title, this.onChanged})
+  const TopBarWidget({Key? key, required this.title, this.onChanged})
       : super(key: key);
 
-  final IconData icon;
+
   final String title;
   final void Function(String?)? onChanged;
 
@@ -28,10 +28,6 @@ class TopBarWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(
-                  icon,
-                  size: 40,
-                ),
                 const SizedBox(
                   width: 10,
                 ),

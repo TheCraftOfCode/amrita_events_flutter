@@ -72,7 +72,6 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
         child: CustomSliverView(
           columnList: [
             TopBarWidget(
-              icon: Icons.star_border_sharp,
               title: "Starred",
               onChanged: (value) {
                 dataSearch.clear();
