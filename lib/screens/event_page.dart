@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:amrita_events_flutter/models/event_model.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
+import 'package:amrita_events_flutter/utils/http_modules.dart';
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget_with_back_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -20,6 +23,15 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      makePostRequest(json.encode({"id": widget.model.id}), "/event/pageViewed",
+          null, true, context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
