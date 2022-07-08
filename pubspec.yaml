@@ -46,6 +46,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   smooth_page_indicator:
   cached_network_image: ^3.2.0
+  oktoast:
 
 
 
