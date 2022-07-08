@@ -38,9 +38,9 @@ class _EventsListState extends State<EventsList> {
   //     return;
   //   }
 
-    //Map<String, dynamic> decodedData = jsonDecode(data.body);
+  //Map<String, dynamic> decodedData = jsonDecode(data.body);
 
-    //allEventsList.clear();
+  //allEventsList.clear();
   //   for (var i in decodedData['data']) {
   //     List<ResultsModel> resultData = [];
   //     if (i['results'] != null || i['results'].length != 0) {
@@ -90,148 +90,118 @@ class _EventsListState extends State<EventsList> {
         },
         child: const Icon(Icons.add),
       ),
-      body: Container(
-                  height: double.maxFinite,
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
+      body: SizedBox(
+        height: double.maxFinite,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //TODO: Add appbar with search and notifications
+              Padding(
+                padding: const EdgeInsets.only(top: 70.0, bottom: 20, left: 20),
+                child: Align(
+                    alignment: Alignment.topLeft,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        //TODO: Add appbar with search and notifications
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 70.0, bottom: 20, left: 20),
-                          child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Events (admin)',
-                                    style: GoogleFonts.nunito(
-                                        fontSize: 30,
-                                        color: colors.primaryTextColor,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    'Choose an event to edit it\'s details.',
-                                    style: GoogleFonts.nunito(
-                                        fontSize: 17,
-                                        color: colors.primaryTextColor),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        if (allEventsList.isNotEmpty)
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: allEventsList.length,
-                            itemBuilder: (_, i) {
-                              return _MainContentCardWidget(
-                                cardTitle: allEventsList[i].eventName,
-                                cardSubTitle: allEventsList[i].eventType,
-                                eventType: allEventsList[i].eventType,
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AddEvent(
-                                                eventData: allEventsList[i],
-                                                eventUpdate: true,
-                                              )));
-                                },
-                                cardDate: allEventsList[i].eventDate,
-                                removeData: () {
-                                  setState(() {
-                                    allEventsList.removeAt(i);
-                                  });
-                                },
-                                id: allEventsList[i].id,
-                              );
-                            },
-                          )
-                        else
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15, right: 20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Center(
-                                    child: Image.asset(
-                                  'assets/events_empty.png',
-                                  fit: BoxFit.contain,
-                                )),
-                                Text(
-                                  "Nothing to see here",
-                                  style: GoogleFonts.nunito(
-                                      fontSize: 25,
-                                      color: colors.primaryTextColor,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20.0,
-                                      bottom: 50,
-                                      left: 30,
-                                      right: 35),
-                                  child: Text(
-                                    "No events have been published so far, do check in later (or create some!). Cheers!",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      fontSize: 17,
-                                      color: colors.primaryTextColor,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                    alignment: Alignment.topLeft,
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          'TAKE ME BACK',
-                                          style: GoogleFonts.nunito(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        )))
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            } else {
-              return Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Center(child: CircularProgressIndicator()),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Center(
-                        child: Text(
-                          'Please wait...',
+                        Text(
+                          'Events (admin)',
                           style: GoogleFonts.nunito(
+                              fontSize: 30,
                               color: colors.primaryTextColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 17),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Choose an event to edit it\'s details.',
+                          style: GoogleFonts.nunito(
+                              fontSize: 17, color: colors.primaryTextColor),
+                        ),
+                      ],
+                    )),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              if (allEventsList.isNotEmpty)
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: allEventsList.length,
+                  itemBuilder: (_, i) {
+                    return _MainContentCardWidget(
+                      cardTitle: allEventsList[i].eventName,
+                      cardSubTitle: allEventsList[i].eventType,
+                      eventType: allEventsList[i].eventType,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddEvent(
+                                      eventData: allEventsList[i],
+                                      eventUpdate: true,
+                                    )));
+                      },
+                      cardDate: allEventsList[i].eventDate,
+                      removeData: () {
+                        setState(() {
+                          allEventsList.removeAt(i);
+                        });
+                      },
+                      id: allEventsList[i].id,
+                    );
+                  },
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                          child: Image.asset(
+                        'assets/events_empty.png',
+                        fit: BoxFit.contain,
+                      )),
+                      Text(
+                        "Nothing to see here",
+                        style: GoogleFonts.nunito(
+                            fontSize: 25,
+                            color: colors.primaryTextColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, bottom: 50, left: 30, right: 35),
+                        child: Text(
+                          "No events have been published so far, do check in later (or create some!). Cheers!",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.nunito(
+                            fontSize: 17,
+                            color: colors.primaryTextColor,
+                          ),
                         ),
                       ),
-                    )
-                  ],
+                      Align(
+                          alignment: Alignment.topLeft,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'TAKE ME BACK',
+                                style: GoogleFonts.nunito(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              )))
+                    ],
+                  ),
                 ),
-              );
-            }
-          }),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
