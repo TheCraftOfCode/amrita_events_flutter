@@ -23,10 +23,8 @@ class _NotificationsState extends State<Notifications> with AutomaticKeepAliveCl
   List<Widget> notificationList = [];
 
   _getData() async {
-    setState(() {
-      mapData.clear();
-      notificationList.clear();
-    });
+    mapData.clear();
+    notificationList.clear();
 
     var response = await makePostRequest(
         null, "/notification/getNotifications", null, true, context);

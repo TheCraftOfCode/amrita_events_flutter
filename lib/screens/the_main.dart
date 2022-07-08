@@ -26,10 +26,9 @@ class _TheMainState extends State<TheMain> {
   PageController controller = PageController();
   List<EventModel> data = [];
 
+
   _getData() async {
-    setState(() {
-      data.clear();
-    });
+    data.clear();
 
     var response =
         await makePostRequest(null, "/event/getEvents", null, true, context);

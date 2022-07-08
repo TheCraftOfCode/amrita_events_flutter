@@ -35,13 +35,11 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
   List<Widget> eventList = [];
 
   buildDataList(search) {
-    setState(() {
-      eventList.clear();
-      if (!search) {
-        dataSearch.clear();
-        dataSearch.addAll(widget.data);
-      }
-    });
+    eventList.clear();
+    if (!search) {
+      dataSearch.clear();
+      dataSearch.addAll(widget.data);
+    }
     for (var i in dataSearch) {
       setState(() {
         if (i.starred) {

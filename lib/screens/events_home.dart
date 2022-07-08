@@ -48,18 +48,16 @@ class EventsHomeState extends State<EventsHome>
 
   //call this method if data is updated to refresh all data without having to pull new data from the server again
   buildDataList(bool search) {
-    setState(() {
-      cultural.clear();
-      technical.clear();
-      spiritual.clear();
+    cultural.clear();
+    technical.clear();
+    spiritual.clear();
 
-      rsvpList.clear();
-      upcomingList.clear();
-      if (!search) {
-        dataSearch.clear();
-        dataSearch.addAll(widget.data);
-      }
-    });
+    rsvpList.clear();
+    upcomingList.clear();
+    if (!search) {
+      dataSearch.clear();
+      dataSearch.addAll(widget.data);
+    }
     for (var i in dataSearch) {
       setState(() {
         var card = StarCard(
@@ -295,38 +293,45 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Padding(
-        padding: EdgeInsets.only(left: 28, top: 30),
-        child: Text(
-          "Upcoming",
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-      ),
-      HorizontalPageView(
-        list: widget.upcomingList,
-        rsvp: widget.rsvp,
-      ),
-      const Padding(
-        padding: EdgeInsets.only(left: 28, top: 16),
-        child: Text(
-          "RSVP'd Events",
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-      ),
-      HorizontalPageView(
-        list: widget.rsvpList,
-        rsvp: widget.rsvp,
-      ),
-      _dropDown(options, chosenOption, (newValue) {
-        setState(() {
-          chosenOption = newValue;
-          initList();
-        });
-      }),
-    ] + widgetList);
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 28, top: 30),
+                child: Text(
+                  "Upcoming",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
+              HorizontalPageView(
+                list: widget.upcomingList,
+                rsvp: widget.rsvp,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 28, top: 16),
+                child: Text(
+                  "RSVP'd Events",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
+              HorizontalPageView(
+                list: widget.rsvpList,
+                rsvp: widget.rsvp,
+              ),
+              _dropDown(options, chosenOption, (newValue) {
+                setState(() {
+                  chosenOption = newValue;
+                  initList();
+                });
+              }),
+            ] +
+            widgetList);
   }
 }
 
