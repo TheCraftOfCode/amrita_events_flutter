@@ -235,7 +235,6 @@ class _AdminUserListState extends State<AdminUserList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _fetchUsers(),
       builder: (context, AsyncSnapshot<http.Response> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.statusCode == 200) {
