@@ -28,3 +28,9 @@ const String userIdKey = "USER_ID";
 const user = "user";
 const admin = "admin";
 const superAdmin = "super_admin";
+
+//event types
+const eventAdd = "event_add";
+const eventModify = "event_modify";
+const eventDelete = "event_delete";
+const notification = "notification";

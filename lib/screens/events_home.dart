@@ -282,7 +282,6 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
   void didUpdateWidget(covariant YesEventsWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     initList();
-    print("INIT");
   }
 
   @override

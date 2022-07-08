@@ -16,8 +16,6 @@ Future<http.Response> makePostRequest(
       contentType["user-auth-token"] = await jwtTokenGet;
     }
 
-    print(Uri.http(networkAddress, route, queryParameters));
-
     var res = await http
         .post(
             isHTTPS

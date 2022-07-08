@@ -9,8 +9,10 @@ import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../models/event_model.dart';
+import '../models/notification.dart';
 import '../utils/constants.dart';
 import '../utils/http_modules.dart';
 
@@ -26,6 +28,9 @@ class _TheMainState extends State<TheMain> {
   PageController controller = PageController();
   List<EventModel> data = [];
 
+  final channel = WebSocketChannel.connect(
+    Uri.parse('ws://10.0.2.2:8000/websockets'),
+  );
 
   _getData() async {
     data.clear();
@@ -41,8 +46,12 @@ class _TheMainState extends State<TheMain> {
           data.add(parseData);
         });
       }
-      _eventHomeState.currentState!.buildDataList(false);
-      _starredEventsState.currentState!.buildDataList(false);
+      if (_eventHomeState.currentState != null) {
+        _eventHomeState.currentState!.buildDataList(false);
+      }
+      if (_starredEventsState.currentState != null) {
+        _starredEventsState.currentState!.buildDataList(false);
+      }
     }
   }
 
@@ -56,8 +65,12 @@ class _TheMainState extends State<TheMain> {
 
       //updating list to refresh new changed done to the list
       setState(() {});
-      _eventHomeState.currentState!.buildDataList(false);
-      _starredEventsState.currentState!.buildDataList(false);
+      if (_eventHomeState.currentState != null) {
+        _eventHomeState.currentState!.buildDataList(false);
+      }
+      if (_starredEventsState.currentState != null) {
+        _starredEventsState.currentState!.buildDataList(false);
+      }
     }
   }
 
@@ -73,8 +86,12 @@ class _TheMainState extends State<TheMain> {
 
         //updating list to refresh new changed done to the list
         setState(() {});
-        _eventHomeState.currentState!.buildDataList(false);
-        _starredEventsState.currentState!.buildDataList(false);
+        if (_eventHomeState.currentState != null) {
+          _eventHomeState.currentState!.buildDataList(false);
+        }
+        if (_starredEventsState.currentState != null) {
+          _starredEventsState.currentState!.buildDataList(false);
+        }
       }
     }
 
@@ -89,8 +106,12 @@ class _TheMainState extends State<TheMain> {
 
         //updating list to refresh new changed done to the list
         setState(() {});
-        _eventHomeState.currentState!.buildDataList(false);
-        _starredEventsState.currentState!.buildDataList(false);
+        if (_eventHomeState.currentState != null) {
+          _eventHomeState.currentState!.buildDataList(false);
+        }
+        if (_starredEventsState.currentState != null) {
+          _starredEventsState.currentState!.buildDataList(false);
+        }
       }
     }
   }
@@ -99,9 +120,53 @@ class _TheMainState extends State<TheMain> {
       GlobalKey<EventsHomeState>();
   final GlobalKey<StarredState> _starredEventsState = GlobalKey<StarredState>();
 
+  //Notifications
+  final GlobalKey<NotificationsState> _notificationPageState =
+      GlobalKey<NotificationsState>();
+
   @override
   void initState() {
     super.initState();
+    channel.stream.listen(
+      (eventData) {
+        var res = json.decode(eventData);
+        var socketEventType = res['type'];
+        var socketData = res['data'];
+        print(socketData);
+
+        if (socketEventType == eventAdd) {
+          var parseData = EventModel.fromJSON(socketData);
+          data.add(parseData);
+        } else if (socketEventType == eventModify) {
+          var parseData = EventModel.fromJSON(socketData);
+          for (int i = 0; i < data.length; i++) {
+            if (data[i].id == parseData.id) {
+              data[i] = parseData;
+              break;
+            }
+          }
+        } else if (socketEventType == eventDelete) {
+          for (int i = 0; i < data.length; i++) {
+            if (socketData['_id'] == data[i].id) {
+              data.removeAt(i);
+              break;
+            }
+          }
+        } else if (socketEventType == notification) {
+          if (_notificationPageState.currentState != null) {
+            _notificationPageState.currentState!.addMapData(NotificationModel.fromJSON(socketData));
+            _notificationPageState.currentState!.buildList();
+          }
+        }
+        if (_eventHomeState.currentState != null) {
+          _eventHomeState.currentState!.buildDataList(false);
+        }
+        if (_starredEventsState.currentState != null) {
+          _starredEventsState.currentState!.buildDataList(false);
+        }
+      },
+      onError: (error) => print(error),
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getData();
     });
@@ -135,9 +200,13 @@ class _TheMainState extends State<TheMain> {
                 rsvp: _rsvp,
               ),
               const Profile(),
-              const Notifications(),
+              Notifications(
+                key: _notificationPageState,
+              ),
               if (snapshot.data == admin || snapshot.data == superAdmin)
-                AdminConsole(userRole: snapshot.data,),
+                AdminConsole(
+                  userRole: snapshot.data,
+                ),
               const Settings()
             ],
           ),
