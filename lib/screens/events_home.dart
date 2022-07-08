@@ -32,7 +32,10 @@ class EventsHomeState extends State<EventsHome>
   List<EventModel> dataSearch = [];
 
   //list depending on root data
-  List<Widget> eventList = [];
+  List<Widget> cultural = [];
+  List<Widget> technical = [];
+  List<Widget> spiritual = [];
+
   List<EventModel> rsvpList = [];
   List<EventModel> upcomingList = [];
 
@@ -46,22 +49,34 @@ class EventsHomeState extends State<EventsHome>
   //call this method if data is updated to refresh all data without having to pull new data from the server again
   buildDataList(bool search) {
     setState(() {
-      eventList.clear();
+      cultural.clear();
+      technical.clear();
+      spiritual.clear();
+
       rsvpList.clear();
       upcomingList.clear();
-      if(!search){
+      if (!search) {
         dataSearch.clear();
         dataSearch.addAll(widget.data);
       }
-
     });
     for (var i in dataSearch) {
       setState(() {
-        eventList.add(StarCard(
+        var card = StarCard(
           model: i,
           rsvp: widget.rsvp,
           star: widget.star,
-        ));
+        );
+
+        //three conditions for three types of events
+        if (i.eventType == "CULTURAL") {
+          cultural.add(card);
+        } else if (i.eventType == "TECHNICAL") {
+          technical.add(card);
+        } else if (i.eventType == "SPIRITUAL") {
+          spiritual.add(card);
+        }
+
         if (i.rsvp) {
           rsvpList.add(i);
         }
@@ -118,10 +133,12 @@ class EventsHomeState extends State<EventsHome>
             ),
             dataSearch.isNotEmpty
                 ? YesEventsWidget(
-                    data: eventList,
                     rsvpList: rsvpList,
                     upcomingList: upcomingList,
                     rsvp: widget.rsvp,
+                    spiritual: spiritual,
+                    technical: technical,
+                    cultural: cultural,
                   )
                 : const NoEventsWidget()
           ],
@@ -220,17 +237,22 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
 }
 
 class YesEventsWidget extends StatefulWidget {
-  YesEventsWidget(
+  const YesEventsWidget(
       {Key? key,
-      required this.data,
+      required this.cultural,
+      required this.spiritual,
+      required this.technical,
       required this.rsvpList,
       required this.upcomingList,
       required this.rsvp})
       : super(key: key);
 
-  List<Widget> data;
-  List<EventModel> rsvpList;
-  List<EventModel> upcomingList;
+  final List<Widget> cultural;
+  final List<Widget> technical;
+  final List<Widget> spiritual;
+
+  final List<EventModel> rsvpList;
+  final List<EventModel> upcomingList;
   final void Function(EventModel) rsvp;
 
   @override
@@ -239,50 +261,73 @@ class YesEventsWidget extends StatefulWidget {
 
 class _YesEventsWidgetState extends State<YesEventsWidget> {
   String chosenOption = "ALL EVENTS";
+  var options = ["ALL EVENTS", "CULTURAL", "TECHNICAL", "SPIRITUAL"];
+
+  final List<Widget> widgetList = [];
+
+  initList() {
+    widgetList.clear();
+    if (chosenOption == options[0]) {
+      widgetList.addAll(widget.cultural);
+      widgetList.addAll(widget.technical);
+      widgetList.addAll(widget.spiritual);
+    } else if (chosenOption == options[1]) {
+      widgetList.addAll(widget.cultural);
+    } else if (chosenOption == options[2]) {
+      widgetList.addAll(widget.technical);
+    } else if (chosenOption == options[3]) {
+      widgetList.addAll(widget.spiritual);
+    }
+    setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant YesEventsWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    initList();
+    print("INIT");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 28, top: 30),
-              child: Text(
-                "Upcoming",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-            ),
-            HorizontalPageView(
-              list: widget.upcomingList,
-              rsvp: widget.rsvp,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 28, top: 16),
-              child: Text(
-                "RSVP'd Events",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-            ),
-            HorizontalPageView(
-              list: widget.rsvpList,
-              rsvp: widget.rsvp,
-            ),
-            _dropDown(
-                ["ALL EVENTS", "STARRED EVENTS", "RSVP'D EVENTS"], chosenOption,
-                (newValue) {
-              setState(() {
-                chosenOption = newValue;
-              });
-            }),
-          ] +
-          widget.data,
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Padding(
+        padding: EdgeInsets.only(left: 28, top: 30),
+        child: Text(
+          "Upcoming",
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+      ),
+      HorizontalPageView(
+        list: widget.upcomingList,
+        rsvp: widget.rsvp,
+      ),
+      const Padding(
+        padding: EdgeInsets.only(left: 28, top: 16),
+        child: Text(
+          "RSVP'd Events",
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+      ),
+      HorizontalPageView(
+        list: widget.rsvpList,
+        rsvp: widget.rsvp,
+      ),
+      _dropDown(options, chosenOption, (newValue) {
+        setState(() {
+          chosenOption = newValue;
+          initList();
+        });
+      }),
+    ] + widgetList);
   }
 }
 
