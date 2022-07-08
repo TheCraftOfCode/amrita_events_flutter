@@ -324,7 +324,7 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
                 ),
               ),
               HorizontalPageView(
-                list: widget.upcomingList,
+                list: widget.upcomingList.reversed.toList(),
                 rsvp: widget.rsvp,
               ),
               const Padding(
@@ -338,7 +338,7 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
                 ),
               ),
               HorizontalPageView(
-                list: widget.rsvpList,
+                list: widget.rsvpList.reversed.toList(),
                 rsvp: widget.rsvp,
               ),
               _dropDown(options, chosenOption, (newValue) {
