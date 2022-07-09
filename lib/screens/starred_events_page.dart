@@ -142,7 +142,7 @@ class NoStarredEventsWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
+          padding: const EdgeInsets.only(top: 60.0, bottom: 20.0),
           child: Image(
             image: const AssetImage('assets/no_starred.png'),
             height: MediaQuery.of(context).size.width * 0.8,
