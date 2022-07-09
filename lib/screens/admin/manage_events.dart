@@ -8,6 +8,7 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import '../../widgets/custom_sliver_widget.dart';
 import '../../widgets/drop_down.dart';
 import '../../widgets/top_bar_widget.dart';
+import 'add_modify_event.dart';
 
 class ManageEvents extends StatefulWidget {
   const ManageEvents({Key? key}) : super(key: key);
@@ -82,7 +83,7 @@ class _ManageEventsState extends State<ManageEvents> {
         }
       });
     }
-    setState((){});
+    setState(() {});
   }
 
   filterSearchData(value) {
@@ -146,9 +147,8 @@ class _ManageEventsState extends State<ManageEvents> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_chart),
         onPressed: () async {
-          //TODO: Navigate to add event page
-          // await Navigator.of(context).push(MaterialPageRoute(
-          //     builder: (BuildContext context) => const AddUsers()));
+          await Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => const AddModifyEvent()));
           _getData();
         },
       ),
