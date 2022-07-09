@@ -22,6 +22,8 @@ class AddModifyEvent extends StatefulWidget {
 class _AddModifyEventState extends State<AddModifyEvent> {
   final _formKey = GlobalKey<FormState>();
   bool showProgress = false;
+
+  //TODO: Change variables
   String error = "", _userName = "", _userEmail = "", _userRole = "";
 
   @override
