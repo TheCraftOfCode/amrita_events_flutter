@@ -44,7 +44,6 @@ class UserTile extends StatelessWidget {
               removeItem(userModel);
               // showToast(
               //     "Deleted user Successfully! Refresh in case if changes have not been reflected");
-              //TODO: Update list here
             }
           }, "Delete user", "Are you sure you want to delete this user?");
         },

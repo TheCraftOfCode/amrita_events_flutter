@@ -90,7 +90,6 @@ class AdminStarCard extends StatelessWidget {
                             removeItem(model);
                             // showToast(
                             //     "Deleted user Successfully! Refresh in case if changes have not been reflected");
-                            //TODO: Update list here
                           }
                         }, "Delete event",
                             "Are you sure you want to delete this event?");

@@ -35,8 +35,7 @@ class LoadValidPageWidget extends StatelessWidget {
       // showToast("Could not authenticate to server, continuing in offline mode!");
     }
     else if(res.statusCode == 412){
-      //TODO: logout here
-      jwtTokenSet = '';
+      clearAllData();
       return '';
     }
     return jwt;

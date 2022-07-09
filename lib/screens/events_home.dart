@@ -128,7 +128,6 @@ class EventsHomeState extends State<EventsHome>
     buildDataList(false);
   }
 
-  //TODO: Figure out logic to maintain search list even if new data is added
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,7 +163,6 @@ class EventsHomeState extends State<EventsHome>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
 
@@ -385,4 +383,4 @@ class NoEventsWidget extends StatelessWidget {
   }
 }
 
-//TODO: Have to add refresh on pull and empty / no network states
+//TODO: Have to add empty / no network states
