@@ -27,7 +27,6 @@ class AdminConsole extends StatelessWidget {
                   subTitle: 'Manage all users here',
                   iconData: Icons.manage_accounts,
                   onTap: () {
-                    //TODO: Replace admin with user role from the_main.dart
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) =>
                             ManageUsers(userRole: userRole)));

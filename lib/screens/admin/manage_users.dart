@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:amrita_events_flutter/screens/admin/add_users.dart';
 import 'package:amrita_events_flutter/utils/constants.dart';
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget.dart';
@@ -57,15 +58,17 @@ class _ManageUsersState extends State<ManageUsers> {
   //builds a list tile for each user
   _buildUserTile(i) {
     return UserTile(
-        name: listSearch[i].name,
-        role: listSearch[i].role,
-        email: listSearch[i].email,
-        index: i,
-        removeItem: (index) {
-          list.removeAt(i);
-          listSearch.removeAt(i);
-          setState(() {});
-        });
+      name: listSearch[i].name,
+      role: listSearch[i].role,
+      email: listSearch[i].email,
+      index: i,
+      removeItem: (index) {
+        list.removeAt(i);
+        listSearch.removeAt(i);
+        _buildUserList();
+      },
+      userRole: widget.userRole,
+    );
   }
 
   //builds the actual widget list accordingly (based on options)
@@ -125,26 +128,36 @@ class _ManageUsersState extends State<ManageUsers> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: CustomSliverView(
-        columnList: [
-              TopBarWidget(
-                title: "Manage Users",
-                onChanged: (value) {
-                  searchPattern = value ?? "";
-                  filterSearchData(value);
-                },
-              ),
-              dropDown(options, chosenOption, (newValue) {
-                chosenOption = newValue;
-                _buildUserList();
-              }),
-            ] +
-            widgetList,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await _getData();
+        },
+        child: CustomSliverView(
+          columnList: [
+                TopBarWidget(
+                  title: "Manage Users",
+                  onChanged: (value) {
+                    searchPattern = value ?? "";
+                    filterSearchData(value);
+                  },
+                ),
+                dropDown(options, chosenOption, (newValue) {
+                  chosenOption = newValue;
+                  _buildUserList();
+                }),
+              ] +
+              widgetList +
+              [const Padding(padding: EdgeInsets.only(bottom: 20))],
+        ),
       ),
       floatingActionButton: widget.userRole == superAdmin
           ? FloatingActionButton(
               child: const Icon(Icons.person_add),
-              onPressed: () {},
+              onPressed: () async {
+                await Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => const AddUsers()));
+                _getData();
+              },
             )
           : Container(),
     );

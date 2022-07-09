@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
+import 'package:amrita_events_flutter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:oktoast/oktoast.dart';
+import '../utils/http_modules.dart';
 import 'alert_dialog.dart';
 
 class UserTile extends StatelessWidget {
@@ -10,14 +15,68 @@ class UserTile extends StatelessWidget {
       required this.role,
       required this.email,
       required this.index,
-      required this.removeItem})
+      required this.removeItem,
+      required this.userRole})
       : super(key: key);
-  final String name, role, email;
+  final String name, role, email, userRole;
   final int index;
   final Function(int) removeItem;
 
   @override
   Widget build(BuildContext context) {
+    final deleteIconButton = Expanded(
+      flex: 1,
+      child: IconButton(
+        icon: const Icon(
+          Icons.delete_forever,
+          color: Colors.red,
+        ),
+        onPressed: () {
+          displayDialog(context, "Yes", "No", () async {
+            Navigator.of(context).pop();
+            final response = await makePostRequest(
+                json.encode({"email": email}),
+                "/admin/delete",
+                null,
+                true,
+                context);
+            if (response.statusCode == 200) {
+              removeItem(index);
+              // showToast(
+              //     "Deleted user Successfully! Refresh in case if changes have not been reflected");
+              //TODO: Update list here
+            }
+          }, "Delete user", "Are you sure you want to delete this user?");
+        },
+      ),
+    );
+
+    _getDeleteIconButton() {
+      if (userRole == superAdmin) {
+        if (role == admin) {
+          //allowed
+          return deleteIconButton;
+        } else if (role == user) {
+          //allowed
+          return deleteIconButton;
+        } else {
+          //not allowed
+          return Container();
+        }
+      } else if (userRole == admin) {
+        if (role == user) {
+          //allowed
+          return deleteIconButton;
+        } else {
+          //not allowed
+          return Container();
+        }
+      } else {
+        //not allowed
+        return Container();
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
       child: Card(
@@ -65,55 +124,7 @@ class UserTile extends StatelessWidget {
                   ],
                 ),
               ),
-              role != "super_admin"
-                  ? Expanded(
-                      flex: 1,
-                      child: IconButton(
-                          onPressed: () {
-                            if (role == "admin") {
-                              displayDialog(context, "Yes", "No", () async {
-                                Navigator.of(context).pop();
-                                // final response = await makePostRequest(
-                                //     json.encode({"email": email}),
-                                //     "/deleteAdminUser",
-                                //     null,
-                                //     true,
-                                //     context: context);
-                                // if (response.statusCode == 200) {
-                                //   showToast(
-                                //       "Deleted User Successfully! Refresh in case if changes have not been reflected");
-                                //   setState(() {
-                                //     listData?.removeAt(index);
-                                //   });
-                                // }
-                              }, "Delete Admin",
-                                  "Are you sure you want to delete this admin?");
-                            } else if (role == "user") {
-                              displayDialog(context, "Yes", "No", () async {
-                                Navigator.of(context).pop();
-                                // final response = await makePostRequest(
-                                //     json.encode({"email": email}),
-                                //     "/deleteUser",
-                                //     null,
-                                //     true,
-                                //     context: context);
-                                // if (response.statusCode == 200) {
-                                //   showToast(
-                                //       "Deleted User Successfully! Refresh in case if changes have not been reflected");
-                                //   setState(() {
-                                //     listData?.removeAt(index);
-                                //   });
-                                // }
-                              }, "Delete User",
-                                  "Are you sure you want to delete this user?");
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.delete_forever,
-                            color: Colors.red,
-                          )),
-                    )
-                  : Container(),
+              _getDeleteIconButton()
             ],
           ),
         ),
@@ -121,3 +132,7 @@ class UserTile extends StatelessWidget {
     );
   }
 }
+
+//Allowed access rules for deleting users
+//Super admin -> admin, user
+//Admin -> user
