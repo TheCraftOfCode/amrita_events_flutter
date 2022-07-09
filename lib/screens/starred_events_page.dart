@@ -105,7 +105,6 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
                 filterSearchData(value);
               },
             ),
-            //TODO: Check for list size here
             eventList.isNotEmpty
                 ? YesStarredEventsWidget(
                     eventList: eventList,
