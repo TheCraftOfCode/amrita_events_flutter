@@ -88,7 +88,6 @@ class AdminStarCard extends StatelessWidget {
                               context);
                           if (response.statusCode == 200) {
                             removeItem(model);
-                            print("delete success");
                             // showToast(
                             //     "Deleted user Successfully! Refresh in case if changes have not been reflected");
                             //TODO: Update list here

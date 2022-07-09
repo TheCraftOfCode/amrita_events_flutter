@@ -5,22 +5,22 @@ import 'package:amrita_events_flutter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
+import '../models/user_model.dart';
 import '../utils/http_modules.dart';
 import 'alert_dialog.dart';
 
 class UserTile extends StatelessWidget {
   const UserTile(
       {Key? key,
-      required this.name,
-      required this.role,
-      required this.email,
       required this.index,
       required this.removeItem,
-      required this.userRole})
+      required this.userRole,
+      required this.userModel})
       : super(key: key);
-  final String name, role, email, userRole;
+  final User userModel;
+  final String userRole;
   final int index;
-  final Function(int) removeItem;
+  final Function(User) removeItem;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +35,13 @@ class UserTile extends StatelessWidget {
           displayDialog(context, "Yes", "No", () async {
             Navigator.of(context).pop();
             final response = await makePostRequest(
-                json.encode({"email": email}),
+                json.encode({"email": userModel.email}),
                 "/admin/delete",
                 null,
                 true,
                 context);
             if (response.statusCode == 200) {
-              removeItem(index);
+              removeItem(userModel);
               // showToast(
               //     "Deleted user Successfully! Refresh in case if changes have not been reflected");
               //TODO: Update list here
@@ -53,10 +53,10 @@ class UserTile extends StatelessWidget {
 
     _getDeleteIconButton() {
       if (userRole == superAdmin) {
-        if (role == admin) {
+        if (userModel.role == admin) {
           //allowed
           return deleteIconButton;
-        } else if (role == user) {
+        } else if (userModel.role == user) {
           //allowed
           return deleteIconButton;
         } else {
@@ -64,7 +64,7 @@ class UserTile extends StatelessWidget {
           return Container();
         }
       } else if (userRole == admin) {
-        if (role == user) {
+        if (userModel.role == user) {
           //allowed
           return deleteIconButton;
         } else {
@@ -100,21 +100,21 @@ class UserTile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 2),
                       child: Text(
-                        name,
+                        userModel.name,
                         style: GoogleFonts.nunito(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Text(('Role: $role'),
+                    Text(('Role: ${userModel.role}'),
                         style: GoogleFonts.nunito(
                             color: colors.textBoxTextColor,
                             fontSize: 15,
                             fontWeight: FontWeight.bold)),
                     Padding(
                       padding: const EdgeInsets.only(top: 15, bottom: 10),
-                      child: Text(email.toLowerCase(),
+                      child: Text(userModel.email.toLowerCase(),
                           overflow: TextOverflow.fade,
                           style: GoogleFonts.nunito(
                               color: Colors.white54,

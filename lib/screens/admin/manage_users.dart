@@ -58,13 +58,11 @@ class _ManageUsersState extends State<ManageUsers> {
   //builds a list tile for each user
   _buildUserTile(i) {
     return UserTile(
-      name: listSearch[i].name,
-      role: listSearch[i].role,
-      email: listSearch[i].email,
+      userModel: listSearch[i],
       index: i,
-      removeItem: (index) {
-        list.removeAt(i);
-        listSearch.removeAt(i);
+      removeItem: (User model) {
+        list.remove(model);
+        listSearch.remove(model);
         _buildUserList();
       },
       userRole: widget.userRole,
@@ -90,6 +88,7 @@ class _ManageUsersState extends State<ManageUsers> {
         }
       });
     }
+    setState((){});
   }
 
   filterSearchData(value) {
