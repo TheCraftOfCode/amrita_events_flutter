@@ -22,7 +22,7 @@ class _ManageEventsState extends State<ManageEvents> {
 
   List<AdminStarCard> widgetList = [];
 
-  List<String>  options = ["ALL EVENTS", "CULTURAL", "TECHNICAL", "SPIRITUAL"];
+  List<String> options = ["ALL EVENTS", "CULTURAL", "TECHNICAL", "SPIRITUAL"];
   late String chosenOption;
   String searchPattern = "";
 
@@ -53,6 +53,18 @@ class _ManageEventsState extends State<ManageEvents> {
     }
   }
 
+  _buildEventTile(data, i) {
+    return AdminStarCard(
+      model: data,
+      index: i,
+      removeItem: (model) {
+        listSearch.remove(model);
+        list.remove(model);
+        _buildUserList();
+      },
+    );
+  }
+
   //builds the actual widget list accordingly (based on options)
   _buildUserList() {
     widgetList.clear();
@@ -60,16 +72,17 @@ class _ManageEventsState extends State<ManageEvents> {
       setState(() {
         var data = listSearch[i];
         if (chosenOption == options[0]) {
-          widgetList.add(AdminStarCard(model: data));
+          widgetList.add(_buildEventTile(data, i));
         } else if (data.eventType == options[1] && chosenOption == options[1]) {
-          widgetList.add(AdminStarCard(model: data));
+          widgetList.add(_buildEventTile(data, i));
         } else if (data.eventType == options[2] && chosenOption == options[2]) {
-          widgetList.add(AdminStarCard(model: data));
+          widgetList.add(_buildEventTile(data, i));
         } else if (data.eventType == options[3] && chosenOption == options[3]) {
-          widgetList.add(AdminStarCard(model: data));
+          widgetList.add(_buildEventTile(data, i));
         }
       });
     }
+    setState((){});
   }
 
   filterSearchData(value) {
@@ -114,18 +127,18 @@ class _ManageEventsState extends State<ManageEvents> {
         },
         child: CustomSliverView(
           columnList: [
-            TopBarWidget(
-              title: "Manage Events",
-              onChanged: (value) {
-                searchPattern = value ?? "";
-                filterSearchData(value);
-              },
-            ),
-            dropDown(options, chosenOption, (newValue) {
-              chosenOption = newValue;
-              _buildUserList();
-            }),
-          ] +
+                TopBarWidget(
+                  title: "Manage Events",
+                  onChanged: (value) {
+                    searchPattern = value ?? "";
+                    filterSearchData(value);
+                  },
+                ),
+                dropDown(options, chosenOption, (newValue) {
+                  chosenOption = newValue;
+                  _buildUserList();
+                }),
+              ] +
               widgetList +
               [const Padding(padding: EdgeInsets.only(bottom: 20))],
         ),

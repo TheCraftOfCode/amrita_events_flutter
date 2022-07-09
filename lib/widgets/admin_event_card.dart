@@ -1,16 +1,23 @@
-import 'package:amrita_events_flutter/screens/event_page.dart';
+import 'dart:convert';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../models/event_model.dart';
-import '../screens/onboarding.dart';
+import '../utils/http_modules.dart';
+import 'alert_dialog.dart';
 import 'network_image.dart';
 
 class AdminStarCard extends StatelessWidget {
-  const AdminStarCard({Key? key, required this.model}):super(key: key);
+  const AdminStarCard(
+      {Key? key,
+      required this.model,
+      required this.removeItem,
+      required this.index})
+      : super(key: key);
 
   final EventModel model;
+  final Function(EventModel) removeItem;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +72,31 @@ class AdminStarCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.delete_forever,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        displayDialog(context, "Yes", "No", () async {
+                          Navigator.of(context).pop();
+                          final response = await makePostRequest(
+                              json.encode({"id": model.id}),
+                              "/event/deleteEvent",
+                              null,
+                              true,
+                              context);
+                          if (response.statusCode == 200) {
+                            removeItem(model);
+                            print("delete success");
+                            // showToast(
+                            //     "Deleted user Successfully! Refresh in case if changes have not been reflected");
+                            //TODO: Update list here
+                          }
+                        }, "Delete event",
+                            "Are you sure you want to delete this event?");
+                      },
+                    )
                   ],
                 )
               ],
