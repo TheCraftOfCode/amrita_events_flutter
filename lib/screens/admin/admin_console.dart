@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/screens/admin/manage_events.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import '../../widgets/admin_card.dart';
@@ -37,7 +38,11 @@ class AdminConsole extends StatelessWidget {
                   title: 'Manage Events',
                   subTitle: 'Manage all events here',
                   iconData: Icons.event_available,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const ManageEvents()));
+                  },
                 )),
                 Expanded(
                     child: AdminCard(
