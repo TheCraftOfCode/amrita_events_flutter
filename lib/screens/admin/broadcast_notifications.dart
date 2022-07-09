@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:amrita_events_flutter/widgets/textbox_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +8,11 @@ import 'package:amrita_events_flutter/utils/constants.dart' as constants;
 import 'package:amrita_events_flutter/utils/http_modules.dart';
 import 'package:amrita_events_flutter/widgets/alert_dialog.dart';
 
+import '../../widgets/custom_sliver_widget.dart';
 import '../../widgets/error_box.dart';
+import '../../widgets/left_beveled_container.dart';
+import '../../widgets/password_formfield_widget.dart';
+import '../../widgets/top_bar_no_search_widget.dart';
 
 class BroadcastNotifications extends StatefulWidget {
   const BroadcastNotifications({Key? key}) : super(key: key);
@@ -18,159 +23,134 @@ class BroadcastNotifications extends StatefulWidget {
 
 class _BroadcastNotificationsState extends State<BroadcastNotifications> {
   final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
-  final _bodyController = TextEditingController();
-  String error = "";
+  String error = "", _title = "", _body = "";
   bool showProgress = false;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return await displayQuitDialog(
-            context, "Close Page?", "Are you sure you want to close this page? All data will be lost");
+        return await displayQuitDialog(context, "Close Page?",
+            "Are you sure you want to close this page? All data will be lost");
       },
       child: Scaffold(
-        body: Container(
-          // decoration: constants.gradientDecoration,
-          height: double.maxFinite,
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 70.0, bottom: 20, left: 30),
-                  child: Align(
+        backgroundColor: colors.scaffoldColor,
+        body: Form(
+          key: _formKey,
+          child: LeftBeveledContainer(
+            columnList: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       'Broadcast Notifications',
-                      style: GoogleFonts.nunito(
-                          fontSize: 30,
+                      style: GoogleFonts.nunitoSans(
                           color: colors.primaryTextColor,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                    )),
+              ),
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Have something that all your dear app users have to know? Broadcast it from here!',
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.primaryTextColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.normal),
+                  )),
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                child: errorBox(error),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: TextBoxField(
+                  validator: (value) {
+                    if (value == "" || value == null) {
+                      return "Please enter notification title";
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (value) {
+                    _title = value!;
+                  },
+                  padding: const EdgeInsets.only(bottom: 5),
+                  title: 'Notification Title',
+                  hint: 'Enter Title',
+                  light: true,
                 ),
-                Expanded(child: Container()),
-                Padding(
-                  padding: constants.textFieldPadding,
-                  child: TextFormField(
-                      controller: _titleController,
-                      style: GoogleFonts.montserrat(color: colors.primaryTextColor),
-                      validator: (value) {
-                        if (value == "" || value == null) {
-                          return "Please enter title";
-                        } else {
-                          return null;
-                        }
-                      },
-                      decoration: InputDecoration(
-                        label: Text('Notification Title',
-                            style: GoogleFonts.raleway(
-                                color: colors.textBoxTextColor, fontSize: 12)),
-                        filled: true,
-                        hintText: 'Please enter notification title',
-                        hintStyle: GoogleFonts.poppins(
-                            color: colors.primaryTextColor.withOpacity(0.7)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(5)),
-                        // fillColor: colors.textBoxFill,
-                        // focusColor: colors.textBoxFill,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(5)),
-                      )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: TextBoxField(
+                  validator: (value) {
+                    if (value == "" || value == null) {
+                      return "Please enter notification body";
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (value) {
+                    _body = value!;
+                  },
+                  padding: const EdgeInsets.only(bottom: 5),
+                  title: 'Notification Body',
+                  hint: 'Enter body',
+                  light: true,
                 ),
-                Padding(
-                  padding: constants.textFieldPadding,
-                  child: TextFormField(
-                      controller: _bodyController,
-                      validator: (value) {
-                        if (value == "" || value == null) {
-                          return "Please enter body";
-                        } else {
-                          return null;
-                        }
-                      },
-                      style: GoogleFonts.montserrat(color: colors.primaryTextColor),
-                      decoration: InputDecoration(
-                        label: Text('Notification Body',
-                            style: GoogleFonts.raleway(
-                                color: colors.textBoxTextColor, fontSize: 12)),
-                        filled: true,
-                        hintText: 'Please enter notification body',
-                        hintStyle: GoogleFonts.poppins(
-                            color: colors.primaryTextColor.withOpacity(0.7)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(5)),
-                        // fillColor: colors.textBoxFill,
-                        // focusColor: colors.textBoxFill,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(5)),
-                      )),
-                ),
-                Padding(
-                  padding: constants.textFieldPadding,
-                  child: error == "" ? Container() : errorBox(error),
-                ),
-                Expanded(child: Container()),
-                Padding(
-                  padding: const EdgeInsets.only(top: 50.0, left: 20, bottom: 20),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: showProgress
-                        ? const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
-                    )
-                        : ElevatedButton(
+              ),
+              showProgress
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
                       onPressed: () async {
+                        _formKey.currentState!.validate();
                         if (_formKey.currentState!.validate()) {
-                          _formKey.currentState?.save();
                           setState(() {
                             showProgress = true;
+                            error = '';
                           });
-                          // var res = await makePostRequest(
-                          //     json.encode({
-                          //       "title": _titleController.text,
-                          //       "body": _bodyController.text
-                          //     }),
-                          //     "/notify",
-                          //     null,
-                          //     true,
-                          //     context: context);
+
+                          _formKey.currentState!.save();
+                          var res = await makePostRequest(
+                              json.encode({"title": _title, "body": _body}),
+                              "/notification/sendNotification",
+                              null,
+                              true,
+                              context);
+                          if (res.statusCode == 200) {
+                            error = '';
+                            displayDialog(context, "Continue", null, () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            }, "Successful",
+                                "Notification was broadcast successfully");
+                          } else {
+                            setState(() {
+                              error = json.decode(res.body)['message'];
+                            });
+                          }
+
                           setState(() {
                             showProgress = false;
                           });
-                          // if (res.statusCode == 200) {
-                          //   error = '';
-                          //   displayDialog(context, "Continue", null, () {
-                          //     Navigator.of(context).pop();
-                          //     Navigator.of(context).pop();
-                          //   }, "Notification has been broadcast",
-                          //       "A notification with your title and body has been broadcast to all associated devices");
-                          // } else {
-                          //   setState(() {
-                          //     error = json.decode(res.body)['message'];
-                          //   });
-                          // }
                         }
                       },
-                      child: Text(
-                        'BROADCAST NOTIFICATION',
-                        style:
-                        GoogleFonts.nunito(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                      child: SizedBox(
+                          width: double.infinity,
+                          height: 60,
+                          child: Center(
+                              child: Text(
+                            'BROADCAST',
+                            style: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ))),
+                      style: ElevatedButton.styleFrom(
+                          primary: colors.scaffoldColor),
+                    )
+            ],
           ),
         ),
       ),
