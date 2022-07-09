@@ -1,10 +1,10 @@
-import 'package:amrita_events_flutter/screens/admin/user_management.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import '../../widgets/admin_card.dart';
 import '../../widgets/custom_sliver_widget.dart';
 import '../../widgets/top_bar_no_search_widget.dart';
 import 'broadcast_notifications.dart';
+import 'manage_users.dart';
 
 class AdminConsole extends StatelessWidget {
   const AdminConsole({Key? key, required this.userRole}) : super(key: key);
@@ -30,7 +30,7 @@ class AdminConsole extends StatelessWidget {
                     //TODO: Replace admin with user role from the_main.dart
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            UserManagement(role: userRole)));
+                            ManageUsers(userRole: userRole)));
                   },
                 )),
                 Expanded(

@@ -8,10 +8,8 @@ class TopBarWidget extends StatelessWidget {
   const TopBarWidget({Key? key, required this.title, this.onChanged})
       : super(key: key);
 
-
   final String title;
   final void Function(String?)? onChanged;
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,33 +39,13 @@ class TopBarWidget extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: TextBoxField(
-                        hint: 'Type to search',
-                        light: true,
-                        onChanged: onChanged,
-                        padding: const EdgeInsets.all(0.0),
-                        title: 'Search',
-                      ),
-                    ),
-                  ),
-                  FloatingActionButton(
-                    onPressed: () {},
-                    heroTag: title,
-                    backgroundColor: colors.scaffoldColor,
-                    child: Icon(
-                      Icons.search_outlined,
-                      color: colors.headingTextColor,
-                    ),
-                  ),
-                ],
+              padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+              child: TextBoxField(
+                hint: 'Type to search',
+                light: true,
+                onChanged: onChanged,
+                padding: const EdgeInsets.all(0.0),
+                title: 'Search',
               ),
             )
           ],
