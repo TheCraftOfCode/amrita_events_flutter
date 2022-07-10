@@ -140,7 +140,6 @@ class _TheMainState extends State<TheMain> {
         var res = json.decode(eventData);
         var socketEventType = res['type'];
         var socketData = res['data'];
-        print(socketData);
 
         if (socketEventType == eventAdd) {
           var parseData = EventModel.fromJSON(socketData);

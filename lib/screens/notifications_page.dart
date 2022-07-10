@@ -43,7 +43,6 @@ class NotificationsState extends State<Notifications>
 
   addMapData(model) {
     var dateString = model.date.toString().split(" ")[0];
-    print(mapData.length);
     var mapItem = mapData[dateString];
     if (mapItem != null) {
       mapData[dateString]!.add(model);
@@ -56,7 +55,6 @@ class NotificationsState extends State<Notifications>
 
   buildList() {
     notificationList.clear();
-    print(notificationList.length);
     SplayTreeMap<String, dynamic>.from(mapData, (a, b) => b.compareTo(a))
         .forEach((key, value) {
       notificationList.add(DayNotificationWidget(
@@ -113,8 +111,6 @@ class _YesNotificationsWidgetState extends State<YesNotificationsWidget> {
   @override
   void didUpdateWidget(covariant YesNotificationsWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print("updated");
-    print(widget.notificationList.last);
     setState(() {});
   }
 

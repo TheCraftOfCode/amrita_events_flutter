@@ -72,7 +72,6 @@ class _SignInPageState extends State<SignInPage> {
               },
               onSaved: (value) {
                 _email = value!;
-                print(value);
               },
               padding: const EdgeInsets.only(bottom: 5),
               title: 'Email',
