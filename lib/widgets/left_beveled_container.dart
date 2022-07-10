@@ -23,7 +23,7 @@ class _LeftBeveledContainerState extends State<LeftBeveledContainer> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 60),
+                padding: const EdgeInsets.only(top: 100),
                 child: Container(
                   decoration: ShapeDecoration(
                       shape: constants.beveledRectangle,

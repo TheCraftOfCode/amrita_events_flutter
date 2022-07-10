@@ -63,6 +63,14 @@ class _ManageEventsState extends State<ManageEvents> {
         list.remove(model);
         _buildUserList();
       },
+      onTap: () async {
+        await Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => AddModifyEvent(
+                  modifyEvent: true,
+                  model: data,
+                )));
+        _getData();
+      },
     );
   }
 
@@ -140,7 +148,7 @@ class _ManageEventsState extends State<ManageEvents> {
                   _buildUserList();
                 }),
               ] +
-              widgetList +
+              widgetList.reversed.toList() +
               [const Padding(padding: EdgeInsets.only(bottom: 20))],
         ),
       ),
@@ -148,7 +156,8 @@ class _ManageEventsState extends State<ManageEvents> {
         child: const Icon(Icons.add_chart),
         onPressed: () async {
           await Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => const AddModifyEvent()));
+              builder: (BuildContext context) =>
+                  const AddModifyEvent(modifyEvent: false)));
           _getData();
         },
       ),

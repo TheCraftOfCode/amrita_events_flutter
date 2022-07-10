@@ -12,26 +12,26 @@ class AdminStarCard extends StatelessWidget {
       {Key? key,
       required this.model,
       required this.removeItem,
-      required this.index})
+      required this.index,
+      required this.onTap})
       : super(key: key);
 
   final EventModel model;
   final Function(EventModel) removeItem;
+  final VoidCallback onTap;
   final int index;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        //TODO: Navigate to edit event page
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          elevation: 10,
-          color: colors.cardBackgroundColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 10,
+        color: colors.cardBackgroundColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(

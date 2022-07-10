@@ -12,7 +12,8 @@ class TextBoxField extends StatelessWidget {
       required this.hint,
       required this.padding,
       required this.light,
-      this.onChanged})
+      this.onChanged,
+      this.initialValue})
       : super(key: key);
 
   final TextEditingController? controller;
@@ -23,12 +24,14 @@ class TextBoxField extends StatelessWidget {
   final String hint;
   final EdgeInsets padding;
   final bool light;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: padding,
       child: TextFormField(
+          initialValue: initialValue ?? '',
           controller: controller,
           validator: validator,
           onSaved: onSaved,

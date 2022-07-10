@@ -1,19 +1,24 @@
 import 'dart:convert';
 
+import 'package:amrita_events_flutter/models/event_model.dart';
+import 'package:amrita_events_flutter/widgets/time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../utils/constants.dart';
+import 'package:intl/intl.dart';
 import '../../utils/http_modules.dart';
 import '../../widgets/alert_dialog.dart';
+import '../../widgets/date_picker.dart';
 import '../../widgets/dropdown_widget.dart';
 import '../../widgets/error_box.dart';
 import '../../widgets/left_beveled_container.dart';
 import '../../widgets/textbox_widget.dart';
 
 class AddModifyEvent extends StatefulWidget {
-  const AddModifyEvent({Key? key}) : super(key: key);
+  const AddModifyEvent({Key? key, this.model, required this.modifyEvent})
+      : super(key: key);
+  final EventModel? model;
+  final bool modifyEvent;
 
   @override
   State<AddModifyEvent> createState() => _AddModifyEventState();
@@ -23,8 +28,44 @@ class _AddModifyEventState extends State<AddModifyEvent> {
   final _formKey = GlobalKey<FormState>();
   bool showProgress = false;
 
-  //TODO: Change variables
-  String error = "", _userName = "", _userEmail = "", _userRole = "";
+  String error = "",
+      _eventName = "",
+      _eventType = "",
+      _eventLocation = "",
+      _eventHost = "",
+      _eventDescription = "",
+      _eventPosterUrl = "",
+      _eventOver = "";
+
+  DateTime? _eventDate;
+  TimeOfDay? _eventTime;
+
+  TimeOfDay? _time12to24(String time) {
+    String time = widget.model!.time;
+    try {
+      List<String> timeSlice = time.split(":");
+      int hour = int.parse(timeSlice[0]);
+      int minute = int.parse(timeSlice[1]);
+      String period = timeSlice[2].split(" ")[1];
+
+      if (period == "AM") {
+        return TimeOfDay(hour: hour, minute: minute);
+      } else {
+        return TimeOfDay(hour: (hour + 12) % 23, minute: minute);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    if (widget.model != null) {
+      var _localTime = DateTime.parse(widget.model!.dateUnparsed).toLocal();
+      _eventTime = TimeOfDay(hour: _localTime.hour, minute: _localTime.minute);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +85,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                   child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Add New Event',
+                        widget.modifyEvent ? 'Modify Event' : 'Add New Event',
                         style: GoogleFonts.nunitoSans(
                             color: colors.primaryTextColor,
                             fontSize: 30,
@@ -54,7 +95,9 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Add new events here!',
+                      widget.modifyEvent
+                          ? 'Modify events here!'
+                          : 'Add new events here!',
                       style: GoogleFonts.nunitoSans(
                           color: colors.primaryTextColor,
                           fontSize: 17,
@@ -67,6 +110,8 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: TextBoxField(
+                    initialValue:
+                        widget.model != null ? widget.model?.title : '',
                     validator: (value) {
                       if (value == "" || value == null) {
                         return "Please enter event name";
@@ -75,7 +120,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                       }
                     },
                     onSaved: (value) {
-                      _userName = value!;
+                      _eventName = value!;
                     },
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Event Name',
@@ -86,19 +131,43 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: DropDownFormField(
+                    defaultValue:
+                        widget.model != null ? widget.model?.eventType : null,
                     list: const ["CULTURAL", "TECHNICAL", "SPIRITUAL"],
                     title: "Event Type",
                     hint: "Choose event type",
                     errorField: "Please choose an event type",
                     onSaved: (value) {
-                      _userRole = value;
+                      _eventType = value;
                     },
                   ),
                 ),
-                //TODO: Add time and date pickers
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: DatePickerWidget(
+                      defaultDate: widget.model != null
+                          ? DateTime.parse(widget.model!.dateUnparsed)
+                          : null,
+                      context: context,
+                      onSaved: (data) {
+                        _eventDate = data;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: TimePickerWidget(
+                    initialValue: _eventTime,
+                    context: context,
+                    onSaved: (data) {
+                      _eventTime = data;
+                    },
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: TextBoxField(
+                    initialValue:
+                        widget.model != null ? widget.model?.location : '',
                     validator: (value) {
                       if (value == "" || value == null) {
                         return "Please enter event location";
@@ -107,7 +176,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                       }
                     },
                     onSaved: (value) {
-                      _userName = value!;
+                      _eventLocation = value!;
                     },
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Event Location',
@@ -118,6 +187,8 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: TextBoxField(
+                    initialValue:
+                        widget.model != null ? widget.model?.host : '',
                     validator: (value) {
                       if (value == "" || value == null) {
                         return "Please enter event host";
@@ -126,7 +197,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                       }
                     },
                     onSaved: (value) {
-                      _userName = value!;
+                      _eventHost = value!;
                     },
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Event Host',
@@ -137,6 +208,8 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: TextBoxField(
+                    initialValue:
+                        widget.model != null ? widget.model?.description : '',
                     validator: (value) {
                       if (value == "" || value == null) {
                         return "Please enter event description";
@@ -145,7 +218,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                       }
                     },
                     onSaved: (value) {
-                      _userName = value!;
+                      _eventDescription = value!;
                     },
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Event Description',
@@ -156,8 +229,10 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: TextBoxField(
+                    initialValue:
+                        widget.model != null ? widget.model?.posterUrl : '',
                     onSaved: (value) {
-                      _userName = value!;
+                      _eventPosterUrl = value!;
                     },
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Poster Url',
@@ -165,11 +240,26 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                     light: true,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: DropDownFormField(
+                    defaultValue: widget.model != null
+                        ? ((widget.model!.eventOver) ? "Yes" : "No")
+                        : "No",
+                    list: const ["Yes", "No"],
+                    title: "Event Over",
+                    hint: "Choose yes if event over, else choose no",
+                    errorField:
+                        "Please choose option according to event status",
+                    onSaved: (value) {
+                      _eventOver = value;
+                    },
+                  ),
+                ),
                 showProgress
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: () async {
-                          _formKey.currentState!.validate();
                           if (_formKey.currentState!.validate()) {
                             setState(() {
                               showProgress = true;
@@ -177,23 +267,61 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                             });
 
                             _formKey.currentState!.save();
-                            var res = await makePostRequest(
-                                json.encode({
-                                  "name": _userName,
-                                  "email": _userEmail,
-                                  "userType": _userRole
-                                }),
-                                "/admin/register",
-                                null,
-                                true,
-                                context);
+                            var res;
+                            if (!widget.modifyEvent) {
+                              //add, include id
+                              res = await makePostRequest(
+                                  json.encode({
+                                    "eventName": _eventName,
+                                    "timeHour": _eventTime!.hour,
+                                    "timeMinute": _eventTime!.minute,
+                                    "day": _eventDate!.day,
+                                    "month": _eventDate!.month,
+                                    "year": _eventDate!.year,
+                                    "posterUrl": _eventPosterUrl,
+                                    "location": _eventLocation,
+                                    "host": _eventHost,
+                                    "description": _eventDescription,
+                                    "eventType": _eventType
+                                  }),
+                                  "/event/addEvent",
+                                  null,
+                                  true,
+                                  context);
+                            } else {
+                              //modify data, just include variables
+                              res = await makePostRequest(
+                                  json.encode({
+                                    "id": widget.model!.id,
+                                    "eventName": _eventName,
+                                    "timeHour": _eventTime!.hour,
+                                    "timeMinute": _eventTime!.minute,
+                                    "day": _eventDate!.day,
+                                    "month": _eventDate!.month,
+                                    "year": _eventDate!.year,
+                                    "posterUrl": _eventPosterUrl,
+                                    "location": _eventLocation,
+                                    "host": _eventHost,
+                                    "description": _eventDescription,
+                                    "eventType": _eventType,
+                                    "eventOver": _eventOver == "Yes"
+                                  }),
+                                  "/event/modifyEvent",
+                                  null,
+                                  true,
+                                  context);
+                            }
+
                             if (res.statusCode == 200) {
                               error = '';
                               displayDialog(context, "Continue", null, () {
                                 Navigator.of(context).pop();
                                 Navigator.of(context).pop();
-                              }, "Successful",
-                                  "New user created successfully, access credentials has been sent to their mail box");
+                              },
+                                  "Successful",
+                                  widget.modifyEvent
+                                      ? "Event modified successfully"
+                                      : "New event created successfully");
                             } else {
                               setState(() {
                                 error = json.decode(res.body)['message'];
@@ -210,7 +338,9 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                             height: 60,
                             child: Center(
                                 child: Text(
-                              'REGISTER USER',
+                              widget.modifyEvent
+                                  ? 'MODIFY EVENT'
+                                  : 'CREATE EVENT',
                               style: GoogleFonts.inter(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ))),
