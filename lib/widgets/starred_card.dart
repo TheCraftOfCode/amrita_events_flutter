@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
-import '../screens/onboarding.dart';
 import 'network_image.dart';
 
 class StarCard extends StatelessWidget {
@@ -100,6 +99,8 @@ class StarCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           model.time,

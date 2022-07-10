@@ -1,3 +1,4 @@
+import 'package:amrita_events_flutter/screens/admin/event_rsvp_management.dart';
 import 'package:amrita_events_flutter/screens/admin/manage_events.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
@@ -49,7 +50,11 @@ class AdminConsole extends StatelessWidget {
                   title: 'RSVP',
                   subTitle: 'View all RSVPd user and stats here',
                   iconData: Icons.rsvp_outlined,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                        const EventRSVPManagement()));
+                  },
                 )),
                 Expanded(
                     child: AdminCard(
