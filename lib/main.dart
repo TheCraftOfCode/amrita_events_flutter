@@ -10,6 +10,6 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: LoadValidPageWidget(GreetingPage(), TheMain()),
+    home: TheMain() //LoadValidPageWidget(GreetingPage(), TheMain()),
   ));
 }

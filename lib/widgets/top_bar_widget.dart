@@ -21,27 +21,24 @@ class TopBarWidget extends StatelessWidget {
       child: Padding(
         //changed from bottom: 70 to 30
         padding:
-            const EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 70),
+            const EdgeInsets.only(left: 30, right: 30, bottom: 50, top: 90),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(
-                  width: 10,
-                ),
                 Text(
                   title,
                   style: GoogleFonts.raleway(
-                      fontSize: 40,
+                      fontSize: 35,
                       fontWeight: FontWeight.bold,
                       color: colors.primaryTextColor),
                 )
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.only(top: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -56,15 +53,6 @@ class TopBarWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(0.0),
                         title: 'Search',
                       ),
-                    ),
-                  ),
-                  FloatingActionButton(
-                    onPressed: () {},
-                    heroTag: title,
-                    backgroundColor: colors.scaffoldColor,
-                    child: Icon(
-                      Icons.search_outlined,
-                      color: colors.headingTextColor,
                     ),
                   ),
                 ],

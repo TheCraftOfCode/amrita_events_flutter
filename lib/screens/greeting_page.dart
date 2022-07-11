@@ -14,73 +14,77 @@ class GreetingPage extends StatelessWidget {
       backgroundColor: colors.scaffoldColor,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: CustomSliverView(
-          columnList: [
-            Expanded(
-              child: Container(),
-              flex: 2,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  right: MediaQuery.of(context).size.width * 0.1, bottom: 10),
-              child: Text(
-                "Here's a random line approximate length",
+        child: Stack(
+          children:[
+            const Image(image: AssetImage('assets/background.png'),height: double.infinity,),
+            CustomSliverView(
+            columnList: [
+              Expanded(
+                child: Container(),
+                flex: 2,
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    right: MediaQuery.of(context).size.width * 0.1, bottom: 10),
+                child: Text(
+                  "Here's a random line approximate length",
+                  style: GoogleFonts.nunitoSans(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: colors.headingTextColor),
+                ),
+              ),
+              Text(
+                'A small description of what the app is and what it does.',
                 style: GoogleFonts.nunitoSans(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: colors.headingTextColor),
+                    color: colors.headingTextColor, fontSize: 20),
               ),
-            ),
-            Text(
-              'A small description of what the app is and what it does.',
-              style: GoogleFonts.nunitoSans(
-                  color: colors.headingTextColor, fontSize: 20),
-            ),
-            Expanded(child: Container()),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SignInPage()));
-                    },
-                    child: Text(
-                      'Sign In',
-                      style: GoogleFonts.nunitoSans(
-                          fontSize: 15,
-                          color: colors.alternateButtonTextColor,
-                          fontWeight: FontWeight.bold),
+              Expanded(child: Container()),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const SignInPage()));
+                      },
+                      child: Text(
+                        'Sign In',
+                        style: GoogleFonts.nunitoSans(
+                            fontSize: 15,
+                            color: colors.alternateButtonTextColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          primary: colors.alternateButtonColor),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        primary: colors.alternateButtonColor),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const FeaturesPage()));
-                    },
-                    child: Text(
-                      'Get Started',
-                      style: GoogleFonts.nunitoSans(
-                          fontSize: 15,
-                          color: colors.scaffoldColor,
-                          fontWeight: FontWeight.bold),
+                    const SizedBox(
+                      width: 20,
                     ),
-                    style: ElevatedButton.styleFrom(
-                        primary: colors.headingTextColor),
-                  ),
-                ],
-              ),
-            )
-          ],
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const FeaturesPage()));
+                      },
+                      child: Text(
+                        'Get Started',
+                        style: GoogleFonts.nunitoSans(
+                            fontSize: 15,
+                            color: colors.scaffoldColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          primary: colors.headingTextColor),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),]
         ),
       ),
     );
