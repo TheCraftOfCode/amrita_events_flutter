@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
+import '../widgets/drop_down.dart';
 import '../widgets/network_image.dart';
 import '../widgets/starred_card.dart';
 import 'event_page.dart';
@@ -35,9 +36,12 @@ class EventsHomeState extends State<EventsHome>
   List<Widget> cultural = [];
   List<Widget> technical = [];
   List<Widget> spiritual = [];
+  List<Widget> mainWidgetList = [];
 
   List<EventModel> rsvpList = [];
   List<EventModel> upcomingList = [];
+
+  String searchPattern = "";
 
   _compareDates(String date) {
     DateTime dateParsed = DateTime.parse(date);
@@ -48,18 +52,17 @@ class EventsHomeState extends State<EventsHome>
 
   //call this method if data is updated to refresh all data without having to pull new data from the server again
   buildDataList(bool search) {
-    setState(() {
-      cultural.clear();
-      technical.clear();
-      spiritual.clear();
+    cultural.clear();
+    technical.clear();
+    spiritual.clear();
+    mainWidgetList.clear();
 
-      rsvpList.clear();
-      upcomingList.clear();
-      if (!search) {
-        dataSearch.clear();
-        dataSearch.addAll(widget.data);
-      }
-    });
+    rsvpList.clear();
+    upcomingList.clear();
+    if (!search) {
+      dataSearch.clear();
+      dataSearch.addAll(widget.data);
+    }
     for (var i in dataSearch) {
       setState(() {
         var card = StarCard(
@@ -69,6 +72,7 @@ class EventsHomeState extends State<EventsHome>
         );
 
         //three conditions for three types of events
+        mainWidgetList.add(card);
         if (i.eventType == "CULTURAL") {
           cultural.add(card);
         } else if (i.eventType == "TECHNICAL") {
@@ -86,6 +90,36 @@ class EventsHomeState extends State<EventsHome>
         if (i.starred) {}
       });
     }
+  }
+
+  rebuildSearchData(){
+    if(searchPattern.isNotEmpty){
+      filterSearchData(searchPattern);
+    }
+  }
+
+  filterSearchData(value){
+    dataSearch.clear();
+    if (value != null) {
+      if (value.isEmpty) {
+        setState(() {
+          dataSearch.addAll(widget.data);
+        });
+      } else {
+        setState(() {
+          dataSearch = widget.data
+              .where((i) => i.title
+              .toLowerCase()
+              .contains(value.toLowerCase()))
+              .toList();
+        });
+      }
+    } else {
+      setState(() {
+        dataSearch.addAll(widget.data);
+      });
+    }
+    buildDataList(true);
   }
 
   @override
@@ -106,27 +140,8 @@ class EventsHomeState extends State<EventsHome>
           columnList: [
             TopBarWidget(
               onChanged: (value) {
-                dataSearch.clear();
-                if (value != null) {
-                  if (value.isEmpty) {
-                    setState(() {
-                      dataSearch.addAll(widget.data);
-                    });
-                  } else {
-                    setState(() {
-                      dataSearch = widget.data
-                          .where((i) => i.title
-                              .toLowerCase()
-                              .contains(value.toLowerCase()))
-                          .toList();
-                    });
-                  }
-                } else {
-                  setState(() {
-                    dataSearch.addAll(widget.data);
-                  });
-                }
-                buildDataList(true);
+                searchPattern = value ?? "";
+                filterSearchData(value);
               },
               title: 'Events',
             ),
@@ -138,6 +153,7 @@ class EventsHomeState extends State<EventsHome>
                     spiritual: spiritual,
                     technical: technical,
                     cultural: cultural,
+                    allWidgets: mainWidgetList,
                   )
                 : const NoEventsWidget()
           ],
@@ -147,7 +163,6 @@ class EventsHomeState extends State<EventsHome>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
 
@@ -243,12 +258,14 @@ class YesEventsWidget extends StatefulWidget {
       required this.technical,
       required this.rsvpList,
       required this.upcomingList,
-      required this.rsvp})
+      required this.rsvp,
+      required this.allWidgets})
       : super(key: key);
 
   final List<Widget> cultural;
   final List<Widget> technical;
   final List<Widget> spiritual;
+  final List<Widget> allWidgets;
 
   final List<EventModel> rsvpList;
   final List<EventModel> upcomingList;
@@ -267,9 +284,7 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
   initList() {
     widgetList.clear();
     if (chosenOption == options[0]) {
-      widgetList.addAll(widget.cultural);
-      widgetList.addAll(widget.technical);
-      widgetList.addAll(widget.spiritual);
+      widgetList.addAll(widget.allWidgets);
     } else if (chosenOption == options[1]) {
       widgetList.addAll(widget.cultural);
     } else if (chosenOption == options[2]) {
@@ -284,7 +299,6 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
   void didUpdateWidget(covariant YesEventsWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     initList();
-    print("INIT");
   }
 
   @override
@@ -295,78 +309,46 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Padding(
-        padding: EdgeInsets.only(left: 28, top: 30),
-        child: Text(
-          "Upcoming",
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-      ),
-      HorizontalPageView(
-        list: widget.upcomingList,
-        rsvp: widget.rsvp,
-      ),
-      const Padding(
-        padding: EdgeInsets.only(left: 28, top: 16),
-        child: Text(
-          "RSVP'd Events",
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-      ),
-      HorizontalPageView(
-        list: widget.rsvpList,
-        rsvp: widget.rsvp,
-      ),
-      _dropDown(options, chosenOption, (newValue) {
-        setState(() {
-          chosenOption = newValue;
-          initList();
-        });
-      }),
-    ] + widgetList);
-  }
-}
-
-Widget _dropDown(listOfOptions, chosenOption, onChanged) {
-  return Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: DropdownButtonHideUnderline(
-      child: ButtonTheme(
-        alignedDropdown: true,
-        child: DropdownButton<dynamic>(
-          dropdownColor: colors.scaffoldColor,
-          icon: const Padding(
-            padding: EdgeInsets.only(right: 5),
-            child: Icon(
-              // Add this
-              Icons.menu_open, // Add this
-              // color: colors.errorColor, // Add this
-            ),
-          ),
-          value: chosenOption,
-          isExpanded: true,
-          items: listOfOptions.map<DropdownMenuItem>((value) {
-            return DropdownMenuItem(
-              value: value,
-              child: Text(
-                value,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 28, top: 30),
+                child: Text(
+                  "Upcoming",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
               ),
-            );
-          }).toList(),
-          onChanged: onChanged,
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            // decorationColor: colors.errorColor
-          ),
-        ),
-      ),
-    ),
-  );
+              HorizontalPageView(
+                list: widget.upcomingList.reversed.toList(),
+                rsvp: widget.rsvp,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 28, top: 16),
+                child: Text(
+                  "RSVP'd Events",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
+              HorizontalPageView(
+                list: widget.rsvpList.reversed.toList(),
+                rsvp: widget.rsvp,
+              ),
+              dropDown(options, chosenOption, (newValue) {
+                setState(() {
+                  chosenOption = newValue;
+                  initList();
+                });
+              }),
+            ] +
+            widgetList.reversed.toList());
+  }
 }
 
 class NoEventsWidget extends StatelessWidget {
@@ -401,4 +383,4 @@ class NoEventsWidget extends StatelessWidget {
   }
 }
 
-//TODO: Have to add refresh on pull and empty / no network states
+//TODO: Have to add empty / no network states

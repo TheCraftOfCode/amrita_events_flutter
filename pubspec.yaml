@@ -47,7 +47,10 @@ dependencies:
   smooth_page_indicator:
   cached_network_image: ^3.2.0
   oktoast:
-
+  web_socket_channel: ^2.2.0
+  firebase_core: ^1.19.1
+  firebase_messaging: ^11.4.4
+  flutter_local_notifications: ^9.3.2
 
 
 dev_dependencies:

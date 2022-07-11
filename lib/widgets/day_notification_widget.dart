@@ -19,9 +19,7 @@ class DayNotificationWidget extends StatefulWidget {
 class _DayNotificationWidgetState extends State<DayNotificationWidget> {
   List<Widget> list = [];
 
-  @override
-  void initState() {
-    super.initState();
+  buildList() {
     list.add(
       Padding(
         padding: const EdgeInsets.only(top: 30, bottom: 20, left: 20),
@@ -40,7 +38,21 @@ class _DayNotificationWidgetState extends State<DayNotificationWidget> {
     list = list +
         widget.model
             .map((e) => NotificationWidget(title: e.title, body: e.body))
-            .toList();
+            .toList().reversed.toList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    buildList();
+  }
+
+  @override
+  void didUpdateWidget(covariant DayNotificationWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    list.clear();
+    buildList();
+    setState((){});
   }
 
   @override

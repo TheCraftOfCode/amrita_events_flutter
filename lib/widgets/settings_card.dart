@@ -2,17 +2,16 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class SettingCard extends StatelessWidget {
-  SettingCard({
+  const SettingCard({
     Key? key,
     required this.icon,
-    required this.title,required this.onTap,
+    required this.title,
+    required this.onTap,
   }) : super(key: key);
   final IconData icon;
   final String title;
-  void Function()? onTap;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {

@@ -22,17 +22,20 @@ class _LeftBeveledContainerState extends State<LeftBeveledContainer> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                decoration: ShapeDecoration(
-                    shape: constants.beveledRectangle,
-                    color: colors.cardColor
-                ),
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: widget.columnList,
+              Padding(
+                padding: const EdgeInsets.only(top: 100),
+                child: Container(
+                  decoration: ShapeDecoration(
+                      shape: constants.beveledRectangle,
+                      color: colors.cardColor
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: widget.columnList,
+                    ),
                   ),
                 ),
               ),

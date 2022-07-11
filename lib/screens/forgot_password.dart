@@ -105,7 +105,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       });
 
                       if (res.statusCode == 200) {
-                        //TODO: Reset Password page
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
                           return ForgotPasswordReset(email: _email);

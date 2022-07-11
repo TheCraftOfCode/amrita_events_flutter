@@ -15,18 +15,16 @@ class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
 
   @override
-  State<Notifications> createState() => _NotificationsState();
+  State<Notifications> createState() => NotificationsState();
 }
 
-class _NotificationsState extends State<Notifications> with AutomaticKeepAliveClientMixin  {
+class NotificationsState extends State<Notifications>
+    with AutomaticKeepAliveClientMixin {
   Map<String, List<NotificationModel>> mapData = {};
   List<Widget> notificationList = [];
 
   _getData() async {
-    setState(() {
-      mapData.clear();
-      notificationList.clear();
-    });
+    mapData.clear();
 
     var response = await makePostRequest(
         null, "/notification/getNotifications", null, true, context);
@@ -34,36 +32,43 @@ class _NotificationsState extends State<Notifications> with AutomaticKeepAliveCl
     if (response.statusCode == 200) {
       var responseData = json.decode(response.body)["data"]; //List Data
       for (var i in responseData) {
-        setState(() {
-          //add data
-          var data = NotificationModel.fromJSON(i);
-          var dateString = data.date.toString().split(" ")[0];
-
-          var mapItem = mapData[dateString];
-          if (mapItem != null) {
-            mapData[dateString]!.add(data);
-          } else {
-            mapData[dateString] = [];
-            mapData[dateString]!.add(data);
-          }
-        });
+        var data = NotificationModel.fromJSON(i);
+        addMapData(data);
       }
 
       //TODO: Explore this data structure, I mean come on who knew maps could be sorted
-      SplayTreeMap<String, dynamic>.from(mapData, (a, b) => b.compareTo(a))
-          .forEach((key, value) {
-        notificationList.add(DayNotificationWidget(
-          model: value,
-          date: key,
-        ));
-      });
+      buildList();
     }
+  }
+
+  addMapData(model) {
+    var dateString = model.date.toString().split(" ")[0];
+    var mapItem = mapData[dateString];
+    if (mapItem != null) {
+      mapData[dateString]!.add(model);
+    } else {
+      mapData[dateString] = [];
+      mapData[dateString]!.add(model);
+    }
+    setState(() {});
+  }
+
+  buildList() {
+    notificationList.clear();
+    SplayTreeMap<String, dynamic>.from(mapData, (a, b) => b.compareTo(a))
+        .forEach((key, value) {
+      notificationList.add(DayNotificationWidget(
+        model: value,
+        date: key,
+      ));
+    });
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _getData();
     });
   }
@@ -80,8 +85,8 @@ class _NotificationsState extends State<Notifications> with AutomaticKeepAliveCl
           const TopBarWidgetNoSearch(
               icon: Icons.notifications_none_outlined, title: "Notifications"),
           notificationList.isNotEmpty
-              ? YesNotificationsWidget(
-                  notificationList: notificationList,
+              ? Column(
+                  children: notificationList,
                 )
               : const NoNotificationsWidget(),
         ]),
@@ -103,6 +108,12 @@ class YesNotificationsWidget extends StatefulWidget {
 }
 
 class _YesNotificationsWidgetState extends State<YesNotificationsWidget> {
+  @override
+  void didUpdateWidget(covariant YesNotificationsWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

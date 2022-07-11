@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 Widget networkImage(url) {
-  print(url);
   return ClipRRect(
     borderRadius: BorderRadius.circular(20),
     child: url != null && url != ''

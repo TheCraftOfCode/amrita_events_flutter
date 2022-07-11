@@ -1,25 +1,28 @@
 import 'dart:convert';
 
-import 'package:amrita_events_flutter/widgets/textbox_widget.dart';
+import 'package:amrita_events_flutter/utils/constants.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:amrita_events_flutter/utils/http_modules.dart';
-import 'package:amrita_events_flutter/widgets/alert_dialog.dart';
+import '../../utils/http_modules.dart';
+import '../../widgets/alert_dialog.dart';
+import '../../widgets/dropdown_widget.dart';
 import '../../widgets/error_box.dart';
 import '../../widgets/left_beveled_container.dart';
+import '../../widgets/textbox_widget.dart';
 
-class BroadcastNotifications extends StatefulWidget {
-  const BroadcastNotifications({Key? key}) : super(key: key);
+class AddUsers extends StatefulWidget {
+  const AddUsers({Key? key}) : super(key: key);
 
   @override
-  State<BroadcastNotifications> createState() => _BroadcastNotificationsState();
+  State<AddUsers> createState() => _AddUsersState();
 }
 
-class _BroadcastNotificationsState extends State<BroadcastNotifications> {
+class _AddUsersState extends State<AddUsers> {
   final _formKey = GlobalKey<FormState>();
-  String error = "", _title = "", _body = "";
   bool showProgress = false;
+  String error = "", _userName = "", _userEmail = "", _userRole = "";
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
                 child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Broadcast Notifications',
+                      'Add New User',
                       style: GoogleFonts.nunitoSans(
                           color: colors.primaryTextColor,
                           fontSize: 30,
@@ -49,7 +52,7 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
               Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Have something that all your dear app users have to know? Broadcast it from here!',
+                    'Want to add new users? Want someone to assist you? Don\'t worry, we got your back! Add new users here of your desired role',
                     style: GoogleFonts.nunitoSans(
                         color: colors.primaryTextColor,
                         fontSize: 17,
@@ -61,20 +64,32 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
+                child: DropDownFormField(
+                  list: const [user, admin, superAdmin],
+                  title: "User Role",
+                  hint: "Choose user role",
+                  errorField: "Please choose a user role",
+                  onSaved: (value) {
+                    _userRole = value;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
                 child: TextBoxField(
                   validator: (value) {
                     if (value == "" || value == null) {
-                      return "Please enter notification title";
+                      return "Please enter user name";
                     } else {
                       return null;
                     }
                   },
                   onSaved: (value) {
-                    _title = value!;
+                    _userName = value!;
                   },
                   padding: const EdgeInsets.only(bottom: 5),
-                  title: 'Notification Title',
-                  hint: 'Enter Title',
+                  title: 'User Name',
+                  hint: 'Enter User Name',
                   light: true,
                 ),
               ),
@@ -83,17 +98,19 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
                 child: TextBoxField(
                   validator: (value) {
                     if (value == "" || value == null) {
-                      return "Please enter notification body";
+                      return "Please enter user email address";
+                    } else if (!EmailValidator.validate(value)) {
+                      return "Invalid Email";
                     } else {
                       return null;
                     }
                   },
                   onSaved: (value) {
-                    _body = value!;
+                    _userEmail = value!;
                   },
                   padding: const EdgeInsets.only(bottom: 5),
-                  title: 'Notification Body',
-                  hint: 'Enter body',
+                  title: 'Email',
+                  hint: 'Enter Email',
                   light: true,
                 ),
               ),
@@ -110,8 +127,12 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
 
                           _formKey.currentState!.save();
                           var res = await makePostRequest(
-                              json.encode({"title": _title, "body": _body}),
-                              "/notification/sendNotification",
+                              json.encode({
+                                "name": _userName,
+                                "email": _userEmail,
+                                "userType": _userRole
+                              }),
+                              "/admin/register",
                               null,
                               true,
                               context);
@@ -121,7 +142,7 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
                             }, "Successful",
-                                "Notification was broadcast successfully");
+                                "New user created successfully, access credentials has been sent to their mail box");
                           } else {
                             setState(() {
                               error = json.decode(res.body)['message'];
@@ -138,7 +159,7 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
                           height: 60,
                           child: Center(
                               child: Text(
-                            'BROADCAST',
+                            'REGISTER USER',
                             style: GoogleFonts.inter(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ))),

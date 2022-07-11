@@ -30,13 +30,11 @@ class LoadValidPageWidget extends StatelessWidget {
 
     var res = await makePostRequest(null, "/user/verifyToken", null, true,
         context);
-    print(res.statusCode);
     if (res.statusCode != 200 && res.statusCode != 412) {
       // showToast("Could not authenticate to server, continuing in offline mode!");
     }
     else if(res.statusCode == 412){
-      //TODO: logout here
-      jwtTokenSet = '';
+      clearAllData();
       return '';
     }
     return jwt;

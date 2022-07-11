@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/starred_card.dart';
@@ -9,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
-import '../utils/http_modules.dart';
 
 class Starred extends StatefulWidget {
   const Starred(
@@ -34,14 +30,15 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
   //list depending on root data
   List<Widget> eventList = [];
 
+  String searchPattern = "";
+
+
   buildDataList(search) {
-    setState(() {
-      eventList.clear();
-      if (!search) {
-        dataSearch.clear();
-        dataSearch.addAll(widget.data);
-      }
-    });
+    eventList.clear();
+    if (!search) {
+      dataSearch.clear();
+      dataSearch.addAll(widget.data);
+    }
     for (var i in dataSearch) {
       setState(() {
         if (i.starred) {
@@ -53,6 +50,36 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
         }
       });
     }
+  }
+
+  rebuildSearchData(){
+    if(searchPattern.isNotEmpty){
+      filterSearchData(searchPattern);
+    }
+  }
+
+  filterSearchData(value){
+    dataSearch.clear();
+    if (value != null) {
+      if (value.isEmpty) {
+        setState(() {
+          dataSearch.addAll(widget.data);
+        });
+      } else {
+        setState(() {
+          dataSearch = widget.data
+              .where((i) => i.title
+              .toLowerCase()
+              .contains(value.toLowerCase()))
+              .toList();
+        });
+      }
+    } else {
+      setState(() {
+        dataSearch.addAll(widget.data);
+      });
+    }
+    buildDataList(true);
   }
 
   @override
@@ -74,31 +101,11 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
             TopBarWidget(
               title: "Starred",
               onChanged: (value) {
-                dataSearch.clear();
-                if (value != null) {
-                  if (value.isEmpty) {
-                    setState(() {
-                      dataSearch.addAll(widget.data);
-                    });
-                  } else {
-                    setState(() {
-                      dataSearch = widget.data
-                          .where((i) => i.title
-                              .toLowerCase()
-                              .contains(value.toLowerCase()))
-                          .toList();
-                    });
-                  }
-                } else {
-                  setState(() {
-                    dataSearch.addAll(widget.data);
-                  });
-                }
-                buildDataList(true);
+                searchPattern = value ?? "";
+                filterSearchData(value);
               },
             ),
-            //TODO: Check for list size here
-            dataSearch.isNotEmpty
+            eventList.isNotEmpty
                 ? YesStarredEventsWidget(
                     eventList: eventList,
                   )
@@ -110,7 +117,6 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
 
@@ -122,7 +128,7 @@ class YesStarredEventsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: eventList,
+      children: eventList.reversed.toList(),
     );
   }
 }
@@ -136,7 +142,7 @@ class NoStarredEventsWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
+          padding: const EdgeInsets.only(top: 60.0, bottom: 20.0),
           child: Image(
             image: const AssetImage('assets/no_starred.png'),
             height: MediaQuery.of(context).size.width * 0.8,
