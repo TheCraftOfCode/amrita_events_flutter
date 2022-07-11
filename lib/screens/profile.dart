@@ -2,6 +2,7 @@ import 'package:amrita_events_flutter/screens/change_password.dart';
 import 'package:amrita_events_flutter/screens/greeting_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
+import 'package:amrita_events_flutter/widgets/profile_card.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_no_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,67 +27,70 @@ class _ProfileState extends State<Profile> {
           const TopBarWidgetNoSearch(
               icon: Icons.person_outline, title: "Profile"),
           //
-
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    color: colors.headingTextColor,
-                    height: 100,
-                    width: 100,
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "Username",
-                        style: GoogleFonts.nunitoSans(
-                          color: colors.headingTextColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 100,
-                      ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.edit,
-                            size: 20,
-                            color: colors.headingTextColor,
-                          )),
-                      const SizedBox(
-                        height: 100,
-                      ),
-                    ],
-                  )
-                ]),
+          Expanded(
+            child: Container(),
+            flex: 2,
           ),
-          ElevatedButton(
-              onPressed: () {
-                displayDialog(context, "Yes", "No", () {
-                  clearAllData();
-                  // showToast("Signed out successfully!");
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => const GreetingPage()),
-                      (Route<dynamic> route) => false);
-                }, "Are you sure you want to sign out?",
-                    "You will be signed out and all data will be lost");
-              },
-              child: const Text("Sign Out")),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (BuildContext context) {
-                  return const ChangePassword();
-                }));
-              },
-              child: const Text("Change Password"))
+          ProfileCard(),
+          Expanded(
+            child: Container(),
+            flex: 1,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  displayDialog(context, "Yes", "No", () {
+                    clearAllData();
+                    // showToast("Signed out successfully!");
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const GreetingPage()),
+                        (Route<dynamic> route) => false);
+                  }, "Are you sure you want to sign out?",
+                      "You will be signed out and all data will be lost");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 5.0, vertical: 10.0),
+                  child: Text(
+                    "SIGN OUT",
+                    style: GoogleFonts.raleway(
+                        fontSize: 15,
+                        color: colors.primaryTextColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                style:
+                    ElevatedButton.styleFrom(primary: colors.headingTextColor),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return const ChangePassword();
+                    }));
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: colors.headingTextColor),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0, vertical: 10.0),
+                    child: Text(
+                      "CHANGE PASSWORD",
+                      style: GoogleFonts.raleway(
+                          fontSize: 15,
+                          color: colors.primaryTextColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )),
+            ],
+          ),
+          Expanded(
+            child: Container(),
+            flex: 2,
+          ),
         ],
       ),
     );

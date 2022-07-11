@@ -27,7 +27,7 @@ class TopBarWidgetNoSearch extends StatelessWidget {
           children: [
             Expanded(
               child: Container(),
-              flex: 2,
+              flex: 3,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -46,7 +46,7 @@ class TopBarWidgetNoSearch extends StatelessWidget {
                       AutoSizeText(
                         title,
                         style: GoogleFonts.nunitoSans(
-                            fontWeight: FontWeight.normal,
+                            fontWeight: FontWeight.bold,
                             color: colors.primaryTextColor,
                             fontSize: 35),
                         maxLines: 2,
@@ -56,7 +56,11 @@ class TopBarWidgetNoSearch extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
+            Expanded(
+              child: Container(),
+              flex: 1,
+            ),
           ],
         ),
       ),

@@ -59,7 +59,7 @@ class _TopBarWithTextWidgetState extends State<TopBarWithTextWidget> {
                               style: GoogleFonts.raleway(
                                   fontWeight: FontWeight.bold,
                                   color: colors.primaryTextColor,),
-                              maxFontSize: 40,
+                              maxFontSize: 35,
                               maxLines: 2,
                               minFontSize: 28,
                             ),

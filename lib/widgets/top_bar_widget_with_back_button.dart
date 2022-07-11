@@ -51,7 +51,7 @@ class TopBarWidgetWithBackButton extends StatelessWidget {
                           style: GoogleFonts.raleway(
                               fontWeight: FontWeight.bold,
                               color: colors.primaryTextColor,
-                              fontSize: 40),
+                              fontSize: 35),
                           maxLines: 2,
                           minFontSize: 28,
                         ),
