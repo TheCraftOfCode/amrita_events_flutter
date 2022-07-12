@@ -12,37 +12,38 @@ class GreetingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Stack(
-          children:[
-            const Image(image: AssetImage('assets/background.png'),height: double.infinity,),
-            CustomSliverView(
-            columnList: [
-              Expanded(
-                child: Container(),
-                flex: 2,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    right: MediaQuery.of(context).size.width * 0.1, bottom: 10),
-                child: Text(
-                  "Here's a random line approximate length",
-                  style: GoogleFonts.nunitoSans(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: colors.headingTextColor),
+        body: Stack(children: [
+          const Image(
+            image: AssetImage('assets/background.png'),
+            fit: BoxFit.cover,
+            width: double.infinity,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: CustomSliverView(
+              columnList: [
+                Expanded(
+                  child: Container(),
+                  flex: 2,
                 ),
-              ),
-              Text(
-                'A small description of what the app is and what it does.',
-                style: GoogleFonts.nunitoSans(
-                    color: colors.headingTextColor, fontSize: 20),
-              ),
-              Expanded(child: Container()),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: Row(
+                Padding(
+                  padding: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width * 0.1, bottom: 10),
+                  child: Text(
+                    "Here's a random line approximate length",
+                    style: GoogleFonts.nunitoSans(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: colors.headingTextColor),
+                  ),
+                ),
+                Text(
+                  'A small description of what the app is and what it does.',
+                  style: GoogleFonts.nunitoSans(
+                      color: colors.headingTextColor, fontSize: 20),
+                ),
+                Expanded(child: Container()),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
@@ -81,12 +82,11 @@ class GreetingPage extends StatelessWidget {
                           primary: colors.headingTextColor),
                     ),
                   ],
-                ),
-              )
-            ],
-          ),]
-        ),
-      ),
+                )
+              ],
+            ),
+          ),
+        ]),
     );
   }
 }
