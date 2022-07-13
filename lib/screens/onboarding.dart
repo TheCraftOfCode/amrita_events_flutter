@@ -115,12 +115,21 @@ class _FeaturesPageState extends State<FeaturesPage> {
                   SmoothPageIndicator(
                     controller: controller,
                     count: pages.length,
-                    effect: JumpingDotEffect(
-                        dotHeight: 7,
-                        dotWidth: 7,
-                        jumpScale: .7,
-                        verticalOffset: 10,
-                        activeDotColor: colors.accentColor),
+                    effect: WormEffect(
+                      activeDotColor: colors.accentColor,
+                      dotColor: Color(0xff2E215C),
+                      type: WormType.thin,
+                      dotHeight: 7,
+                      dotWidth: 7,
+                    )
+                  //   effect: JumpingDotEffect(
+                  //       dotHeight: 7,
+                  //       dotWidth: 7,
+                  //       strokeWidth: 5,
+                  //       jumpScale: .7,
+                  //       verticalOffset: 5,
+                  //       dotColor: const Color(0xff2E215C),
+                  //       activeDotColor: colors.accentColor),
                   ),
                   const SizedBox(
                     width: 30,
