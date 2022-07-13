@@ -163,19 +163,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Material(
-                    color: colors.accentColor,
-                    shape: const CircleBorder(),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        FontAwesomeIcons.google,
-                        color: colors.primaryTextColor,
-                      ),
-                    ),
-                  ),
                   showProgress
                       ? const CircularProgressIndicator()
                       : ElevatedButton(
