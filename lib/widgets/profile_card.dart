@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/edit_profile.dart';
 
 const darkColor = Color(0xFF49535C);
 
@@ -33,7 +34,7 @@ class ProfileCard extends StatelessWidget {
                       child: Container(
                         height: 100,
                         decoration: BoxDecoration(
-                          color: darkColor,
+                          color: Color(0xffA0A4A8),
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(20),
                             topLeft: Radius.circular(20),
@@ -55,16 +56,35 @@ class ProfileCard extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Max Weber",
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  color: const Color(0xFFFFFFFF),
-                                ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Sumithra",
+                                    style: TextStyle(
+                                      fontSize: 26,
+                                      color: const Color(0xFFFFFFFF),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EditProfile()));
+                                    },
+                                  )
+                                ],
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                "Flutter Explained",
+                                "CB.EN.U4CSE19247",
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: darkColor,
@@ -90,12 +110,12 @@ class ProfileCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "Twitter Account: \n GitHub Account: ",
+                          " E-Mail: \n GitHub Account: ",
                           style: montserrat,
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          "Official Start: \n Occupation: ",
+                          " Phone Number: \n Instagram: ",
                           style: montserrat,
                         ),
                       ],
@@ -104,11 +124,11 @@ class ProfileCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("@flutter_exp", style: montserrat),
-                        Text("md-weber", style: montserrat),
+                        Text("sums@gmail.com", style: montserrat),
+                        Text("sumithra1306", style: montserrat),
                         const SizedBox(height: 16),
-                        Text("28.01.2020", style: montserrat),
-                        Text("Sn. Software Engineer", style: montserrat),
+                        Text("1234567890", style: montserrat),
+                        Text("sumiithraa_sudhakar", style: montserrat),
                       ],
                     )
                   ],
@@ -116,8 +136,8 @@ class ProfileCard extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 8.0, right: 8.0, bottom: 8.0),
+                padding:
+                    const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,14 +145,14 @@ class ProfileCard extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          "6280",
+                          "60",
                           style: buildMontserrat(
                             const Color(0xFF000000),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "Subscribers",
+                          "Starred",
                           style: buildMontserrat(darkColor),
                         )
                       ],
@@ -146,39 +166,39 @@ class ProfileCard extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          "1745",
+                          "17",
                           style: buildMontserrat(
                             const Color(0xFF000000),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "Followers",
+                          "RSVP",
                           style: buildMontserrat(darkColor),
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: 50,
-                      child: const VerticalDivider(
-                        color: Color(0xFF9A9A9A),
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "163",
-                          style: buildMontserrat(
-                            const Color(0xFF000000),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "Videos",
-                          style: buildMontserrat(darkColor),
-                        )
-                      ],
-                    ),
+                    // SizedBox(
+                    //   height: 50,
+                    //   child: const VerticalDivider(
+                    //     color: Color(0xFF9A9A9A),
+                    //   ),
+                    // ),
+                    // Column(
+                    //   children: [
+                    //     Text(
+                    //       "13",
+                    //       style: buildMontserrat(
+                    //         const Color(0xFF000000),
+                    //         fontWeight: FontWeight.bold,
+                    //       ),
+                    //     ),
+                    //     Text(
+                    //       "Upcoming this week",
+                    //       style: buildMontserrat(darkColor),
+                    //     )
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -191,9 +211,9 @@ class ProfileCard extends StatelessWidget {
   }
 
   TextStyle buildMontserrat(
-      Color color, {
-        FontWeight fontWeight = FontWeight.normal,
-      }) {
+    Color color, {
+    FontWeight fontWeight = FontWeight.normal,
+  }) {
     return TextStyle(
       fontSize: 18,
       color: color,
