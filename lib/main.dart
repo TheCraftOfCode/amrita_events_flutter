@@ -1,4 +1,5 @@
 import 'package:amrita_events_flutter/screens/greeting_page.dart';
+import 'package:amrita_events_flutter/screens/profile.dart';
 import 'package:amrita_events_flutter/screens/the_main.dart';
 import 'package:amrita_events_flutter/widgets/load_valid_page_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -113,7 +114,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoadValidPageWidget(GreetingPage(), TheMain()),
+      home: Profile(),
     );
   }
 }
