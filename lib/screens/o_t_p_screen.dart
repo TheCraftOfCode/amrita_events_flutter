@@ -25,89 +25,97 @@ class _OTPScreenState extends State<OTPScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: LeftBeveledContainer(
-        columnList: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Align(
+      body: Stack(
+        children:[
+      const Image(
+      image: AssetImage('assets/background.png'),
+      fit: BoxFit.cover,
+      width: double.infinity,
+    ),
+          LeftBeveledContainer(
+          columnList: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Enter OTP',
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.primaryTextColor,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
+            Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Enter OTP',
+                  'Please enter the OTP sent to your phone number',
                   style: GoogleFonts.nunitoSans(
                       color: colors.primaryTextColor,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
+                      fontSize: 17,
+                      fontWeight: FontWeight.normal),
                 )),
-          ),
-          Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Please enter the OTP sent to your phone number',
-                style: GoogleFonts.nunitoSans(
-                    color: colors.primaryTextColor,
-                    fontSize: 17,
-                    fontWeight: FontWeight.normal),
-              )),
-          Padding(
-            padding: const EdgeInsets.only(top: 90.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                OTPInput(_fieldOne, true),
-                OTPInput(_fieldTwo, false),
-                OTPInput(_fieldThree, false),
-                OTPInput(_fieldFour, false)
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 90.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OTPInput(_fieldOne, true),
+                  OTPInput(_fieldTwo, false),
+                  OTPInput(_fieldThree, false),
+                  OTPInput(_fieldFour, false)
+                ],
+              ),
             ),
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Didn't get OTP?",
-                  style: GoogleFonts.nunitoSans(
-                      color: colors.primaryTextColor),
-                ),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Resend",
-                      style: GoogleFonts.nunitoSans(
-                          color: colors.primaryTextColor,
-                          fontWeight: FontWeight.bold),
-                    )),
-                Text(
-                  'in',
-                  style: GoogleFonts.nunitoSans(
-                      color: colors.primaryTextColor),
-                ),
-                Text(
-                  ' 00:50',
-                  style: GoogleFonts.nunitoSans(
-                      color: colors.primaryTextColor),
-                ),
-              ],
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Didn't get OTP?",
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.primaryTextColor),
+                  ),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Resend",
+                        style: GoogleFonts.nunitoSans(
+                            color: colors.primaryTextColor,
+                            fontWeight: FontWeight.bold),
+                      )),
+                  Text(
+                    'in',
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.primaryTextColor),
+                  ),
+                  Text(
+                    ' 00:50',
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.primaryTextColor),
+                  ),
+                ],
+              ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {});
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => const EventsHome()));
-            },
-            child: SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: Center(
-                    child: Text(
-                      'VERIFY',
-                      style: GoogleFonts.inter(
-                          fontWeight: FontWeight.bold, fontSize: 20),
-                    ))),
-            style: ElevatedButton.styleFrom(primary: colors.scaffoldColor),
-          )
-        ],
+            ElevatedButton(
+              onPressed: () {
+                setState(() {});
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (context) => const EventsHome()));
+              },
+              child: SizedBox(
+                  width: double.infinity,
+                  height: 60,
+                  child: Center(
+                      child: Text(
+                        'VERIFY',
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ))),
+              style: ElevatedButton.styleFrom(primary: colors.scaffoldColor),
+            )
+          ],
+        ),]
       ),
     );
   }
