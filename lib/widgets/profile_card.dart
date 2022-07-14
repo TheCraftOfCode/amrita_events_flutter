@@ -18,13 +18,18 @@ class ProfileCard extends StatefulWidget {
   State<ProfileCard> createState() => _ProfileCardState();
 }
 
-class _ProfileCardState extends State<ProfileCard> {
+class _ProfileCardState extends State<ProfileCard>
+    with AutomaticKeepAliveClientMixin {
   String _userName = "", _email = "", _starred = "", _rsvp = "";
 
   _getUserData() async {
     _userName = await getName;
     _email = await getEmailID;
-    setState(() {});
+    try {
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
 
     //get RSVP and count data
     var res =
@@ -33,7 +38,11 @@ class _ProfileCardState extends State<ProfileCard> {
       var decodedData = json.decode(res.body);
       _starred = decodedData['starred'].toString();
       _rsvp = decodedData['rsvp'].toString();
-      setState(() {});
+      try {
+        setState(() {});
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -79,13 +88,15 @@ class _ProfileCardState extends State<ProfileCard> {
                     ),
                     Positioned(
                       left: 11,
-                      top: 46,
+                      top: 50,
                       child: Row(
                         children: [
                           //TODO: Add first name first letter
                           CircleAvatar(
                             child: Text(
-                              _userName.toUpperCase()[0],
+                              _userName.isNotEmpty
+                                  ? _userName.toUpperCase()[0]
+                                  : '',
                               style: GoogleFonts.raleway(
                                   fontSize: 40, fontWeight: FontWeight.bold),
                             ),
@@ -137,8 +148,8 @@ class _ProfileCardState extends State<ProfileCard> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0, top: 10),
+                padding: const EdgeInsets.only(
+                    left: 8.0, right: 8.0, bottom: 8.0, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,6 +211,9 @@ class _ProfileCardState extends State<ProfileCard> {
       fontWeight: fontWeight,
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class AvatarClipper extends CustomClipper<Path> {
