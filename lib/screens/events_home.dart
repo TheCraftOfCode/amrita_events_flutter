@@ -312,12 +312,12 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 28, top: 30),
+              Padding(
+                padding: const EdgeInsets.only(left: 28, top: 30),
                 child: Text(
-                  "Upcoming",
-                  style: TextStyle(
-                      fontSize: 18,
+                  "UPCOMING",
+                  style: GoogleFonts.nunitoSans(
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
@@ -326,12 +326,12 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
                 list: widget.upcomingList.reversed.toList(),
                 rsvp: widget.rsvp,
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 28, top: 16),
+              Padding(
+                padding: const EdgeInsets.only(left: 28, top: 30),
                 child: Text(
-                  "RSVP'd Events",
-                  style: TextStyle(
-                      fontSize: 18,
+                  "RSVP'D EVENTS",
+                  style: GoogleFonts.nunitoSans(
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
@@ -373,7 +373,7 @@ class NoEventsWidget extends StatelessWidget {
             'Amazing events are being planned by amazing people. Please check in later!',
             textAlign: TextAlign.center,
             style: GoogleFonts.nunitoSans(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.normal,
                 color: colors.headingTextColor),
           )),

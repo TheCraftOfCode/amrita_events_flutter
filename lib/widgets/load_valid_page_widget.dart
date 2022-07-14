@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/http_modules.dart';
 import '../utils/utils.dart';
+import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
 /// *
 /// This widget can be used between usual widgets to avoid rendering
@@ -47,6 +48,7 @@ class LoadValidPageWidget extends StatelessWidget {
         builder: (context, data) {
           if (!data.hasData) {
             return Scaffold(
+              backgroundColor: colors.scaffoldColor,
               body: Column(
                 children: [
                   Expanded(child: Container()),
