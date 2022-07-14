@@ -29,7 +29,7 @@ class _TheMainState extends State<TheMain> {
   List<EventModel> data = [];
 
   final channel = WebSocketChannel.connect(
-    Uri.parse('ws://10.0.2.2:8000/websockets'),
+    Uri.parse('wss://$networkAddress/websockets'),
   );
 
   _getData() async {
