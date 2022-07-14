@@ -18,93 +18,101 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+  final GlobalKey<ProfileCardState> _profileCardKey = GlobalKey<ProfileCardState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
-      body: CustomSliverView(
-        columnList: [
-          const TopBarWidgetNoSearch(
-              icon: Icons.person_outline, title: "Profile"),
-          //
-          Expanded(
-            child: Container(),
-            flex: 2,
-          ),
-          const ProfileCard(),
-          Expanded(
-            child: Container(),
-            flex: 1,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 4),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        displayDialog(context, "Yes", "No", () {
-                          clearAllData();
-                          // showToast("Signed out successfully!");
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => const GreetingPage()),
-                              (Route<dynamic> route) => false);
-                        }, "Are you sure you want to sign out?",
-                            "You will be signed out and all data will be lost");
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 10.0),
-                        child: Text(
-                          "SIGN OUT",
-                          style: GoogleFonts.raleway(
-                              fontSize: 10,
-                              color: colors.primaryTextColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          primary: colors.headingTextColor),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 4),
-                    child: ElevatedButton(
+      body: RefreshIndicator(
+        onRefresh: () async{
+          await _profileCardKey.currentState!.getUserData();
+        },
+        child: CustomSliverView(
+          columnList: [
+            const TopBarWidgetNoSearch(
+                icon: Icons.person_outline, title: "Profile"),
+            //
+            Expanded(
+              child: Container(),
+              flex: 2,
+            ),
+            ProfileCard(key: _profileCardKey,),
+            Expanded(
+              child: Container(),
+              flex: 1,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return const ChangePassword();
-                          }));
+                          displayDialog(context, "Yes", "No", () {
+                            clearAllData();
+                            // showToast("Signed out successfully!");
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const GreetingPage()),
+                                (Route<dynamic> route) => false);
+                          }, "Are you sure you want to sign out?",
+                              "You will be signed out and all data will be lost");
                         },
-                        style: ElevatedButton.styleFrom(
-                            primary: colors.headingTextColor),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5.0, vertical: 10.0),
                           child: Text(
-                            "CHANGE PASSWORD",
+                            "SIGN OUT",
                             style: GoogleFonts.raleway(
                                 fontSize: 10,
                                 color: colors.primaryTextColor,
                                 fontWeight: FontWeight.bold),
                           ),
-                        )),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: colors.headingTextColor),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) {
+                              return const ChangePassword();
+                            }));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: colors.headingTextColor),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5.0, vertical: 10.0),
+                            child: Text(
+                              "CHANGE PASSWORD",
+                              style: GoogleFonts.raleway(
+                                  fontSize: 10,
+                                  color: colors.primaryTextColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(),
-            flex: 2,
-          ),
-        ],
+            Expanded(
+              child: Container(),
+              flex: 2,
+            ),
+          ],
+        ),
       ),
     );
   }

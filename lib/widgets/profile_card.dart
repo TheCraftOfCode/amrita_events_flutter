@@ -5,8 +5,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
-
-import '../screens/edit_profile.dart';
 import '../utils/utils.dart';
 
 const darkColor = Color(0xFF49535C);
@@ -15,14 +13,14 @@ class ProfileCard extends StatefulWidget {
   const ProfileCard({Key? key}) : super(key: key);
 
   @override
-  State<ProfileCard> createState() => _ProfileCardState();
+  State<ProfileCard> createState() => ProfileCardState();
 }
 
-class _ProfileCardState extends State<ProfileCard>
+class ProfileCardState extends State<ProfileCard>
     with AutomaticKeepAliveClientMixin {
   String _userName = "", _email = "", _starred = "", _rsvp = "";
 
-  _getUserData() async {
+  getUserData() async {
     _userName = await getName;
     _email = await getEmailID;
     try {
@@ -50,7 +48,7 @@ class _ProfileCardState extends State<ProfileCard>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getUserData();
+      getUserData();
     });
   }
 
