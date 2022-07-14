@@ -29,9 +29,6 @@ class _ProfileCardState extends State<ProfileCard> {
     //get RSVP and count data
     var res =
         await makePostRequest(null, "/user/userStats", null, true, context);
-    print(res);
-    print(res.statusCode);
-    print(res.body);
     if (res.statusCode == 200) {
       var decodedData = json.decode(res.body);
       _starred = decodedData['starred'].toString();
@@ -88,7 +85,7 @@ class _ProfileCardState extends State<ProfileCard> {
                           //TODO: Add first name first letter
                           CircleAvatar(
                             child: Text(
-                              'N',
+                              _userName.toUpperCase()[0],
                               style: GoogleFonts.raleway(
                                   fontSize: 40, fontWeight: FontWeight.bold),
                             ),
