@@ -28,15 +28,68 @@ class _TheMainState extends State<TheMain> {
   PageController controller = PageController();
   List<EventModel> data = [];
 
-  final channel = WebSocketChannel.connect(
-    Uri.parse('wss://$networkAddress/websockets'),
-  );
+  late WebSocketChannel channel;
+
+  _initChannel() {
+    channel = WebSocketChannel.connect(
+      Uri.parse('wss://$networkAddress/websockets'),
+    );
+    channel.stream.listen(
+          (eventData) {
+        var res = json.decode(eventData);
+        var socketEventType = res['type'];
+        var socketData = res['data'];
+
+        if (socketEventType == eventAdd) {
+          var parseData = EventModel.fromJSON(socketData);
+          data.add(parseData);
+        } else if (socketEventType == eventModify) {
+          var parseData = EventModel.fromJSON(socketData);
+          for (int i = 0; i < data.length; i++) {
+            if (data[i].id == parseData.id) {
+              data[i] = parseData;
+              break;
+            }
+          }
+        } else if (socketEventType == eventDelete) {
+          for (int i = 0; i < data.length; i++) {
+            if (socketData['_id'] == data[i].id) {
+              data.removeAt(i);
+              break;
+            }
+          }
+        } else if (socketEventType == notification) {
+          if (_notificationPageState.currentState != null) {
+            _notificationPageState.currentState!
+                .addMapData(NotificationModel.fromJSON(socketData));
+            _notificationPageState.currentState!.buildList();
+          }
+        }
+        if (_eventHomeState.currentState != null) {
+          _eventHomeState.currentState!.buildDataList(false);
+          _eventHomeState.currentState!.rebuildSearchData();
+        }
+        if (_starredEventsState.currentState != null) {
+          _starredEventsState.currentState!.buildDataList(false);
+          _starredEventsState.currentState!.rebuildSearchData();
+        }
+      },
+      onDone: () {
+        debugPrint('socket closed');
+        _initChannel(); //if closed you will get it here
+      },
+      onError: (error) {
+        print(error);
+        _initChannel();
+      },
+    );
+  }
 
   _getData() async {
     data.clear();
 
     var response =
-        await makePostRequest(null, "/event/getEvents", null, true, context);
+    await makePostRequest(null, "/event/getEvents", null, true, context);
 
     if (response.statusCode == 200) {
       var responseData = json.decode(response.body)["data"]; //List Data
@@ -125,58 +178,17 @@ class _TheMainState extends State<TheMain> {
   }
 
   final GlobalKey<EventsHomeState> _eventHomeState =
-      GlobalKey<EventsHomeState>();
+  GlobalKey<EventsHomeState>();
   final GlobalKey<StarredState> _starredEventsState = GlobalKey<StarredState>();
 
   //Notifications
   final GlobalKey<NotificationsState> _notificationPageState =
-      GlobalKey<NotificationsState>();
+  GlobalKey<NotificationsState>();
 
   @override
   void initState() {
     super.initState();
-    channel.stream.listen(
-      (eventData) {
-        var res = json.decode(eventData);
-        var socketEventType = res['type'];
-        var socketData = res['data'];
-
-        if (socketEventType == eventAdd) {
-          var parseData = EventModel.fromJSON(socketData);
-          data.add(parseData);
-        } else if (socketEventType == eventModify) {
-          var parseData = EventModel.fromJSON(socketData);
-          for (int i = 0; i < data.length; i++) {
-            if (data[i].id == parseData.id) {
-              data[i] = parseData;
-              break;
-            }
-          }
-        } else if (socketEventType == eventDelete) {
-          for (int i = 0; i < data.length; i++) {
-            if (socketData['_id'] == data[i].id) {
-              data.removeAt(i);
-              break;
-            }
-          }
-        } else if (socketEventType == notification) {
-          if (_notificationPageState.currentState != null) {
-            _notificationPageState.currentState!.addMapData(NotificationModel.fromJSON(socketData));
-            _notificationPageState.currentState!.buildList();
-          }
-        }
-        if (_eventHomeState.currentState != null) {
-          _eventHomeState.currentState!.buildDataList(false);
-          _eventHomeState.currentState!.rebuildSearchData();
-        }
-        if (_starredEventsState.currentState != null) {
-          _starredEventsState.currentState!.buildDataList(false);
-          _starredEventsState.currentState!.rebuildSearchData();
-
-        }
-      },
-      onError: (error) => print(error),
-    );
+    _initChannel();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getData();
     });

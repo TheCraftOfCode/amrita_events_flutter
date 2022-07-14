@@ -28,7 +28,7 @@ const String userIdKey = "USER_ID";
 const user = "user";
 const admin = "admin";
 const superAdmin = "super_admin";
-
+const eventOptions = ["ALL EVENTS", "CULTURAL", "TECHNICAL", "SPIRITUAL"];
 //event types
 const eventAdd = "event_add";
 const eventModify = "event_modify";

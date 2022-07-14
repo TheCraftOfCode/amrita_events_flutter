@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:amrita_events_flutter/models/event_model.dart';
 import 'package:amrita_events_flutter/widgets/admin_event_card.dart';
 import 'package:flutter/material.dart';
+import '../../utils/constants.dart';
 import '../../utils/http_modules.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
@@ -23,7 +24,6 @@ class _ManageEventsState extends State<ManageEvents> {
 
   List<AdminStarCard> widgetList = [];
 
-  List<String> options = ["ALL EVENTS", "CULTURAL", "TECHNICAL", "SPIRITUAL"];
   late String chosenOption;
   String searchPattern = "";
 
@@ -80,13 +80,13 @@ class _ManageEventsState extends State<ManageEvents> {
     for (int i = 0; i < listSearch.length; i++) {
       setState(() {
         var data = listSearch[i];
-        if (chosenOption == options[0]) {
+        if (chosenOption == eventOptions[0]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == options[1] && chosenOption == options[1]) {
+        } else if (data.eventType == eventOptions[1] && chosenOption == eventOptions[1]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == options[2] && chosenOption == options[2]) {
+        } else if (data.eventType == eventOptions[2] && chosenOption == eventOptions[2]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == options[3] && chosenOption == options[3]) {
+        } else if (data.eventType == eventOptions[3] && chosenOption == eventOptions[3]) {
           widgetList.add(_buildEventTile(data, i));
         }
       });
@@ -119,7 +119,7 @@ class _ManageEventsState extends State<ManageEvents> {
 
   @override
   void initState() {
-    chosenOption = options[0];
+    chosenOption = eventOptions[0];
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getData();
@@ -143,7 +143,7 @@ class _ManageEventsState extends State<ManageEvents> {
                     filterSearchData(value);
                   },
                 ),
-                dropDown(options, chosenOption, (newValue) {
+                dropDown(eventOptions, chosenOption, (newValue) {
                   chosenOption = newValue;
                   _buildUserList();
                 }),

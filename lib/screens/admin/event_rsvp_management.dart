@@ -4,6 +4,7 @@ import 'package:amrita_events_flutter/screens/admin/rsvp_console.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import '../../models/rsvp_model.dart';
+import '../../utils/constants.dart';
 import '../../utils/http_modules.dart';
 import '../../widgets/custom_sliver_widget.dart';
 import '../../widgets/drop_down.dart';
@@ -23,7 +24,6 @@ class _EventRSVPManagementState extends State<EventRSVPManagement> {
 
   List<RSVPStarCard> widgetList = [];
 
-  List<String> options = ["ALL EVENTS", "CULTURAL", "TECHNICAL", "SPIRITUAL"];
   late String chosenOption;
   String searchPattern = "";
 
@@ -72,13 +72,13 @@ class _EventRSVPManagementState extends State<EventRSVPManagement> {
     for (int i = 0; i < listSearch.length; i++) {
       setState(() {
         var data = listSearch[i];
-        if (chosenOption == options[0]) {
+        if (chosenOption == eventOptions[0]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == options[1] && chosenOption == options[1]) {
+        } else if (data.eventType == eventOptions[1] && chosenOption == eventOptions[1]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == options[2] && chosenOption == options[2]) {
+        } else if (data.eventType == eventOptions[2] && chosenOption == eventOptions[2]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == options[3] && chosenOption == options[3]) {
+        } else if (data.eventType == eventOptions[3] && chosenOption == eventOptions[3]) {
           widgetList.add(_buildEventTile(data, i));
         }
       });
@@ -111,7 +111,7 @@ class _EventRSVPManagementState extends State<EventRSVPManagement> {
 
   @override
   void initState() {
-    chosenOption = options[0];
+    chosenOption = eventOptions[0];
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getData();
@@ -135,7 +135,7 @@ class _EventRSVPManagementState extends State<EventRSVPManagement> {
                     filterSearchData(value);
                   },
                 ),
-                dropDown(options, chosenOption, (newValue) {
+                dropDown(eventOptions, chosenOption, (newValue) {
                   chosenOption = newValue;
                   _buildUserList();
                 }),

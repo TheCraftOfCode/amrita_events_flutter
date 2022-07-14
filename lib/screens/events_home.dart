@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
+import '../utils/constants.dart';
 import '../widgets/drop_down.dart';
 import '../widgets/network_image.dart';
 import '../widgets/starred_card.dart';
@@ -277,19 +278,18 @@ class YesEventsWidget extends StatefulWidget {
 
 class _YesEventsWidgetState extends State<YesEventsWidget> {
   String chosenOption = "ALL EVENTS";
-  var options = ["ALL EVENTS", "CULTURAL", "TECHNICAL", "SPIRITUAL"];
 
   final List<Widget> widgetList = [];
 
   initList() {
     widgetList.clear();
-    if (chosenOption == options[0]) {
+    if (chosenOption == eventOptions[0]) {
       widgetList.addAll(widget.allWidgets);
-    } else if (chosenOption == options[1]) {
+    } else if (chosenOption == eventOptions[1]) {
       widgetList.addAll(widget.cultural);
-    } else if (chosenOption == options[2]) {
+    } else if (chosenOption == eventOptions[2]) {
       widgetList.addAll(widget.technical);
-    } else if (chosenOption == options[3]) {
+    } else if (chosenOption == eventOptions[3]) {
       widgetList.addAll(widget.spiritual);
     }
     setState(() {});
@@ -340,7 +340,7 @@ class _YesEventsWidgetState extends State<YesEventsWidget> {
                 list: widget.rsvpList.reversed.toList(),
                 rsvp: widget.rsvp,
               ),
-              dropDown(options, chosenOption, (newValue) {
+              dropDown(eventOptions, chosenOption, (newValue) {
                 setState(() {
                   chosenOption = newValue;
                   initList();
