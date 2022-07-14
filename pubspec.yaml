@@ -51,6 +51,7 @@ dependencies:
   firebase_core: ^1.19.1
   firebase_messaging: ^11.4.4
   flutter_local_notifications: ^9.3.2
+  circular_bottom_navigation: ^2.1.0
 
 
 dev_dependencies:

@@ -33,7 +33,7 @@ class TopBarWidget extends StatelessWidget {
                   style: GoogleFonts.raleway(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
-                      color: colors.primaryTextColor),
+                      color: colors.headingTextColor),
                 )
               ],
             ),
@@ -48,10 +48,10 @@ class TopBarWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 10),
                       child: TextBoxField(
                         hint: 'Type to search',
-                        light: true,
+                        light: false,
                         onChanged: onChanged,
                         padding: const EdgeInsets.all(0.0),
-                        title: 'Search',
+                        title: 'Search for your favorite events',
                       ),
                     ),
                   ),

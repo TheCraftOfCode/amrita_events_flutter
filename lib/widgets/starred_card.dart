@@ -29,10 +29,10 @@ class StarCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
-          elevation: 10,
+          elevation: 20,
           color: colors.cardBackgroundColor,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
@@ -90,8 +90,8 @@ class StarCard extends StatelessWidget {
                     child: Text(
                       model.title,
                       style: GoogleFonts.nunitoSans(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 26,
+                          fontWeight: FontWeight.w600,
                           color: colors.headingTextColor),
                     ),
                   ),

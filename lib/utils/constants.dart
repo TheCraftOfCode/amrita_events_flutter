@@ -10,7 +10,7 @@ ShapeBorder beveledRectangle = RectangleShapeBorder(
 
 ShapeBorder rightBeveledRectangle = RectangleShapeBorder(
     borderRadius: DynamicBorderRadius.only(
-       bottomRight: DynamicRadius.circular(38.toPXLength)
+       bottomRight: DynamicRadius.circular(20.toPXLength)
     )
 );
 
