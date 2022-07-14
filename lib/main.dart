@@ -114,7 +114,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Profile(),
+      home: LoadValidPageWidget(GreetingPage(), TheMain()),
     );
   }
 }

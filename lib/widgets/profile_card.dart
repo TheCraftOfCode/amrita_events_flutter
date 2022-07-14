@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
 import '../screens/edit_profile.dart';
 
@@ -9,14 +11,14 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var montserrat = TextStyle(
+    var montserrat = const TextStyle(
       fontSize: 12,
     );
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(
-          constraints: BoxConstraints(maxWidth: 400),
+          constraints: const BoxConstraints(maxWidth: 400),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -34,8 +36,8 @@ class ProfileCard extends StatelessWidget {
                       child: Container(
                         height: 100,
                         decoration: BoxDecoration(
-                          color: Color(0xffA0A4A8),
-                          borderRadius: BorderRadius.only(
+                          color: colors.accentColor,
+                          borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(20),
                             topLeft: Radius.circular(20),
                           ),
@@ -47,31 +49,33 @@ class ProfileCard extends StatelessWidget {
                       top: 50,
                       child: Row(
                         children: [
+                          //TODO: Add first name first letter
                           CircleAvatar(
+                            child: Text('N',style: GoogleFonts.raleway(fontSize: 40,fontWeight: FontWeight.bold),),
+                            backgroundColor: colors.cardBackgroundColor,
                             radius: 50,
-                            backgroundImage: NetworkImage(
-                                "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/22/22a4f44d8c8f1451f0eaa765e80b698bab8dd826_full.jpg"),
                           ),
                           const SizedBox(width: 20),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Row(
                                 children: [
                                   Text(
                                     "Sumithra",
-                                    style: TextStyle(
-                                      fontSize: 26,
-                                      color: const Color(0xFFFFFFFF),
+                                    style: GoogleFonts.raleway(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600,
+                                      color: colors.primaryTextColor,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 20,
                                   ),
                                   IconButton(
                                     icon: Icon(
                                       Icons.edit,
-                                      color: Colors.white,
+                                      color: colors.primaryTextColor,
                                     ),
                                     onPressed: () {
                                       Navigator.of(context).pushReplacement(
@@ -82,14 +86,7 @@ class ProfileCard extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "CB.EN.U4CSE19247",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: darkColor,
-                                ),
-                              ),
+                              const SizedBox(height: 50),
                               const SizedBox(height: 8)
                             ],
                           )
@@ -110,12 +107,12 @@ class ProfileCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          " E-Mail: \n GitHub Account: ",
+                          " E-Mail:",
                           style: montserrat,
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          " Phone Number: \n Instagram: ",
+                          " Phone Number:",
                           style: montserrat,
                         ),
                       ],
@@ -125,10 +122,8 @@ class ProfileCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("sums@gmail.com", style: montserrat),
-                        Text("sumithra1306", style: montserrat),
                         const SizedBox(height: 16),
                         Text("1234567890", style: montserrat),
-                        Text("sumiithraa_sudhakar", style: montserrat),
                       ],
                     )
                   ],
@@ -146,8 +141,8 @@ class ProfileCard extends StatelessWidget {
                       children: [
                         Text(
                           "60",
-                          style: buildMontserrat(
-                            const Color(0xFF000000),
+                          style: GoogleFonts.raleway(
+                            color: colors.primaryTextColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -157,9 +152,9 @@ class ProfileCard extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
-                      child: const VerticalDivider(
+                      child: VerticalDivider(
                         color: Color(0xFF9A9A9A),
                       ),
                     ),
@@ -167,9 +162,10 @@ class ProfileCard extends StatelessWidget {
                       children: [
                         Text(
                           "17",
-                          style: buildMontserrat(
-                            const Color(0xFF000000),
+                          style: GoogleFonts.raleway(
                             fontWeight: FontWeight.bold,
+                            color: colors.primaryTextColor,
+
                           ),
                         ),
                         Text(
@@ -178,27 +174,6 @@ class ProfileCard extends StatelessWidget {
                         )
                       ],
                     ),
-                    // SizedBox(
-                    //   height: 50,
-                    //   child: const VerticalDivider(
-                    //     color: Color(0xFF9A9A9A),
-                    //   ),
-                    // ),
-                    // Column(
-                    //   children: [
-                    //     Text(
-                    //       "13",
-                    //       style: buildMontserrat(
-                    //         const Color(0xFF000000),
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     ),
-                    //     Text(
-                    //       "Upcoming this week",
-                    //       style: buildMontserrat(darkColor),
-                    //     )
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
@@ -214,7 +189,7 @@ class ProfileCard extends StatelessWidget {
     Color color, {
     FontWeight fontWeight = FontWeight.normal,
   }) {
-    return TextStyle(
+    return GoogleFonts.raleway(
       fontSize: 18,
       color: color,
       fontWeight: fontWeight,
@@ -228,7 +203,7 @@ class AvatarClipper extends CustomClipper<Path> {
     return Path()
       ..lineTo(0, size.height)
       ..lineTo(8, size.height)
-      ..arcToPoint(Offset(114, size.height), radius: Radius.circular(1))
+      ..arcToPoint(Offset(114, size.height), radius: const Radius.circular(1))
       ..lineTo(size.width, size.height)
       ..lineTo(size.width, 0)
       ..close();

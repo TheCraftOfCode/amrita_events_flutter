@@ -48,7 +48,9 @@ class StarCard extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Card(
-                            color: colors.cardBackgroundColor,
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            color: colors.cardBackgroundColor.withOpacity(1.0),
                             child: InkWell(
                               onTap: () {
                                 star(model);
@@ -57,18 +59,18 @@ class StarCard extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 8),
+                                    padding: const EdgeInsets.only(left: 8),
                                     child: Icon(
                                       model.starred ? Icons.star : Icons.star_border,
-                                      color: Colors.white54,
+                                      color: model.starred ? colors.accentColor : Colors.white54,
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      model.starred ? "Already Starred" : "Star",
+                                      model.starred ? "Starred" : "Star",
                                       style: GoogleFonts.nunitoSans(
-                                          color:Colors.white70,
+                                          color:model.starred ? colors.accentColor : Colors.white54,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   )
@@ -123,16 +125,16 @@ class StarCard extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Text(
-                          model.rsvp ? 'Already RSVPd' : 'RSVP',
+                          model.rsvp ? 'RSVP\'d' : 'RSVP',
                           style: GoogleFonts.nunitoSans(
                               color: model.rsvp
-                                  ? Colors.white38
+                                  ? colors.accentColor
                                   : colors.scaffoldColor,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                          primary: colors.headingTextColor),
+                          primary: colors.accentColor),
                     ),
                   ],
                 )
