@@ -84,7 +84,7 @@ class StarCard extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 20.0,bottom: 5.0),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -107,12 +107,13 @@ class StarCard extends StatelessWidget {
                         Text(
                           model.time,
                           style: GoogleFonts.nunitoSans(
-                              fontSize: 20, color: colors.headingTextColor),
+                              fontSize: 17, color: colors.headingTextColor.withOpacity(0.8)),
                         ),
+                        const SizedBox(height: 1,),
                         Text(
                           model.date,
                           style: GoogleFonts.nunitoSans(
-                              fontSize: 20, color: colors.headingTextColor),
+                              fontSize: 17, color: colors.headingTextColor.withOpacity(0.8)),
                         ),
                       ],
                     ),

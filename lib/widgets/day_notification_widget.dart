@@ -30,7 +30,7 @@ class _DayNotificationWidgetState extends State<DayNotificationWidget> {
             style: GoogleFonts.nunitoSans(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
-                color: colors.notificationDateColors),
+                color: colors.accentColor),
           ),
         ),
       ),

@@ -128,9 +128,9 @@ class ProfileCardState extends State<ProfileCard>
                                   child: AutoSizeText(
                                     _email,
                                     maxLines: 1,
-                                    style: const TextStyle(
+                                    style: GoogleFonts.nunitoSans(
+                                      textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
                                       fontSize: 20,
-                                      overflow: TextOverflow.ellipsis,
                                       color: darkColor,
                                     ),
                                   ),
@@ -155,10 +155,11 @@ class ProfileCardState extends State<ProfileCard>
                     Column(
                       children: [
                         Text(
-                          _starred,
+                          _starred=="" ? "0" : _starred,
                           style: GoogleFonts.raleway(
-                            color: colors.primaryTextColor,
-                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
@@ -176,10 +177,11 @@ class ProfileCardState extends State<ProfileCard>
                     Column(
                       children: [
                         Text(
-                          _rsvp,
+                          _rsvp=="" ? "0" : _rsvp,
                           style: GoogleFonts.raleway(
-                            fontWeight: FontWeight.bold,
-                            color: colors.primaryTextColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 30,
+                            color: Colors.black87,
                           ),
                         ),
                         Text(
@@ -191,7 +193,7 @@ class ProfileCardState extends State<ProfileCard>
                   ],
                 ),
               ),
-              const SizedBox(height: 8)
+              const SizedBox(height: 20)
             ],
           ),
         ),

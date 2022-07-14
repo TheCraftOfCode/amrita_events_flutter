@@ -65,17 +65,17 @@ class _ProfileState extends State<Profile> {
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 5.0, vertical: 10.0),
+                              horizontal: 5.0, vertical: 7.0),
                           child: Text(
                             "SIGN OUT",
                             style: GoogleFonts.raleway(
-                                fontSize: 10,
-                                color: colors.primaryTextColor,
+                                fontSize: 16,
+                                color: colors.headingTextColor,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                            primary: colors.headingTextColor),
+                            primary: colors.accentColor),
                       ),
                     ),
                   ),
@@ -90,14 +90,14 @@ class _ProfileState extends State<Profile> {
                             }));
                           },
                           style: ElevatedButton.styleFrom(
-                              primary: colors.headingTextColor),
+                              primary: colors.accentColor),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 10.0),
+                                horizontal: 0.0, vertical: 10.0),
                             child: Text(
                               "CHANGE PASSWORD",
                               style: GoogleFonts.raleway(
-                                  fontSize: 10,
+                                  fontSize: 14.8,
                                   color: colors.primaryTextColor,
                                   fontWeight: FontWeight.bold),
                             ),
