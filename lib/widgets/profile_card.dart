@@ -1,19 +1,55 @@
+import 'dart:convert';
+
+import 'package:amrita_events_flutter/utils/http_modules.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
 import '../screens/edit_profile.dart';
+import '../utils/utils.dart';
 
 const darkColor = Color(0xFF49535C);
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   const ProfileCard({Key? key}) : super(key: key);
 
   @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+  String _userName = "", _email = "", _starred = "", _rsvp = "";
+
+  _getUserData() async {
+    _userName = await getName;
+    _email = await getEmailID;
+    setState(() {});
+
+    //get RSVP and count data
+    var res =
+        await makePostRequest(null, "/user/userStats", null, true, context);
+    print(res);
+    print(res.statusCode);
+    print(res.body);
+    if (res.statusCode == 200) {
+      var decodedData = json.decode(res.body);
+      _starred = decodedData['starred'].toString();
+      _rsvp = decodedData['rsvp'].toString();
+      setState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getUserData();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var montserrat = const TextStyle(
-      fontSize: 12,
-    );
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -46,86 +82,60 @@ class ProfileCard extends StatelessWidget {
                     ),
                     Positioned(
                       left: 11,
-                      top: 50,
+                      top: 46,
                       child: Row(
                         children: [
                           //TODO: Add first name first letter
                           CircleAvatar(
-                            child: Text('N',style: GoogleFonts.raleway(fontSize: 40,fontWeight: FontWeight.bold),),
+                            child: Text(
+                              'N',
+                              style: GoogleFonts.raleway(
+                                  fontSize: 40, fontWeight: FontWeight.bold),
+                            ),
                             backgroundColor: colors.cardBackgroundColor,
                             radius: 50,
                           ),
                           const SizedBox(width: 20),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "Sumithra",
+                              SizedBox(
+                                width: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 4),
+                                  child: AutoSizeText(
+                                    _userName,
+                                    maxLines: 1,
                                     style: GoogleFonts.raleway(
                                       fontSize: 30,
                                       fontWeight: FontWeight.w600,
                                       color: colors.primaryTextColor,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      color: colors.primaryTextColor,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const EditProfile()));
-                                    },
-                                  )
-                                ],
+                                ),
                               ),
-                              const SizedBox(height: 50),
+                              SizedBox(
+                                width: 200,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 4, right: 30),
+                                  child: AutoSizeText(
+                                    _email,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      overflow: TextOverflow.ellipsis,
+                                      color: darkColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               const SizedBox(height: 8)
                             ],
                           )
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 30,
-                ),
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          " E-Mail:",
-                          style: montserrat,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          " Phone Number:",
-                          style: montserrat,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("sums@gmail.com", style: montserrat),
-                        const SizedBox(height: 16),
-                        Text("1234567890", style: montserrat),
-                      ],
-                    )
                   ],
                 ),
               ),
@@ -140,7 +150,7 @@ class ProfileCard extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          "60",
+                          _starred,
                           style: GoogleFonts.raleway(
                             color: colors.primaryTextColor,
                             fontWeight: FontWeight.bold,
@@ -161,11 +171,10 @@ class ProfileCard extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          "17",
+                          _rsvp,
                           style: GoogleFonts.raleway(
                             fontWeight: FontWeight.bold,
                             color: colors.primaryTextColor,
-
                           ),
                         ),
                         Text(
