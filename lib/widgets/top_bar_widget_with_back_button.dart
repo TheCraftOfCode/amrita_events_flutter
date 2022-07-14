@@ -17,7 +17,7 @@ class TopBarWidgetWithBackButton extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
           shape: constants.rightBeveledRectangle, color: colors.cardColor),
-      height: MediaQuery.of(context).size.height * 0.30,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.all(25.0),

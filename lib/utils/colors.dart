@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 var headingTextColor = const Color(0xffffffff);
 var primaryTextColor = const Color(0xffffffff);
 var scaffoldColor = const Color(0xff26242D);
-var accentColor = const Color(0xffBB79E3);
+var accentColor = const Color(0xffE379A6);
 var cardColor = const Color(0xff585173);
 var buttonColor = const Color(0xff3C374E);
 var buttonTextColor = const Color(0xffffffff);

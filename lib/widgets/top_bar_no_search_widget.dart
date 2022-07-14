@@ -18,7 +18,7 @@ class TopBarWidgetNoSearch extends StatelessWidget {
       decoration: ShapeDecoration(
           shape: constants.rightBeveledRectangle, color: colors.cardColor),
       //changed from 0.3 to 0.2
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.all(25.0),
@@ -39,6 +39,7 @@ class TopBarWidgetNoSearch extends StatelessWidget {
                       Icon(
                         icon,
                         size: 40,
+                        color: colors.headingTextColor,
                       ),
                       const SizedBox(
                         width: 10,

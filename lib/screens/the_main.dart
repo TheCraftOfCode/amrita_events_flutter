@@ -240,9 +240,10 @@ class _TheMainState extends State<TheMain> {
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.ease);
             },
-            selectedItemColor: Colors.white,
+            selectedItemColor: colors.accentColor,
             unselectedItemColor: Colors.white70,
             showUnselectedLabels: false,
+            iconSize: 28,
             showSelectedLabels: true,
             backgroundColor: colors.scaffoldColor,
             items: [
@@ -260,16 +261,16 @@ class _TheMainState extends State<TheMain> {
                   label: 'Profile'),
               BottomNavigationBarItem(
                   backgroundColor: colors.scaffoldColor,
-                  icon: const Icon(Icons.notifications),
+                  icon: const Icon(Icons.notifications_outlined),
                   label: 'Notifications'),
               if (snapshot.data == admin || snapshot.data == superAdmin)
                 BottomNavigationBarItem(
                     backgroundColor: colors.scaffoldColor,
-                    icon: const Icon(Icons.admin_panel_settings),
+                    icon: const Icon(Icons.admin_panel_settings_outlined),
                     label: 'Admin'),
               BottomNavigationBarItem(
                   backgroundColor: colors.scaffoldColor,
-                  icon: const Icon(Icons.settings),
+                  icon: const Icon(Icons.settings_outlined),
                   label: 'Settings'),
             ],
           ),
