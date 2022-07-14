@@ -136,10 +136,9 @@ class _ProfileCardState extends State<ProfileCard> {
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
               Padding(
                 padding:
-                    const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                    const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
