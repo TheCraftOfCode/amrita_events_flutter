@@ -249,7 +249,7 @@ class _TheMainState extends State<TheMain> {
             items: [
               BottomNavigationBarItem(
                   backgroundColor: colors.scaffoldColor,
-                  icon: const Icon(Icons.play_arrow_outlined),
+                  icon: const Icon(Icons.home_outlined),
                   label: 'Events'),
               BottomNavigationBarItem(
                   backgroundColor: colors.scaffoldColor,

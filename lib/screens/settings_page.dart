@@ -37,6 +37,7 @@ class _SettingsState extends State<Settings> {
         columnList: [
           const TopBarWidgetNoSearch(
               icon: Icons.settings_outlined, title: "Settings"),
+          SizedBox(height: 20,),
           SettingCard(
             icon: Icons.insert_invitation_outlined,
             title: "Invite",
