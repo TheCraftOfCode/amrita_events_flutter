@@ -52,6 +52,8 @@ dependencies:
   firebase_messaging: ^11.4.4
   flutter_local_notifications: ^9.3.2
   circular_bottom_navigation: ^2.1.0
+  flutter_email_sender:
+  url_launcher:
 
 
 dev_dependencies:
@@ -85,6 +87,7 @@ flutter:
     - assets/background_image.png
     - assets/background.png
     - assets/background_onboarding.png
+    - assets/developer_pictures/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

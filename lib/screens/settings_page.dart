@@ -1,5 +1,6 @@
 import 'package:amrita_events_flutter/screens/about_page.dart';
-import 'package:amrita_events_flutter/screens/modify_profile.dart';
+import 'package:amrita_events_flutter/screens/bug_report.dart';
+import 'package:amrita_events_flutter/screens/bugreport_page.dart';
 import 'package:amrita_events_flutter/screens/request_features_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
@@ -57,7 +58,9 @@ class _SettingsState extends State<Settings> {
           SettingCard(
             icon: Icons.bug_report_outlined,
             title: "Report a bug",
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>const ContactUs()));
+            },
           ),
           SettingCard(
             icon: Icons.checklist_rtl_outlined,
