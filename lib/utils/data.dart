@@ -19,13 +19,9 @@ class PeopleData {
       required this.name,
       required this.phoneNo,
       required this.pictureURL});
-
-
 }
 
-
-
-var digitalContentTeam = [
+var devTeam = [
   PeopleData(
       rollNo: "CB.EN.U4CSE19352",
       name: "SOORYA S",
@@ -41,13 +37,10 @@ var digitalContentTeam = [
       mail: "nirmalkarthikeyan1503@gmail.com",
       pictureURL: "assets/developer_pictures/nirmal.jpg"),
   PeopleData(
-    rollNo: "CB.EN.U4CSE19247",
-    name: "SUMITHRA S",
-    phoneNo: "7598050765",
-    instagram: "https://instagram.com/sumiithraa_sudhakar",
-    mail: "sumisooriya@gmail.com",
-    pictureURL: "assets/developer_pictures/sumi.jpg"
-  ),
+      rollNo: "CB.EN.U4CSE19247",
+      name: "SUMITHRA S",
+      phoneNo: "7598050765",
+      instagram: "https://instagram.com/sumiithraa_sudhakar",
+      mail: "sumisooriya@gmail.com",
+      pictureURL: "assets/developer_pictures/sumi.jpg"),
 ];
-
-

@@ -31,7 +31,7 @@ class TextBoxField extends StatelessWidget {
     return Padding(
       padding: padding,
       child: TextFormField(
-          initialValue: initialValue ?? '',
+          initialValue: initialValue ?? null,
           controller: controller,
           validator: validator,
           onSaved: onSaved,

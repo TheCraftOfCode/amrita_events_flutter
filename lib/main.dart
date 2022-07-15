@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:oktoast/oktoast.dart';
 import 'firebase_options.dart';
 
 //TODO: Configure APNs for iOS notification
@@ -21,7 +22,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const App());
+  runApp(const OKToast(position: ToastPosition.center, child: App()));
 }
 
 class App extends StatefulWidget {
@@ -54,7 +55,7 @@ class _AppState extends State<App> {
     );
 
     const IOSInitializationSettings initializationSettingsIOS =
-    IOSInitializationSettings(
+        IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
@@ -63,15 +64,15 @@ class _AppState extends State<App> {
     messaging.subscribeToTopic('main');
 
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+        FlutterLocalNotificationsPlugin();
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     var initializationSettingsAndroid =
-    const AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     FlutterLocalNotificationsPlugin().initialize(initializationSettings);
@@ -92,10 +93,11 @@ class _AppState extends State<App> {
                   icon: android.smallIcon,
                 ),
                 iOS: const IOSNotificationDetails(
-                  presentAlert: true,  // Present an alert when the notification is displayed and the application is in the foreground (only from iOS 10 onwards)
-                  presentSound: true,  // Play a sound when the notification is displayed and the application is in the foreground (only from iOS 10 onwards)
-                )
-            ));
+                  presentAlert: true,
+                  // Present an alert when the notification is displayed and the application is in the foreground (only from iOS 10 onwards)
+                  presentSound:
+                      true, // Play a sound when the notification is displayed and the application is in the foreground (only from iOS 10 onwards)
+                )));
       }
     });
 

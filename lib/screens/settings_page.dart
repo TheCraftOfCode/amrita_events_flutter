@@ -55,7 +55,7 @@ class _SettingsState extends State<Settings> {
             icon: Icons.laptop,
             title: "Contribute",
             onTap: () {
-                Uri url = Uri(host: "https://github.com/TheCraftOfCode/");
+                Uri url = Uri.parse("https://github.com/TheCraftOfCode/amrita_events_flutter");
                 launchUrl(url);
             },
           ),

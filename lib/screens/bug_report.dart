@@ -27,14 +27,19 @@ class ContactUs extends StatelessWidget {
       final Email email = Email(
         body: _queryController.text,
         subject: "Technical Query/Suggestions from ${_nameController.text}",
-        recipients: ["nirmalkarthikeyan1503@gmail.com"],
-        //TODO: Change
+        recipients: [
+          "events.amritacbe@gmail.com",
+          "soorya.s27@gmail.com",
+          "nirmalkarthikeyan1503@gmail.com",
+          "sumisooriya@gmail.com"
+        ],
         isHTML: false,
       );
 
       FlutterEmailSender.send(email)
           .then((value) => clearFieldContent())
           .catchError((e) {
+        print(e);
         showToast("Unable to send your query, please try again later!");
       });
     }
@@ -51,10 +56,13 @@ class ContactUs extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TopBarWidgetWithBackButton(title: 'Report a Bug',icon: Icons.arrow_back_ios_outlined,),
+                  const TopBarWidgetWithBackButton(
+                    title: 'Report a Bug',
+                    icon: Icons.arrow_back_ios_outlined,
+                  ),
                   Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 8),
+                          horizontal: 0, vertical: 8),
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -69,7 +77,8 @@ class ContactUs extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
                                     child: TextFormField(
                                         controller: _nameController,
                                         style: GoogleFonts.montserrat(
@@ -85,7 +94,7 @@ class ContactUs extends StatelessWidget {
                                           label: Text('Name',
                                               style: GoogleFonts.raleway(
                                                   color:
-                                                  colors.textBoxTextColor,
+                                                      colors.textBoxTextColor,
                                                   fontSize: 15)),
                                           filled: true,
                                           hintText: 'Enter your name',
@@ -95,17 +104,18 @@ class ContactUs extends StatelessWidget {
                                           focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide.none,
                                               borderRadius:
-                                              BorderRadius.circular(5)),
+                                                  BorderRadius.circular(5)),
                                           fillColor: colors.textBoxColor,
                                           focusColor: colors.textBoxColor,
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide.none,
                                               borderRadius:
-                                              BorderRadius.circular(5)),
+                                                  BorderRadius.circular(5)),
                                         )),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
                                     child: TextFormField(
                                         controller: _queryController,
                                         style: GoogleFonts.montserrat(
@@ -121,7 +131,7 @@ class ContactUs extends StatelessWidget {
                                           label: Text('Bug',
                                               style: GoogleFonts.raleway(
                                                   color:
-                                                  colors.textBoxTextColor,
+                                                      colors.textBoxTextColor,
                                                   fontSize: 15)),
                                           filled: true,
                                           hintText: 'Enter your query',
@@ -131,13 +141,13 @@ class ContactUs extends StatelessWidget {
                                           focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide.none,
                                               borderRadius:
-                                              BorderRadius.circular(5)),
+                                                  BorderRadius.circular(5)),
                                           fillColor: colors.textBoxColor,
                                           focusColor: colors.textBoxColor,
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide.none,
                                               borderRadius:
-                                              BorderRadius.circular(5)),
+                                                  BorderRadius.circular(5)),
                                         )),
                                   ),
                                   Align(
@@ -178,19 +188,18 @@ class ContactUs extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Expanded(child: contactCard(digitalContentTeam[0])),
-                  Expanded(child: contactCard(digitalContentTeam[1])),
-                  Expanded(child: contactCard(digitalContentTeam[2])),
+                  Expanded(child: contactCard(devTeam[0])),
+                  Expanded(child: contactCard(devTeam[1])),
+                  Expanded(child: contactCard(devTeam[2])),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10, top: 10),
                     child: Center(
                       child: TextButton(
                         onPressed: () async {
-                          await launch("mailto:nirmalkarthikeyan1503@gmail.com");
+                          await launch("events.amritacbe@gmail.com");
                         },
                         child: Text(
-                          'Official Mail ID: nirmalkarthikeyan1503@gmail.com',
-                          //TODO: Replace
+                          'Official Mail ID: events.amritacbe@gmail.com',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.nunito(
                             fontSize: 14,
