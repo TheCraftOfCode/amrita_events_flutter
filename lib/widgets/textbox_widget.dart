@@ -36,7 +36,7 @@ class TextBoxField extends StatelessWidget {
           validator: validator,
           onSaved: onSaved,
           onChanged: onChanged,
-          style: GoogleFonts.montserrat(color: colors.primaryTextColor),
+          style: GoogleFonts.montserrat(color: light ? colors.scaffoldColor : colors.primaryTextColor),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(
                 left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),

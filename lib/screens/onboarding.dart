@@ -16,27 +16,27 @@ class _FeaturesPageState extends State<FeaturesPage> {
   final controller = PageController(viewportFraction: 1.0, keepPage: true);
 
   var text = [
-    'Register with your phone number',
-    'View events',
+    'Register with your e-mail',
+    'One stop shop for all events',
     'RSVP to events',
     'Star your favorites',
     'Get notified of updates'
   ];
 
   var subText = [
-    'Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum',
-    'Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum',
-    'Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum',
-    'Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum',
-    'Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum',
+    'Usernames are old fashioned. Use your E-mail to sign up and login',
+    'No more searching in WhatsApp to find that event you were interested in. Find it all in the app',
+    'No more fiddling with forms. Let the organisers know you\'re coming! Get notifications when events are about to start',
+    'Star your favorite events and get to them sooner!',
+    'Change of venue? Not to fear, updates can now be shared through the app!',
   ];
 
   var image_location = [
-    'assets/svg/register.svg',
-    'assets/svg/view_events.svg',
-    'assets/svg/rsvp_events.svg',
-    'assets/svg/star_events.svg',
-    'assets/svg/update_events.svg',
+    'assets/svg/screen1.svg',
+    'assets/svg/screen2.svg',
+    'assets/svg/screen3.svg',
+    'assets/svg/screen4.svg',
+    'assets/svg/screen5.svg',
   ];
 
   @override
@@ -44,55 +44,60 @@ class _FeaturesPageState extends State<FeaturesPage> {
     final pages = List.generate(
       5,
       (index) => Container(
-        margin: const EdgeInsets.only(left: 10, right: 10),
-        child: Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: SvgPicture.asset(
-                      image_location[index],
-                    ),
+      margin: const EdgeInsets.only(left: 10, right: 10),
+      child: Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: SvgPicture.asset(
+                    image_location[index],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
-                  child: Column(children: [
-                    Align(
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Column(children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      text[index],
+                      style: GoogleFonts.nunitoSans(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                          color: colors.headingTextColor),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        text[index],
-                        style: GoogleFonts.nunitoSans(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
+                        subText[index],
+                        style: GoogleFonts.nunito(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
                             color: colors.headingTextColor),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          subText[index],
-                          style: GoogleFonts.nunito(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w400,
-                              color: colors.headingTextColor),
-                        ),
-                      ),
-                    ),
-                  ]),
-                ),
-              ],
-            )),
-      ),
+                  ),
+                ]),
+              ),
+            ],
+          )),
+        ),
     );
     return Scaffold(
       backgroundColor: colors.scaffoldColor,
       body: Stack(children: [
+        const Image(
+          image: AssetImage('assets/background_onboarding.png'),
+          fit: BoxFit.cover,
+          width: double.infinity,
+        ),
         Padding(
           padding: const EdgeInsets.only(
               top: 20.0, bottom: 20.0, left: 20.0, right: 20.0),

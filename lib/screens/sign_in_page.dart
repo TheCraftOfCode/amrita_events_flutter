@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/http_modules.dart';
 import '../utils/utils.dart';
 import '../widgets/password_formfield_widget.dart';
+import '../widgets/white_left_beveled_container.dart';
 import 'forgot_password.dart';
 
 class SignInPage extends StatefulWidget {
@@ -42,13 +43,13 @@ class _SignInPageState extends State<SignInPage> {
           ),
           Form(
           key: _formKey,
-          child: LeftBeveledContainer(columnList: [
+          child: WhiteLeftBeveledContainer(columnList: [
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
                   'Welcome',
                   style: GoogleFonts.nunitoSans(
-                      color: colors.primaryTextColor,
+                      color: colors.scaffoldColor,
                       fontSize: 30,
                       fontWeight: FontWeight.bold),
                 )),
@@ -57,7 +58,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: Text(
                   'Login',
                   style: GoogleFonts.nunitoSans(
-                      color: colors.primaryTextColor,
+                      color: colors.scaffoldColor,
                       fontSize: 17,
                       fontWeight: FontWeight.bold),
                 )),
@@ -96,6 +97,7 @@ class _SignInPageState extends State<SignInPage> {
                   return null;
                 }
               },
+              style: GoogleFonts.montserrat(),
               onSaved: (value) {
                 _password = value!;
               },
@@ -115,7 +117,7 @@ class _SignInPageState extends State<SignInPage> {
                       style: GoogleFonts.nunitoSans(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: colors.primaryTextColor),
+                          color: colors.scaffoldColor),
                     ),
                   ),
                   TextButton(
@@ -128,7 +130,7 @@ class _SignInPageState extends State<SignInPage> {
                       style: GoogleFonts.nunitoSans(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: colors.primaryTextColor),
+                          color: colors.scaffoldColor),
                     ),
                   ),
                 ],
@@ -185,7 +187,7 @@ class _SignInPageState extends State<SignInPage> {
                               fontWeight: FontWeight.bold),
                         ),
                         style:
-                            ElevatedButton.styleFrom(primary: colors.accentColor),
+                            ElevatedButton.styleFrom(primary: colors.scaffoldColor),
                       )
               ],
             )

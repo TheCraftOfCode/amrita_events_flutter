@@ -48,7 +48,7 @@ class _PasswordFormFieldWidgetState extends State<PasswordFormFieldWidget> {
         suffixIcon: Material(
           color: Colors.transparent,
           child: IconButton(
-            color: colors.primaryTextColor,
+            color: colors.scaffoldColor.withOpacity(0.3),
             icon: Icon(
               setPasswordVisible ? Icons.visibility : Icons.visibility_off,
             ),
@@ -60,7 +60,7 @@ class _PasswordFormFieldWidgetState extends State<PasswordFormFieldWidget> {
           ),
         ),
         filled: true,
-        hintStyle: GoogleFonts.poppins(color: colors.lightTextBoxTextColor),
+        hintStyle: GoogleFonts.montserrat(color: colors.lightTextBoxTextColor),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(5)),

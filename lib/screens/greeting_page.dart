@@ -30,15 +30,15 @@ class GreetingPage extends StatelessWidget {
                   padding: EdgeInsets.only(
                       right: MediaQuery.of(context).size.width * 0.1, bottom: 10),
                   child: Text(
-                    "Here's a random line approximate length",
-                    style: GoogleFonts.nunitoSans(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
+                    "Never miss an event ever again.",
+                    style: GoogleFonts.raleway(
+                        fontSize: 45,
+                        fontWeight: FontWeight.w600,
                         color: colors.headingTextColor),
                   ),
                 ),
                 Text(
-                  'A small description of what the app is and what it does.',
+                  'Get notified, RSVP to and keep track of events hosted by your favourite clubs.',
                   style: GoogleFonts.nunitoSans(
                       color: colors.headingTextColor, fontSize: 20),
                 ),

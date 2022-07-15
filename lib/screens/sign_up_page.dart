@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/http_modules.dart';
 import '../widgets/alert_dialog.dart';
 import '../widgets/password_formfield_widget.dart';
+import '../widgets/white_left_beveled_container.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -42,13 +43,13 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Form(
             key: _formKey,
-            child: LeftBeveledContainer(columnList: [
+            child: WhiteLeftBeveledContainer(columnList: [
               Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Welcome',
                     style: GoogleFonts.nunitoSans(
-                        color: colors.primaryTextColor,
+                        color: colors.scaffoldColor,
                         fontSize: 30,
                         fontWeight: FontWeight.bold),
                   )),
@@ -57,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Text(
                     'Sign up',
                     style: GoogleFonts.nunitoSans(
-                        color: colors.primaryTextColor,
+                        color: colors.scaffoldColor,
                         fontSize: 17,
                         fontWeight: FontWeight.bold),
                   )),
@@ -111,6 +112,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(
                       width: (MediaQuery.of(context).size.width - 70) / 2,
                       child: PasswordFormFieldWidget(
+                        style: GoogleFonts.montserrat(),
                           validator: (value) {
                             if (value == "" || value == null) {
                               return "Please enter password";
@@ -157,7 +159,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       style: GoogleFonts.nunitoSans(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: colors.primaryTextColor),
+                          color: colors.scaffoldColor),
                     ),
                   ),
                 ),
@@ -224,7 +226,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 fontWeight: FontWeight.bold),
                           ),
                           style: ElevatedButton.styleFrom(
-                              primary: colors.accentColor),
+                              primary: colors.scaffoldColor),
                         )
                 ],
               )

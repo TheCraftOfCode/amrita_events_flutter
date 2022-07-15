@@ -84,6 +84,7 @@ flutter:
     - assets/no_starred.png
     - assets/background_image.png
     - assets/background.png
+    - assets/background_onboarding.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
