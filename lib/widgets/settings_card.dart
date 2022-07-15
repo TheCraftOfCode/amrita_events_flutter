@@ -16,20 +16,25 @@ class SettingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0, bottom: 8.0),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          elevation: 10,
-          color: colors.cardBackgroundColor,
+      padding: const EdgeInsets.only(
+          top: 10.0, left: 20.0, right: 20.0, bottom: 8.0),
+      child: Card(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        elevation: 10,
+        color: colors.cardBackgroundColor,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10.0),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 25.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Icon(
                   icon,
                   size: 24,
