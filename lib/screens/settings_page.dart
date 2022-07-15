@@ -8,6 +8,8 @@ import 'package:amrita_events_flutter/widgets/top_bar_no_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'licenses.dart';
+
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
@@ -24,16 +26,6 @@ class _SettingsState extends State<Settings> {
         columnList: [
           const TopBarWidgetNoSearch(
               icon: Icons.settings_outlined, title: "Settings"),
-          SettingCard(
-            icon: Icons.edit,
-            title: "Modify Profile",
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ModifyProfile()));
-            },
-          ),
           SettingCard(
             icon: Icons.insert_invitation_outlined,
             title: "Invite",
@@ -70,10 +62,12 @@ class _SettingsState extends State<Settings> {
           SettingCard(
             icon: Icons.checklist_rtl_outlined,
             title: "License",
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LicensesPage()));
+            },
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 25.0, 8.0, 25.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 55.0, 8.0, 25.0),
             child: Text(
               "VERSION 1.0.0",
               style: GoogleFonts.nunitoSans(
