@@ -9,6 +9,8 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:oktoast/oktoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../widgets/textbox_widget.dart';
+
 class ContactUs extends StatelessWidget {
   const ContactUs({Key? key}) : super(key: key);
 
@@ -76,84 +78,40 @@ class ContactUs extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    child: TextFormField(
-                                        controller: _nameController,
-                                        style: GoogleFonts.montserrat(
-                                            color: colors.primaryTextColor),
-                                        validator: (value) {
-                                          if (value == "" || value == null) {
-                                            return "Please enter your name";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        decoration: InputDecoration(
-                                          label: Text('Name',
-                                              style: GoogleFonts.raleway(
-                                                  color:
-                                                      colors.textBoxTextColor,
-                                                  fontSize: 15)),
-                                          filled: true,
-                                          hintText: 'Enter your name',
-                                          hintStyle: GoogleFonts.poppins(
-                                              color: colors.primaryTextColor
-                                                  .withOpacity(0.7)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          fillColor: colors.textBoxColor,
-                                          focusColor: colors.textBoxColor,
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                        )),
+                                  TextBoxField(
+                                    controller: _nameController,
+                                    validator: (value) {
+                                      if (value == "" || value == null) {
+                                        return "Please enter your name";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    padding: const EdgeInsets.only(
+                                        bottom: 15, left: 20, right: 20),
+                                    title: 'Name',
+                                    hint: 'Enter your name',
+                                    light: false,
                                   ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    child: TextFormField(
-                                        controller: _queryController,
-                                        style: GoogleFonts.montserrat(
-                                            color: colors.primaryTextColor),
-                                        validator: (value) {
-                                          if (value == "" || value == null) {
-                                            return "Please explain the bug you faced";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        decoration: InputDecoration(
-                                          label: Text('Bug',
-                                              style: GoogleFonts.raleway(
-                                                  color:
-                                                      colors.textBoxTextColor,
-                                                  fontSize: 15)),
-                                          filled: true,
-                                          hintText: 'Enter your query',
-                                          hintStyle: GoogleFonts.poppins(
-                                              color: colors.primaryTextColor
-                                                  .withOpacity(0.7)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          fillColor: colors.textBoxColor,
-                                          focusColor: colors.textBoxColor,
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                        )),
+                                  TextBoxField(
+                                    controller: _queryController,
+                                    validator: (value) {
+                                      if (value == "" || value == null) {
+                                        return "Please explain the bug you faced";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    padding: const EdgeInsets.only(
+                                        bottom: 15, left: 20, right: 20),
+                                    title: 'Bug',
+                                    hint: 'Add a description of the bug',
+                                    light: false,
                                   ),
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.only(right: 20),
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             onPrimary: colors.accentColor,
