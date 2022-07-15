@@ -54,7 +54,7 @@ dependencies:
   circular_bottom_navigation: ^2.1.0
   flutter_email_sender:
   url_launcher:
-
+  flutter_share: ^2.0.0
 
 dev_dependencies:
   flutter_test:

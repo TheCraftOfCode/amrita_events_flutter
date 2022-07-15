@@ -3,10 +3,12 @@ import 'package:amrita_events_flutter/screens/bug_report.dart';
 import 'package:amrita_events_flutter/screens/bugreport_page.dart';
 import 'package:amrita_events_flutter/screens/request_features_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
+import 'package:amrita_events_flutter/utils/utils.dart';
 import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/settings_card.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_no_search_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -28,6 +30,17 @@ class _SettingsState extends State<Settings> {
     }
   }
 
+  Future<void> share() async {
+    String userName = await getName;
+    await FlutterShare.share(
+        title: 'Invite',
+        text: 'Hey there, $userName has invited you to join Amrita Events, use the following link to download and install Amrita Events in your device.',
+        //TODO: Replace with PlayStore URL
+        linkUrl: 'https://flutter.dev/',
+        chooserTitle: 'Invite a pal'
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +55,7 @@ class _SettingsState extends State<Settings> {
           SettingCard(
             icon: Icons.insert_invitation_outlined,
             title: "Invite",
-            onTap: () {},
+            onTap: share,
           ),
           SettingCard(
             icon: Icons.info,
