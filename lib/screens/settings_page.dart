@@ -20,7 +20,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-
   launchURL(Uri url) async {
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
@@ -37,7 +36,9 @@ class _SettingsState extends State<Settings> {
         columnList: [
           const TopBarWidgetNoSearch(
               icon: Icons.settings_outlined, title: "Settings"),
-          SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           SettingCard(
             icon: Icons.insert_invitation_outlined,
             title: "Invite",
@@ -55,8 +56,9 @@ class _SettingsState extends State<Settings> {
             icon: Icons.laptop,
             title: "Contribute",
             onTap: () {
-                Uri url = Uri.parse("https://github.com/TheCraftOfCode/amrita_events_flutter");
-                launchUrl(url);
+              Uri url = Uri.parse(
+                  "https://github.com/TheCraftOfCode/amrita_events_flutter");
+              launchUrl(url);
             },
           ),
           SettingCard(
@@ -73,14 +75,16 @@ class _SettingsState extends State<Settings> {
             icon: Icons.bug_report_outlined,
             title: "Report a bug",
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>const ContactUs()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ContactUs()));
             },
           ),
           SettingCard(
             icon: Icons.checklist_rtl_outlined,
             title: "License",
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LicensesPage()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const LicensesPage()));
             },
           ),
           Padding(

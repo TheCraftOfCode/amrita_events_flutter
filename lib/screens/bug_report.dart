@@ -88,7 +88,7 @@ class ContactUs extends StatelessWidget {
                                       }
                                     },
                                     padding: const EdgeInsets.only(
-                                        bottom: 15, left: 20, right: 20),
+                                        bottom: 15, left: 20, right: 20, top: 30),
                                     title: 'Name',
                                     hint: 'Enter your name',
                                     light: false,
