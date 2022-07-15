@@ -71,7 +71,7 @@ class ContactUs extends StatelessWidget {
                         color: colors.scaffoldColor,
                         child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 15),
+                                vertical: 10),
                             child: Form(
                               key: _formKey,
                               child: Column(

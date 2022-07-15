@@ -1,6 +1,5 @@
 import 'package:amrita_events_flutter/screens/about_page.dart';
 import 'package:amrita_events_flutter/screens/bug_report.dart';
-import 'package:amrita_events_flutter/screens/bugreport_page.dart';
 import 'package:amrita_events_flutter/screens/request_features_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/utils/utils.dart';
