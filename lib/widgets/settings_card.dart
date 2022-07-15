@@ -17,29 +17,31 @@ class SettingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.only(top: 20.0, left: 8.0, right: 8.0, bottom: 8.0),
+          const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0, bottom: 8.0),
       child: GestureDetector(
         onTap: onTap,
         child: Card(
-          elevation: 0,
-          color: colors.scaffoldColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          elevation: 10,
+          color: colors.cardBackgroundColor,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                SizedBox(width: 20,),
                 Icon(
                   icon,
                   size: 24,
                   color: colors.headingTextColor,
                 ),
                 const SizedBox(
-                  width: 40,
+                  width: 30,
                 ),
                 Text(
                   title,
-                  style: GoogleFonts.nunitoSans(
-                      fontSize: 18, color: colors.headingTextColor),
+                  style: GoogleFonts.raleway(
+                      fontSize: 20, color: colors.headingTextColor),
                 ),
                 const Spacer(
                   flex: 2,

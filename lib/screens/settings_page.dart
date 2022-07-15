@@ -8,6 +8,7 @@ import 'package:amrita_events_flutter/widgets/settings_card.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_no_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'licenses.dart';
 
@@ -19,6 +20,15 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+
+  launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +53,10 @@ class _SettingsState extends State<Settings> {
           SettingCard(
             icon: Icons.laptop,
             title: "Contribute",
-            onTap: () {},
+            onTap: () {
+                Uri url = Uri(host: "https://github.com/TheCraftOfCode/");
+                launchUrl(url);
+            },
           ),
           SettingCard(
             icon: Icons.request_page_outlined,
