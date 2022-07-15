@@ -111,7 +111,7 @@ class ContactUs extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(right: 20),
+                                      padding: const EdgeInsets.only(right: 20, top: 20),
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             onPrimary: colors.accentColor,
