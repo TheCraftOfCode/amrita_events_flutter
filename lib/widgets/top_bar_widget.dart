@@ -51,7 +51,7 @@ class TopBarWidget extends StatelessWidget {
                         light: false,
                         onChanged: onChanged,
                         padding: const EdgeInsets.all(0.0),
-                        title: 'Search for your favorite events',
+                        title: 'Search',
                       ),
                     ),
                   ),
