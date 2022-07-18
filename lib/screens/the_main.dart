@@ -89,6 +89,7 @@ class _TheMainState extends State<TheMain> {
   _getData() async {
     data.clear();
 
+    //TODO: Maybe display non dismissable loading dialog instead?
     _eventHomeState.currentState!.isLoading = true;
     _eventHomeState.currentState!.setState(() {});
 
