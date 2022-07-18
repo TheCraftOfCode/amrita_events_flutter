@@ -26,13 +26,21 @@ class _EventRSVPManagementState extends State<EventRSVPManagement> {
 
   late String chosenOption;
   String searchPattern = "";
+  bool isLoading = false;
 
   //gets data from the server
   _getData() async {
     list.clear();
     listSearch.clear();
+
+    isLoading = true;
+    setState((){});
+
     var response =
         await makePostRequest(null, "/rsvp/getRSVP", null, true, context);
+
+    isLoading = false;
+    setState((){});
 
     if (response.statusCode == 200) {
       var responseData = json.decode(response.body)["event"]; //List Data
@@ -74,11 +82,14 @@ class _EventRSVPManagementState extends State<EventRSVPManagement> {
         var data = listSearch[i];
         if (chosenOption == eventOptions[0]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == eventOptions[1] && chosenOption == eventOptions[1]) {
+        } else if (data.eventType == eventOptions[1] &&
+            chosenOption == eventOptions[1]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == eventOptions[2] && chosenOption == eventOptions[2]) {
+        } else if (data.eventType == eventOptions[2] &&
+            chosenOption == eventOptions[2]) {
           widgetList.add(_buildEventTile(data, i));
-        } else if (data.eventType == eventOptions[3] && chosenOption == eventOptions[3]) {
+        } else if (data.eventType == eventOptions[3] &&
+            chosenOption == eventOptions[3]) {
           widgetList.add(_buildEventTile(data, i));
         }
       });
@@ -140,6 +151,11 @@ class _EventRSVPManagementState extends State<EventRSVPManagement> {
                   chosenOption = newValue;
                   _buildUserList();
                 }),
+                if (isLoading)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 100),
+                    child: CircularProgressIndicator(),
+                  )
               ] +
               widgetList.reversed.toList() +
               [const Padding(padding: EdgeInsets.only(bottom: 20))],

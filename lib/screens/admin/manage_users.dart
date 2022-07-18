@@ -29,13 +29,21 @@ class _ManageUsersState extends State<ManageUsers> {
   List<String> options = ["All Users", user, admin, superAdmin];
   late String chosenOption;
   String searchPattern = "";
+  bool isLoading = false;
 
   //gets data from the server
   _getData() async {
     list.clear();
     listSearch.clear();
+
+    isLoading = true;
+    setState(() {});
+
     var response =
         await makePostRequest(null, "/admin/getUsers", null, true, context);
+
+    isLoading = false;
+    setState(() {});
 
     if (response.statusCode == 200) {
       var responseData = json.decode(response.body)["users"]; //List Data
@@ -88,7 +96,7 @@ class _ManageUsersState extends State<ManageUsers> {
         }
       });
     }
-    setState((){});
+    setState(() {});
   }
 
   filterSearchData(value) {
@@ -145,6 +153,11 @@ class _ManageUsersState extends State<ManageUsers> {
                   chosenOption = newValue;
                   _buildUserList();
                 }),
+                if (isLoading)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 100),
+                    child: CircularProgressIndicator(),
+                  )
               ] +
               widgetList +
               [const Padding(padding: EdgeInsets.only(bottom: 20))],
