@@ -3,11 +3,14 @@ import 'package:amrita_events_flutter/widgets/custom_sliver_widget.dart';
 import 'package:amrita_events_flutter/widgets/top_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skeletons/skeletons.dart';
 
 import '../models/event_model.dart';
 import '../utils/constants.dart';
 import '../widgets/drop_down.dart';
+import '../widgets/horizontal_skeleton_widget.dart';
 import '../widgets/network_image.dart';
+import '../widgets/star_card_skeleton_widget.dart';
 import '../widgets/starred_card.dart';
 import 'event_page.dart';
 
@@ -158,10 +161,7 @@ class EventsHomeState extends State<EventsHome>
                     allWidgets: mainWidgetList,
                   )
                 : isLoading
-                    ? const Padding(
-                      padding: EdgeInsets.only(top: 100),
-                      child: CircularProgressIndicator(),
-                    )
+                    ? const SkeletonLoadingWidget()
                     : const NoEventsWidget()
           ],
         ),
@@ -171,6 +171,40 @@ class EventsHomeState extends State<EventsHome>
 
   @override
   bool get wantKeepAlive => true;
+}
+
+class SkeletonLoadingWidget extends StatelessWidget {
+  const SkeletonLoadingWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: const [
+          HorizontalSkeletonWidget(),
+          HorizontalSkeletonWidget(),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 30),
+            child: SizedBox(
+              height: 40,
+              child: SkeletonItem(
+                child: SkeletonAvatar(
+                  style: SkeletonAvatarStyle(width: double.infinity),
+                ),
+              ),
+            ),
+          ),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+        ],
+      ),
+    );
+  }
 }
 
 class HorizontalPageView extends StatefulWidget {

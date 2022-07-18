@@ -55,6 +55,7 @@ dependencies:
   flutter_email_sender:
   url_launcher:
   flutter_share: ^2.0.0
+  skeletons: ^0.0.3
 
 dev_dependencies:
   flutter_test:
