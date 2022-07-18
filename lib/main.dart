@@ -1,5 +1,4 @@
 import 'package:amrita_events_flutter/screens/greeting_page.dart';
-import 'package:amrita_events_flutter/screens/profile.dart';
 import 'package:amrita_events_flutter/screens/the_main.dart';
 import 'package:amrita_events_flutter/widgets/load_valid_page_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oktoast/oktoast.dart';
 import 'firebase_options.dart';
+import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
 //TODO: Configure APNs for iOS notification
 //reference: https://firebase.flutter.dev/docs/messaging/apple-integration/
@@ -114,9 +114,12 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoadValidPageWidget(GreetingPage(), TheMain()),
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: colors.accentColor, secondary: colors.accentColor)),
+      home: const LoadValidPageWidget(GreetingPage(), TheMain()),
     );
   }
 }
