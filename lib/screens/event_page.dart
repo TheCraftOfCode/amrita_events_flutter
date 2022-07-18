@@ -56,7 +56,7 @@ class _EventPageState extends State<EventPage> {
                   child: Text(
                     'HOST: ',
                     style: GoogleFonts.nunitoSans(
-                        color: colors.eventCardItemTitle, fontSize: 20),
+                        color: colors.eventCardItemTitle, fontSize: 18),
                   ),
                   flex: 2,
                 ),
@@ -64,7 +64,7 @@ class _EventPageState extends State<EventPage> {
                   child: Text(
                     widget.model.host,
                     style: GoogleFonts.nunitoSans(
-                        color: colors.headingTextColor, fontSize: 20),
+                        color: colors.headingTextColor, fontSize: 18),
                   ),
                   flex: 6,
                 ),
@@ -80,7 +80,7 @@ class _EventPageState extends State<EventPage> {
                   child: Text(
                     'VENUE: ',
                     style: GoogleFonts.nunitoSans(
-                        color: colors.eventCardItemTitle, fontSize: 20),
+                        color: colors.eventCardItemTitle, fontSize: 18),
                   ),
                   flex: 2,
                 ),
@@ -88,7 +88,31 @@ class _EventPageState extends State<EventPage> {
                   child: Text(
                     widget.model.location,
                     style: GoogleFonts.nunitoSans(
-                        color: colors.headingTextColor, fontSize: 20),
+                        color: colors.headingTextColor, fontSize: 18),
+                  ),
+                  flex: 6,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding:
+            const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'TYPE: ',
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.eventCardItemTitle, fontSize: 18),
+                  ),
+                  flex: 2,
+                ),
+                Expanded(
+                  child: Text(
+                    widget.model.eventType,
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.headingTextColor, fontSize: 18),
                   ),
                   flex: 6,
                 ),
@@ -104,7 +128,7 @@ class _EventPageState extends State<EventPage> {
                   child: Text(
                     'DATE: ',
                     style: GoogleFonts.nunitoSans(
-                        color: colors.eventCardItemTitle, fontSize: 20),
+                        color: colors.eventCardItemTitle, fontSize: 18),
                   ),
                   flex: 2,
                 ),
@@ -112,7 +136,31 @@ class _EventPageState extends State<EventPage> {
                   child: Text(
                     widget.model.date,
                     style: GoogleFonts.nunitoSans(
-                        color: colors.headingTextColor, fontSize: 20),
+                        color: colors.headingTextColor, fontSize: 18),
+                  ),
+                  flex: 6,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding:
+            const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'TIME: ',
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.eventCardItemTitle, fontSize: 18),
+                  ),
+                  flex: 2,
+                ),
+                Expanded(
+                  child: Text(
+                    widget.model.time,
+                    style: GoogleFonts.nunitoSans(
+                        color: colors.headingTextColor, fontSize: 18),
                   ),
                   flex: 6,
                 ),
@@ -133,31 +181,37 @@ class _EventPageState extends State<EventPage> {
           ),
           Align(
             alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: !widget.model.rsvp
-                  ? () {
-                      setState(() {
-                        widget.rsvp(widget.model);
-                      });
-                    }
-                  : null,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.model.rsvp ? 'Already RSVPd' : 'RSVP',
-                  style: GoogleFonts.nunitoSans(
-                      color: widget.model.rsvp
-                          ? Colors.white38
-                          : colors.scaffoldColor,
-                      fontWeight: FontWeight.bold),
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: ElevatedButton(
+                onPressed: !widget.model.rsvp
+                    ? () {
+                        setState(() {
+                          widget.rsvp(widget.model);
+                        });
+                      }
+                    : null,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: Center(
+                      child: Text(
+                        widget.model.rsvp ? 'Already RSVPd' : 'RSVP',
+                        style: GoogleFonts.nunitoSans(
+                            color: widget.model.rsvp
+                                ? Colors.white38
+                                : colors.scaffoldColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
                 ),
+                style: ElevatedButton.styleFrom(primary: colors.accentColor),
               ),
-              style: ElevatedButton.styleFrom(primary: colors.headingTextColor),
             ),
           ),
-          const SizedBox(
-            height: 100,
-          )
         ],
       ),
     );
