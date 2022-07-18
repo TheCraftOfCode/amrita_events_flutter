@@ -77,7 +77,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 padding: const EdgeInsets.only(bottom: 5),
                 title: 'Email',
                 hint: 'Please enter your e-mail',
-                light: true,
+                light: false,
               ),
             ),
           ),

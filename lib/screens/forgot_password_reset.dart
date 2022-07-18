@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:amrita_events_flutter/screens/sign_in_page.dart';
 import 'package:amrita_events_flutter/utils/http_modules.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +10,6 @@ import '../widgets/alert_dialog.dart';
 import '../widgets/error_box.dart';
 import '../widgets/left_beveled_container.dart';
 import '../widgets/password_formfield_widget.dart';
-import '../widgets/textbox_widget.dart';
 
 class ForgotPasswordReset extends StatefulWidget {
   const ForgotPasswordReset({Key? key, required this.email}) : super(key: key);
@@ -69,6 +67,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                       return null;
                     }
                   },
+                  light: false,
                   onSaved: (value) {
                     _resetCode = value!;
                   },
@@ -93,6 +92,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                           onSaved: (value) {
                             _password = value!;
                           },
+                          light: false,
                           label: 'Password',
                           hintText: 'Password')),
                   const SizedBox(
@@ -111,6 +111,7 @@ class _ForgotPasswordResetState extends State<ForgotPasswordReset> {
                           onSaved: (value) {
                             _passwordRepeat = value!;
                           },
+                          light: false,
                           label: 'Retype',
                           hintText: 'Retype'))
                 ],
