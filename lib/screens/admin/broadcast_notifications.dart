@@ -75,7 +75,7 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
                   padding: const EdgeInsets.only(bottom: 5),
                   title: 'Notification Title',
                   hint: 'Enter Title',
-                  light: true,
+                  light: false,
                 ),
               ),
               Padding(
@@ -94,7 +94,7 @@ class _BroadcastNotificationsState extends State<BroadcastNotifications> {
                   padding: const EdgeInsets.only(bottom: 5),
                   title: 'Notification Body',
                   hint: 'Enter body',
-                  light: true,
+                  light: false,
                 ),
               ),
               showProgress
