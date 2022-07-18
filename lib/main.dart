@@ -13,6 +13,13 @@ import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 //TODO: Configure APNs for iOS notification
 //reference: https://firebase.flutter.dev/docs/messaging/apple-integration/
 
+//TODO: Fix bug in progress wheel in management pages
+//TODO: Add place holder widgets for management pages (empty)
+//TODO: Add progress wheel for notifications page (list)
+
+//TODO: Add download CSV file in manage RSVP and also add place holder for RSVP console, add stats in RSVP console
+//TODO: Add toasts
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
