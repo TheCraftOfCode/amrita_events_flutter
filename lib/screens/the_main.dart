@@ -9,6 +9,7 @@ import 'package:amrita_events_flutter/screens/starred_events_page.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:amrita_events_flutter/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../models/event_model.dart';
@@ -245,6 +246,8 @@ class _TheMainState extends State<TheMain> {
             showUnselectedLabels: false,
             iconSize: 28,
             showSelectedLabels: true,
+            selectedLabelStyle: GoogleFonts.raleway(fontWeight: FontWeight.w800),
+            selectedIconTheme: const IconThemeData(size: 35),
             backgroundColor: colors.scaffoldColor,
             items: [
               BottomNavigationBarItem(

@@ -129,6 +129,7 @@ class _EventRSVPManagementState extends State<EventRSVPManagement> {
         child: CustomSliverView(
           columnList: [
                 TopBarWidget(
+                  hasback: true,
                   title: "RSVP",
                   onChanged: (value) {
                     searchPattern = value ?? "";

@@ -1,6 +1,6 @@
+import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:intl/intl.dart';
 
 class TimePickerWidget extends FormField<TimeOfDay> {
@@ -43,13 +43,51 @@ class TimePickerWidget extends FormField<TimeOfDay> {
                             fontSize: 15, color: colors.primaryTextColor)),
                   ),
                   Card(
-                    color: colors.lightTextBoxColor,
+                    color: colors.textBoxColor,
                     margin: const EdgeInsets.only(bottom: 4),
                     child: InkWell(
                       onTap: () async {
                         TimeOfDay? pickedTime = await showTimePicker(
                           context: context,
                           initialTime: state.value ?? TimeOfDay.now(),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                // This uses the _timePickerTheme defined above
+                                timePickerTheme: TimePickerThemeData(
+                                  backgroundColor: colors.cardColor,
+                                  hourMinuteColor: colors.textBoxColor,
+                                  hourMinuteTextColor: colors.primaryTextColor,
+                                  dayPeriodTextColor: colors.primaryTextColor,
+                                  dialTextColor: colors.primaryTextColor,
+                                  dialHandColor: colors.scaffoldColor,
+                                  entryModeIconColor: colors.primaryTextColor,
+                                  helpTextStyle: GoogleFonts.raleway(
+                                      color: colors.primaryTextColor,
+                                      fontWeight: FontWeight.w600),
+                                  inputDecorationTheme: InputDecorationTheme(
+                                      helperStyle: GoogleFonts.raleway(
+                                          color: colors.primaryTextColor),
+                                      floatingLabelStyle: GoogleFonts.raleway(
+                                          color: colors.primaryTextColor)),
+                                ),
+                                textButtonTheme: TextButtonThemeData(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateColor.resolveWith(
+                                            (states) => colors.accentColor),
+                                    foregroundColor:
+                                        MaterialStateColor.resolveWith(
+                                            (states) => Colors.white),
+                                    overlayColor:
+                                        MaterialStateColor.resolveWith(
+                                            (states) => colors.accentColor),
+                                  ),
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
                         );
                         state.didChange(pickedTime ?? state.value);
                       },
@@ -88,7 +126,7 @@ class TimePickerWidget extends FormField<TimeOfDay> {
                           padding: const EdgeInsets.all(7),
                           child: Text(
                             state.errorText ?? "error",
-                            style: const TextStyle(
+                            style: GoogleFonts.raleway(
                                 color: Colors.red, fontSize: 10),
                           ),
                         )

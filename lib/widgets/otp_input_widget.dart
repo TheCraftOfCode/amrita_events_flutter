@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OTPInput extends StatelessWidget {
   final TextEditingController controller;
@@ -17,10 +18,10 @@ class OTPInput extends StatelessWidget {
         controller: controller,
         maxLength: 1,
         cursorColor: Theme.of(context).primaryColor,
-        decoration: const InputDecoration(
-            border: OutlineInputBorder(),
+        decoration: InputDecoration(
+            border: const OutlineInputBorder(),
             counterText: '',
-            hintStyle: TextStyle(color: Colors.black, fontSize: 20.0)),
+            hintStyle: GoogleFonts.raleway(color: Colors.black, fontSize: 20.0)),
         onChanged: (value) {
           if (value.length == 1) {
             FocusScope.of(context).nextFocus();

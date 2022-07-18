@@ -134,6 +134,7 @@ class _ManageUsersState extends State<ManageUsers> {
         child: CustomSliverView(
           columnList: [
                 TopBarWidget(
+                  hasback: true,
                   title: "Manage Users",
                   onChanged: (value) {
                     searchPattern = value ?? "";

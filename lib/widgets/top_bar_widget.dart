@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TopBarWidget extends StatelessWidget {
-  const TopBarWidget({Key? key, required this.title, this.onChanged})
+  const TopBarWidget({Key? key, required this.title, this.onChanged, required this.hasback})
       : super(key: key);
 
 
   final String title;
   final void Function(String?)? onChanged;
+  final bool hasback;
 
 
   @override
@@ -28,13 +29,16 @@ class TopBarWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                if(hasback)
+                  IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios_new_outlined,color: colors.primaryTextColor,)),
+                SizedBox(width: 3,),
                 Text(
                   title,
                   style: GoogleFonts.raleway(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
                       color: colors.headingTextColor),
-                )
+                ),
               ],
             ),
             Padding(

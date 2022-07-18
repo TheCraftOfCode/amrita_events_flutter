@@ -37,7 +37,7 @@ class _PasswordFormFieldWidgetState extends State<PasswordFormFieldWidget> {
       onSaved: widget.onSaved,
       controller: widget.controller,
       validator: widget.validator,
-      style: widget.style,
+      style: widget.style ?? GoogleFonts.raleway(),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.only(
             left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),

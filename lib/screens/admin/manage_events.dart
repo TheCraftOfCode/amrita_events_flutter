@@ -137,6 +137,7 @@ class _ManageEventsState extends State<ManageEvents> {
         child: CustomSliverView(
           columnList: [
                 TopBarWidget(
+                  hasback: true,
                   title: "Manage Events",
                   onChanged: (value) {
                     searchPattern = value ?? "";

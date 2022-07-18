@@ -140,6 +140,7 @@ class EventsHomeState extends State<EventsHome>
         child: CustomSliverView(
           columnList: [
             TopBarWidget(
+              hasback: false,
               onChanged: (value) {
                 searchPattern = value ?? "";
                 filterSearchData(value);
@@ -217,7 +218,7 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
                             child: Text(
                               widget.list[index].title,
                               maxLines: 1,
-                              style: const TextStyle(
+                              style: GoogleFonts.raleway(
                                   color: Colors.white, fontSize: 20),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -227,7 +228,7 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
                             child: Text(
                               widget.list[index].date,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(color: Colors.grey),
+                              style: GoogleFonts.raleway(color: Colors.grey),
                               maxLines: 1,
                             ),
                           ),
@@ -239,12 +240,12 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
               ),
             ),
           )
-        : const Padding(
-            padding: EdgeInsets.all(32.0),
+        : Padding(
+            padding:const EdgeInsets.all(32.0),
             child: Center(
               child: Text(
                 "No events to show!",
-                style: TextStyle(color: Colors.white38),
+                style: GoogleFonts.raleway(color: Colors.white38),
               ),
             ),
           );

@@ -107,6 +107,7 @@ class _RSVPConsoleState extends State<RSVPConsole> {
       body: CustomSliverView(
         columnList: [
               TopBarWidget(
+                hasback: true,
                 title: "RSVP Console",
                 onChanged: (value) {
                   filterSearchData(value);

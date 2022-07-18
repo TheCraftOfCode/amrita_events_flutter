@@ -27,7 +27,7 @@ class DatePickerWidget extends FormField<DateTime> {
             builder: (FormFieldState<DateTime> state) {
               Future pickDate(BuildContext context) async {
                 await CupertinoRoundedDatePicker.show(context,
-                    background: colors.lightTextBoxColor,
+                    background: colors.textBoxColor,
                     textColor: colors.primaryTextColor,
                     initialDate: state.value ?? DateTime.now(),
                     minimumYear: DateTime.now().year,
@@ -50,7 +50,7 @@ class DatePickerWidget extends FormField<DateTime> {
                             fontSize: 15, color: colors.primaryTextColor)),
                   ),
                   Card(
-                    color: colors.lightTextBoxColor,
+                    color: colors.textBoxColor ,
                     margin: const EdgeInsets.only(bottom: 4),
                     child: InkWell(
                       onTap: () {
@@ -100,3 +100,6 @@ class DatePickerWidget extends FormField<DateTime> {
               );
             });
 }
+
+
+//TODO: Style
