@@ -1,18 +1,14 @@
 import 'dart:convert';
 
-import 'package:amrita_events_flutter/screens/sign_in_page.dart';
 import 'package:amrita_events_flutter/utils/http_modules.dart';
 import 'package:amrita_events_flutter/utils/utils.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 import 'package:google_fonts/google_fonts.dart';
-
 import '../widgets/alert_dialog.dart';
 import '../widgets/error_box.dart';
 import '../widgets/left_beveled_container.dart';
 import '../widgets/password_formfield_widget.dart';
-import '../widgets/textbox_widget.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -76,6 +72,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     _currentPassword = value!;
                   },
                   label: 'Current Password',
+                  light: false,
                   hintText: 'Current Password'),
             ),
             Padding(
@@ -97,6 +94,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             _password = value!;
                           },
                           label: 'Password',
+                          light: false,
                           hintText: 'Password')),
                   const SizedBox(
                     width: 10.0,
@@ -104,18 +102,20 @@ class _ChangePasswordState extends State<ChangePassword> {
                   SizedBox(
                       width: (MediaQuery.of(context).size.width - 70) / 2,
                       child: PasswordFormFieldWidget(
-                          validator: (value) {
-                            if (value == "" || value == null) {
-                              return "Please enter new password";
-                            } else {
-                              return null;
-                            }
-                          },
-                          onSaved: (value) {
-                            _passwordRepeat = value!;
-                          },
-                          label: 'Retype',
-                          hintText: 'Retype'))
+                        validator: (value) {
+                          if (value == "" || value == null) {
+                            return "Please enter new password";
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _passwordRepeat = value!;
+                        },
+                        label: 'Retype',
+                        hintText: 'Retype',
+                        light: false,
+                      ))
                 ],
               ),
             ),

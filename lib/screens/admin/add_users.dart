@@ -90,7 +90,7 @@ class _AddUsersState extends State<AddUsers> {
                   padding: const EdgeInsets.only(bottom: 5),
                   title: 'User Name',
                   hint: 'Enter User Name',
-                  light: true,
+                  light: false,
                 ),
               ),
               Padding(
@@ -111,7 +111,7 @@ class _AddUsersState extends State<AddUsers> {
                   padding: const EdgeInsets.only(bottom: 5),
                   title: 'Email',
                   hint: 'Enter Email',
-                  light: true,
+                  light: false,
                 ),
               ),
               showProgress

@@ -125,7 +125,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Event Name',
                     hint: 'Enter Event Name',
-                    light: true,
+                    light: false,
                   ),
                 ),
                 Padding(
@@ -181,7 +181,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Event Location',
                     hint: 'Enter Location',
-                    light: true,
+                    light: false,
                   ),
                 ),
                 Padding(
@@ -202,7 +202,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Event Host',
                     hint: 'Enter Event Host',
-                    light: true,
+                    light: false,
                   ),
                 ),
                 Padding(
@@ -223,7 +223,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Event Description',
                     hint: 'Enter Event Description',
-                    light: true,
+                    light: false,
                   ),
                 ),
                 Padding(
@@ -237,7 +237,7 @@ class _AddModifyEventState extends State<AddModifyEvent> {
                     padding: const EdgeInsets.only(bottom: 5),
                     title: 'Poster Url',
                     hint: 'Enter Poster Url (not mandatory)',
-                    light: true,
+                    light: false,
                   ),
                 ),
                 Padding(
