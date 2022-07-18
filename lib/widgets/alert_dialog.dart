@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:amrita_events_flutter/utils/colors.dart' as colors;
 
-//TODO: Style alert dialog
 displayDialog(context, positiveText, negativeText, Function positiveFunction,
-    title, subTitle, {dismissDialog, willPop}) {
+    title, subTitle,
+    {dismissDialog, willPop}) {
   return showDialog(
     context: context,
     barrierDismissible: dismissDialog ?? true,
@@ -13,12 +14,16 @@ displayDialog(context, positiveText, negativeText, Function positiveFunction,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
+        backgroundColor: colors.cardBackgroundColor,
         title: Text(
           title,
-          style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
+          style: GoogleFonts.raleway(
+              fontWeight: FontWeight.bold, color: colors.headingTextColor),
         ),
         content: Text(
           subTitle,
+          style: GoogleFonts.raleway(
+              color: colors.headingTextColor.withOpacity(0.8)),
         ),
         actions: <Widget>[
           negativeText != null
@@ -32,7 +37,9 @@ displayDialog(context, positiveText, negativeText, Function positiveFunction,
                 )
               : Container(),
           ElevatedButton(
-            child: Text(positiveText,),
+            child: Text(
+              positiveText,
+            ),
             onPressed: () async {
               positiveFunction();
             },
@@ -44,30 +51,36 @@ displayDialog(context, positiveText, negativeText, Function positiveFunction,
 }
 
 displayQuitDialog(context, title, subTitle) async {
- return await showDialog(
+  return await showDialog(
     context: context,
     builder: (context) => AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
+      backgroundColor: colors.cardBackgroundColor,
       title: Text(
         title,
-        style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
+        style: GoogleFonts.raleway(
+            fontWeight: FontWeight.bold, color: colors.headingTextColor),
       ),
       content: Text(
         subTitle,
+        style: GoogleFonts.raleway(
+            color: colors.headingTextColor.withOpacity(0.8)),
       ),
       actions: <Widget>[
         TextButton(
-                child: const Text(
-                  "No",
-                ),
-                onPressed: () {
-                  Navigator.pop(context, false);
-                },
-              ),
+          child: const Text(
+            "No",
+          ),
+          onPressed: () {
+            Navigator.pop(context, false);
+          },
+        ),
         ElevatedButton(
-          child: const Text("Yes",),
+          child: const Text(
+            "Yes",
+          ),
           onPressed: () async {
             Navigator.pop(context, true);
           },
