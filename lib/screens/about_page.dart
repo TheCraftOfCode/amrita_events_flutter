@@ -33,6 +33,7 @@ class AboutPage extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Text(
               'Starting out in life as an elective project done by regular club event hosts, the app has gone through several design changes and feature changes over the past year, resulting in what you see today. The developers are supporters of the philosophy that peer-to-peer information exchange is of paramount importance. Workshops, events and competitions hosted in the campus will help foster this and being able to inform everyone about events without flooding chat apps is the ultimate aim.',
+              textAlign: TextAlign.justify,
               style: GoogleFonts.nunitoSans(
                 fontSize: 15,
                 color: colors.headingTextColor,
@@ -73,7 +74,8 @@ class AboutPage extends StatelessWidget {
                 const Spacer()
               ],
             ),
-          )
+          ),
+          Padding(padding: const EdgeInsets.only(bottom: 30))
         ],
       ),
     );
