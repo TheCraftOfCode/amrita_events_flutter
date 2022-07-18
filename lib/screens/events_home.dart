@@ -44,6 +44,8 @@ class EventsHomeState extends State<EventsHome>
 
   String searchPattern = "";
 
+  bool isLoading = false;
+
   _compareDates(String date) {
     DateTime dateParsed = DateTime.parse(date);
     DateTime currentDate = DateTime.now();
@@ -93,13 +95,13 @@ class EventsHomeState extends State<EventsHome>
     }
   }
 
-  rebuildSearchData(){
-    if(searchPattern.isNotEmpty){
+  rebuildSearchData() {
+    if (searchPattern.isNotEmpty) {
       filterSearchData(searchPattern);
     }
   }
 
-  filterSearchData(value){
+  filterSearchData(value) {
     dataSearch.clear();
     if (value != null) {
       if (value.isEmpty) {
@@ -109,9 +111,7 @@ class EventsHomeState extends State<EventsHome>
       } else {
         setState(() {
           dataSearch = widget.data
-              .where((i) => i.title
-              .toLowerCase()
-              .contains(value.toLowerCase()))
+              .where((i) => i.title.toLowerCase().contains(value.toLowerCase()))
               .toList();
         });
       }
@@ -157,7 +157,12 @@ class EventsHomeState extends State<EventsHome>
                     cultural: cultural,
                     allWidgets: mainWidgetList,
                   )
-                : const NoEventsWidget()
+                : isLoading
+                    ? const Padding(
+                      padding: EdgeInsets.only(top: 100),
+                      child: CircularProgressIndicator(),
+                    )
+                    : const NoEventsWidget()
           ],
         ),
       ),
@@ -241,7 +246,7 @@ class _HorizontalPageViewState extends State<HorizontalPageView> {
             ),
           )
         : Padding(
-            padding:const EdgeInsets.all(32.0),
+            padding: const EdgeInsets.all(32.0),
             child: Center(
               child: Text(
                 "No events to show!",

@@ -36,7 +36,7 @@ class _TheMainState extends State<TheMain> {
       Uri.parse('wss://$networkAddress/websockets'),
     );
     channel.stream.listen(
-          (eventData) {
+      (eventData) {
         var res = json.decode(eventData);
         var socketEventType = res['type'];
         var socketData = res['data'];
@@ -89,8 +89,14 @@ class _TheMainState extends State<TheMain> {
   _getData() async {
     data.clear();
 
+    _eventHomeState.currentState!.isLoading = true;
+    _eventHomeState.currentState!.setState(() {});
+
     var response =
-    await makePostRequest(null, "/event/getEvents", null, true, context);
+        await makePostRequest(null, "/event/getEvents", null, true, context);
+
+    _eventHomeState.currentState!.isLoading = false;
+    _eventHomeState.currentState!.setState(() {});
 
     if (response.statusCode == 200) {
       var responseData = json.decode(response.body)["data"]; //List Data
@@ -179,12 +185,12 @@ class _TheMainState extends State<TheMain> {
   }
 
   final GlobalKey<EventsHomeState> _eventHomeState =
-  GlobalKey<EventsHomeState>();
+      GlobalKey<EventsHomeState>();
   final GlobalKey<StarredState> _starredEventsState = GlobalKey<StarredState>();
 
   //Notifications
   final GlobalKey<NotificationsState> _notificationPageState =
-  GlobalKey<NotificationsState>();
+      GlobalKey<NotificationsState>();
 
   @override
   void initState() {
@@ -246,7 +252,8 @@ class _TheMainState extends State<TheMain> {
             showUnselectedLabels: false,
             iconSize: 28,
             showSelectedLabels: true,
-            selectedLabelStyle: GoogleFonts.raleway(fontWeight: FontWeight.w800),
+            selectedLabelStyle:
+                GoogleFonts.raleway(fontWeight: FontWeight.w800),
             selectedIconTheme: const IconThemeData(size: 35),
             backgroundColor: colors.scaffoldColor,
             items: [
