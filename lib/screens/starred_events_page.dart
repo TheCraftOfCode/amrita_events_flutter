@@ -28,7 +28,7 @@ class Starred extends StatefulWidget {
 class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
   List<EventModel> dataSearch = [];
 
-  bool isLoading = false;
+  bool isLoading = true;
 
   //list depending on root data
   List<Widget> eventList = [];

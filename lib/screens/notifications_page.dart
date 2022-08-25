@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/http_modules.dart';
+import 'notification_skeleton_widget.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
@@ -26,6 +27,10 @@ class NotificationsState extends State<Notifications>
   _getData() async {
     mapData.clear();
 
+    setState(() {
+      isLoading = true;
+    });
+
     var response = await makePostRequest(
         null, "/notification/getNotifications", null, true, context);
 
@@ -35,6 +40,10 @@ class NotificationsState extends State<Notifications>
         var data = NotificationModel.fromJSON(i);
         addMapData(data);
       }
+
+      setState(() {
+        isLoading = true;
+      });
 
       //TODO: Explore this data structure, I mean come on who knew maps could be sorted
       buildList();
@@ -65,6 +74,8 @@ class NotificationsState extends State<Notifications>
     setState(() {});
   }
 
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -88,7 +99,16 @@ class NotificationsState extends State<Notifications>
               ? Column(
                   children: notificationList,
                 )
-              : const NoNotificationsWidget(),
+              : !isLoading
+                  ? const NoNotificationsWidget()
+                  : Column(
+                      children: const [
+                        NotificationSkeletonWidget(),
+                        NotificationSkeletonWidget(),
+                        NotificationSkeletonWidget(),
+                        NotificationSkeletonWidget(),
+                      ],
+                    ),
         ]),
       ),
     );
