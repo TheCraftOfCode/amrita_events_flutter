@@ -42,7 +42,7 @@ class NotificationsState extends State<Notifications>
       }
 
       setState(() {
-        isLoading = true;
+        isLoading = false;
       });
 
       //TODO: Explore this data structure, I mean come on who knew maps could be sorted
