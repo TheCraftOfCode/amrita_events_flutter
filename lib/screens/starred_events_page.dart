@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/event_model.dart';
+import '../widgets/star_card_skeleton_widget.dart';
 
 class Starred extends StatefulWidget {
   const Starred(
@@ -26,6 +27,8 @@ class Starred extends StatefulWidget {
 
 class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
   List<EventModel> dataSearch = [];
+
+  bool isLoading = false;
 
   //list depending on root data
   List<Widget> eventList = [];
@@ -110,6 +113,8 @@ class StarredState extends State<Starred> with AutomaticKeepAliveClientMixin {
                 ? YesStarredEventsWidget(
                     eventList: eventList,
                   )
+                : isLoading
+                ? const SkeletonLoadingWidget()
                 : const NoStarredEventsWidget()
           ],
         ),
@@ -162,6 +167,28 @@ class NoStarredEventsWidget extends StatelessWidget {
           )),
         ),
       ],
+    );
+  }
+}
+
+class SkeletonLoadingWidget extends StatelessWidget {
+  const SkeletonLoadingWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: const [
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+          StarCardSkeletonWidget(),
+        ],
+      ),
     );
   }
 }

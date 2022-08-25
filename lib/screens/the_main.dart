@@ -92,12 +92,16 @@ class _TheMainState extends State<TheMain> {
     //TODO: Maybe display non dismissable loading dialog instead?
     _eventHomeState.currentState!.isLoading = true;
     _eventHomeState.currentState!.setState(() {});
+    _starredEventsState.currentState!.isLoading = true;
+    _starredEventsState.currentState!.setState(() {});
 
     var response =
         await makePostRequest(null, "/event/getEvents", null, true, context);
 
     _eventHomeState.currentState!.isLoading = false;
     _eventHomeState.currentState!.setState(() {});
+    _starredEventsState.currentState!.isLoading = false;
+    _starredEventsState.currentState!.setState(() {});
 
     if (response.statusCode == 200) {
       var responseData = json.decode(response.body)["data"]; //List Data
