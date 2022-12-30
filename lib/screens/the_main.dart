@@ -33,7 +33,7 @@ class _TheMainState extends State<TheMain> {
 
   _initChannel() {
     channel = WebSocketChannel.connect(
-      Uri.parse('wss://$networkAddress/websockets'),
+      Uri.parse(isHTTPS ? "wss" : "ws" '://$networkAddress/websockets'),
     );
     channel.stream.listen(
       (eventData) {
